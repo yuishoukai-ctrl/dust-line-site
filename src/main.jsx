@@ -1,0 +1,320 @@
+import { StrictMode, useEffect, useId, useRef, useState } from 'react'
+import { createRoot } from 'react-dom/client'
+import './styles.css'
+
+const assetPath = (filename) => `${import.meta.env.BASE_URL}images/${filename}`
+
+const stories = [
+  {
+    category: 'FIELD NOTE 01',
+    title: '雪が残る稜線へ',
+    excerpt: '季節の境界を越えていく。残雪路で必要だった装備と判断を記録する。',
+    image: assetPath('snow-route.jpg'),
+    className: 'story--wide',
+  },
+  {
+    category: 'CAMP & RIDE',
+    title: '一日の終わりを運ぶ',
+    excerpt: '積みすぎないキャンプ道具と、夕暮れまで走るための小さな工夫。',
+    image: assetPath('camp-sunset.jpg'),
+    className: 'story--tall',
+  },
+  {
+    category: 'MACHINE',
+    title: '旅するための輪郭',
+    excerpt: 'スペックではなく、未舗装路で分かった車体と道具の相性を読む。',
+    image: assetPath('bike-profile.jpg'),
+    className: 'story--compact',
+  },
+]
+
+function ArrowIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 12h13M13 6l6 6-6 6" />
+    </svg>
+  )
+}
+
+function MenuIcon({ open }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      {open ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 7h16M4 17h16" />}
+    </svg>
+  )
+}
+
+function Header() {
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    const close = () => setOpen(false)
+    window.addEventListener('resize', close)
+    return () => window.removeEventListener('resize', close)
+  }, [])
+
+  return (
+    <header className="site-header">
+      <a className="brand" href="#top" aria-label="DUST LINE ホーム">
+        <span>DUST LINE</span>
+        <small>ADVENTURE JOURNAL</small>
+      </a>
+      <nav className={open ? 'nav nav--open' : 'nav'} aria-label="メインナビゲーション">
+        <a href="#stories" onClick={() => setOpen(false)}>Stories</a>
+        <a href="#issue" onClick={() => setOpen(false)}>Issue 01</a>
+        <a href="#about" onClick={() => setOpen(false)}>About</a>
+        <a className="nav__cta" href="#newsletter" onClick={() => setOpen(false)}>Newsletter</a>
+      </nav>
+      <button
+        className="menu-button"
+        type="button"
+        aria-label={open ? 'メニューを閉じる' : 'メニューを開く'}
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <MenuIcon open={open} />
+      </button>
+    </header>
+  )
+}
+
+function Hero() {
+  return (
+    <section className="hero" id="top">
+      <div className="hero__image" style={{ backgroundImage: `url(${assetPath('hero-rider.jpg')})` }} role="img" aria-label="ダートを走るアドベンチャーバイク" />
+      <div className="hero__veil" />
+      <div className="hero__content reveal">
+        <p className="eyebrow">ADVENTURE MOTORCYCLE JOURNAL</p>
+        <h1><span>道の先ではなく、</span><span>道の外へ。</span></h1>
+        <p className="hero__lead">
+          地図に残らない時間を走る。DUST LINEは、旅と道具、
+          そしてライダーの選択を記録するデジタル・ジャーナルです。
+        </p>
+        <div className="hero__actions">
+          <a className="button button--accent" href="#issue">創刊号を見る <ArrowIcon /></a>
+          <a className="text-link" href="#stories">最新の記録を読む <ArrowIcon /></a>
+        </div>
+      </div>
+      <div className="hero__index" aria-hidden="true">
+        <span>DL</span><span>001</span><span>JPN</span>
+      </div>
+      <div className="scroll-cue" aria-hidden="true"><span />SCROLL</div>
+    </section>
+  )
+}
+
+function Manifesto() {
+  return (
+    <section className="manifesto section" id="about">
+      <div className="section-label reveal"><span>01</span><span>OUR LINE</span></div>
+      <div className="manifesto__grid">
+        <h2 className="reveal">バイクを紹介するのではなく、<br />その先で得た経験を残す。</h2>
+        <div className="manifesto__copy reveal">
+          <p>
+            速さや新しさだけでは測れない価値がある。どこへ向かい、何を積み、
+            どこで引き返したか。DUST LINEは実走から生まれた情報を、写真と文章で丁寧に編みます。
+          </p>
+          <p className="manifesto__en">RIDE FAR. PACK LIGHT. STAY CURIOUS.</p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function FeaturedStory() {
+  return (
+    <section className="feature section" id="stories">
+      <div className="section-label section-label--light reveal"><span>02</span><span>LATEST STORY</span></div>
+      <a className="feature__frame reveal" href="#newsletter">
+        <img src={assetPath('plateau-ride.jpg')} alt="高原道路に停めた二台のアドベンチャーバイク" />
+        <div className="feature__shade" />
+        <div className="feature__copy">
+          <p>LONG RIDE / HIGH LAND</p>
+          <h2>風が抜ける高原へ。</h2>
+          <span>遠くへ行くために必要だったもの、置いてきたもの。<ArrowIcon /></span>
+        </div>
+        <div className="feature__number" aria-hidden="true">01</div>
+      </a>
+    </section>
+  )
+}
+
+function StoryGrid() {
+  return (
+    <section className="story-section section">
+      <div className="story-grid">
+        {stories.map((story, index) => (
+          <article className={`story ${story.className} reveal`} key={story.title} style={{ '--delay': `${index * 90}ms` }}>
+            <a href="#newsletter" aria-label={`${story.title}を読む`}>
+              <div className="story__image"><img src={story.image} alt="" /></div>
+              <div className="story__meta">
+                <p>{story.category}</p>
+                <span>0{index + 2}</span>
+              </div>
+              <h3>{story.title}</h3>
+              <p className="story__excerpt">{story.excerpt}</p>
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function Issue() {
+  return (
+    <section className="issue section" id="issue">
+      <div className="issue__background" aria-hidden="true">ISSUE 01</div>
+      <div className="issue__visual reveal">
+        <div className="issue__cover-wrap">
+          <img src={assetPath('cover-issue-01.png')} alt="DUST LINE ISSUE 01 表紙" />
+          <span className="issue__tag">DIGITAL EDITION</span>
+        </div>
+      </div>
+      <div className="issue__copy reveal">
+        <div className="section-label section-label--light"><span>03</span><span>FIRST ISSUE</span></div>
+        <p className="issue__status">COMING SOON</p>
+        <h2>BEYOND<br />THE PAVEMENT</h2>
+        <p>
+          創刊号は、舗装路の向こう側へ踏み出すための一冊。
+          ロングライド、積載、装備、そして旅の途中で出会った風景を収録します。
+        </p>
+        <dl className="issue__details">
+          <div><dt>FORMAT</dt><dd>Kindle Edition</dd></div>
+          <div><dt>LANGUAGE</dt><dd>Japanese</dd></div>
+          <div><dt>RELEASE</dt><dd>Coming soon</dd></div>
+        </dl>
+        <a className="button button--outline" href="#newsletter">発売情報を受け取る <ArrowIcon /></a>
+      </div>
+    </section>
+  )
+}
+
+function RouteStrip() {
+  return (
+    <section className="route-strip" aria-label="旅の写真">
+      <div className="route-strip__image route-strip__image--one"><img src={assetPath('coastal-view.jpg')} alt="海を望む峠に停めたバイク" /></div>
+      <div className="route-strip__statement reveal">
+        <span>THE DISTANCE IS NOT THE POINT.</span>
+        <strong><span>遠くへ行くことより、</span><span>何を持ち帰ったか。</span></strong>
+        <p>距離や速さでは測れない旅の記憶を、写真と文章で残していく。</p>
+      </div>
+      <svg className="route-line" viewBox="0 0 1000 180" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 125 C160 40 260 160 410 92 S690 15 1000 110" />
+      </svg>
+    </section>
+  )
+}
+
+function Newsletter() {
+  const [email, setEmail] = useState('')
+  const [state, setState] = useState('idle')
+  const inputId = useId()
+  const timerRef = useRef(null)
+
+  useEffect(() => () => clearTimeout(timerRef.current), [])
+
+  const submit = (event) => {
+    event.preventDefault()
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    if (!valid) {
+      setState('error')
+      return
+    }
+    setState('loading')
+    timerRef.current = window.setTimeout(() => setState('success'), 700)
+  }
+
+  return (
+    <section className="newsletter section" id="newsletter">
+      <div className="newsletter__image reveal"><img src={assetPath('mountain-stop.jpg')} alt="山を望む道路に停めたアドベンチャーバイク" /></div>
+      <div className="newsletter__copy reveal">
+        <div className="section-label"><span>04</span><span>FIELD LETTER</span></div>
+        <h2>次の旅を、<br />受信箱へ。</h2>
+        <p>新しい記事、創刊号の発売情報、誌面に入りきらなかったルートノートを届けます。</p>
+        {state === 'success' ? (
+          <div className="form-success" role="status">
+            <span>登録を受け付けました。</span>
+            <small>DUST LINEからの次の便りをお待ちください。</small>
+          </div>
+        ) : (
+          <form onSubmit={submit} noValidate>
+            <label htmlFor={inputId}>EMAIL ADDRESS</label>
+            <div className={state === 'error' ? 'email-field email-field--error' : 'email-field'}>
+              <input
+                id={inputId}
+                type="email"
+                value={email}
+                onChange={(event) => { setEmail(event.target.value); if (state === 'error') setState('idle') }}
+                placeholder="ride@example.com"
+                aria-describedby={`${inputId}-help`}
+                aria-invalid={state === 'error'}
+                disabled={state === 'loading'}
+              />
+              <button type="submit" disabled={state === 'loading'}>
+                {state === 'loading' ? <span className="button-loading">送信中</span> : <>登録する <ArrowIcon /></>}
+              </button>
+            </div>
+            <small id={`${inputId}-help`} className={state === 'error' ? 'form-help form-help--error' : 'form-help'}>
+              {state === 'error' ? '有効なメールアドレスを入力してください。' : '配信停止はいつでも可能です。広告メールは送りません。'}
+            </small>
+          </form>
+        )}
+      </div>
+    </section>
+  )
+}
+
+function Footer() {
+  return (
+    <footer className="footer">
+      <div className="footer__brand">
+        <div className="footer__logo-frame">
+          <img className="footer__logo" src={assetPath('dust-line-logo.png')} alt="DUST LINE" />
+        </div>
+        <small>ADVENTURE MOTORCYCLE JOURNAL</small>
+      </div>
+      <div className="footer__links">
+        <a href="#stories">Stories</a><a href="#issue">Issue</a><a href="#about">About</a><a href="#newsletter">Contact</a>
+      </div>
+      <p>© 2026 DUST LINE. ALL RIGHTS RESERVED.</p>
+    </footer>
+  )
+}
+
+function App() {
+  useEffect(() => {
+    const elements = document.querySelectorAll('.reveal')
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal--visible')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.12 })
+    elements.forEach((element) => observer.observe(element))
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <>
+      <a className="skip-link" href="#main">本文へ移動</a>
+      <Header />
+      <main id="main">
+        <Hero />
+        <Manifesto />
+        <FeaturedStory />
+        <StoryGrid />
+        <Issue />
+        <RouteStrip />
+        <Newsletter />
+      </main>
+      <Footer />
+    </>
+  )
+}
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode><App /></StrictMode>,
+)
