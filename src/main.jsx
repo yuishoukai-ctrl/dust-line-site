@@ -61,6 +61,7 @@ function Header() {
       </a>
       <nav className={open ? 'nav nav--open' : 'nav'} aria-label="メインナビゲーション">
         <a href="#stories" onClick={() => setOpen(false)}>Stories</a>
+        <a href="#magazine" onClick={() => setOpen(false)}>Magazine</a>
         <a href="#issue" onClick={() => setOpen(false)}>Issue 01</a>
         <a href="#about" onClick={() => setOpen(false)}>About</a>
         <a className="nav__cta" href="#newsletter" onClick={() => setOpen(false)}>Newsletter</a>
@@ -108,11 +109,11 @@ function Manifesto() {
     <section className="manifesto section" id="about">
       <div className="section-label reveal"><span>01</span><span>OUR LINE</span></div>
       <div className="manifesto__grid">
-        <h2 className="reveal">バイクを紹介するのではなく、<br />その先で得た経験を残す。</h2>
+        <h2 className="reveal">走ることから生まれた発見を、<br />次の旅へつながる記録に。</h2>
         <div className="manifesto__copy reveal">
           <p>
-            速さや新しさだけでは測れない価値がある。どこへ向かい、何を積み、
-            どこで引き返したか。DUST LINEは実走から生まれた情報を、写真と文章で丁寧に編みます。
+            マシンの個性、選んだ道具、どこへ向かい、どこで引き返したか。
+            DUST LINEは実走と取材から生まれた情報を、写真と文章で丁寧に編みます。
           </p>
           <p className="manifesto__en">RIDE FAR. PACK LIGHT. STAY CURIOUS.</p>
         </div>
@@ -161,6 +162,27 @@ function StoryGrid() {
   )
 }
 
+function MagazinePreview() {
+  const spread = assetPath('machine-file-001-spread.png')
+
+  return (
+    <section className="magazine-preview section" id="magazine">
+      <div className="magazine-preview__intro reveal">
+        <div className="section-label"><span>03</span><span>INSIDE THE MAGAZINE</span></div>
+        <div>
+          <p className="magazine-preview__kicker">MACHINE FILE 001</p>
+          <h2>誌面から読む、<br />大陸横断マシン。</h2>
+          <p>ガードファクトリーが仕立てた一台を、写真と詳細な解説で紹介。黒の特集扉と白の本文面を組み合わせた、DUST LINEの誌面プレビューです。</p>
+        </div>
+      </div>
+      <a className="magazine-preview__spread reveal" href={spread} target="_blank" rel="noreferrer" aria-label="MACHINE FILE 001の誌面を拡大表示">
+        <img src={spread} alt="DUST LINE MACHINE FILE 001 ガードファクトリー製大陸横断マシンの見開き記事" />
+        <span>OPEN FULL SPREAD <ArrowIcon /></span>
+      </a>
+    </section>
+  )
+}
+
 function Issue() {
   return (
     <section className="issue section" id="issue">
@@ -172,7 +194,7 @@ function Issue() {
         </div>
       </div>
       <div className="issue__copy reveal">
-        <div className="section-label section-label--light"><span>03</span><span>FIRST ISSUE</span></div>
+        <div className="section-label section-label--light"><span>04</span><span>FIRST ISSUE</span></div>
         <p className="issue__status">COMING SOON</p>
         <h2>BEYOND<br />THE PAVEMENT</h2>
         <p>
@@ -229,7 +251,7 @@ function Newsletter() {
     <section className="newsletter section" id="newsletter">
       <div className="newsletter__image reveal"><img src={assetPath('mountain-stop.jpg')} alt="山を望む道路に停めたアドベンチャーバイク" /></div>
       <div className="newsletter__copy reveal">
-        <div className="section-label"><span>04</span><span>FIELD LETTER</span></div>
+        <div className="section-label"><span>05</span><span>FIELD LETTER</span></div>
         <h2>次の旅を、<br />受信箱へ。</h2>
         <p>新しい記事、創刊号の発売情報、誌面に入りきらなかったルートノートを届けます。</p>
         {state === 'success' ? (
@@ -306,6 +328,7 @@ function App() {
         <Manifesto />
         <FeaturedStory />
         <StoryGrid />
+        <MagazinePreview />
         <Issue />
         <RouteStrip />
         <Newsletter />
