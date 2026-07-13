@@ -1,15 +1,17 @@
 import { StrictMode, useEffect, useId, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
+import WorldTripArticle from './WorldTripArticle'
 import './styles.css'
 
 const assetPath = (filename) => `${import.meta.env.BASE_URL}images/${filename}`
 
 const stories = [
   {
-    category: 'FIELD NOTE 01',
-    title: '雪が残る稜線へ',
-    excerpt: '季節の境界を越えていく。残雪路で必要だった装備と判断を記録する。',
-    image: assetPath('snow-route.jpg'),
+    category: 'BUILD LOG 001',
+    title: '世界一周に行こうとしたら。',
+    excerpt: '10ガロンの巨大タンクを取り寄せ、KLR650を世界一周仕様へ作り替えた記録。',
+    image: assetPath('world-trip/completed-klr650.jpg'),
+    href: `${import.meta.env.BASE_URL}?article=world-trip`,
     className: 'story--wide',
   },
   {
@@ -146,7 +148,7 @@ function StoryGrid() {
       <div className="story-grid">
         {stories.map((story, index) => (
           <article className={`story ${story.className} reveal`} key={story.title} style={{ '--delay': `${index * 90}ms` }}>
-            <a href="#newsletter" aria-label={`${story.title}を読む`}>
+            <a href={story.href || '#newsletter'} aria-label={`${story.title}を読む`}>
               <div className="story__image"><img src={story.image} alt="" /></div>
               <div className="story__meta">
                 <p>{story.category}</p>
@@ -318,6 +320,9 @@ function App() {
     elements.forEach((element) => observer.observe(element))
     return () => observer.disconnect()
   }, [])
+
+  const article = new URLSearchParams(window.location.search).get('article')
+  if (article === 'world-trip') return <WorldTripArticle assetPath={assetPath} />
 
   return (
     <>
