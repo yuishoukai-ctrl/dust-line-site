@@ -22,9 +22,9 @@ const stories = [
     className: 'story--tall',
   },
   {
-    category: 'MACHINE',
-    title: '旅するための輪郭',
-    excerpt: 'スペックではなく、未舗装路で分かった車体と道具の相性を読む。',
+    category: 'MACHINE FILE 001',
+    title: '大陸横断マシン',
+    excerpt: '60Lタンク、トリプルヘッドライト、6mmアーマー。ガードファクトリーが仕立てた一台。',
     image: assetPath('bike-profile.jpg'),
     className: 'story--compact',
   },
@@ -165,22 +165,47 @@ function StoryGrid() {
 }
 
 function MagazinePreview() {
-  const spread = assetPath('machine-file-001-spread.png')
+  const samplePdf = `${import.meta.env.BASE_URL}downloads/dust-line-issue-01-sample.pdf`
+  const page026 = assetPath('issue-01/world-trip-026.png')
+  const page027 = assetPath('issue-01/world-trip-027.png')
+  const page030 = assetPath('issue-01/world-trip-030.png')
+  const page031 = assetPath('issue-01/world-trip-031.png')
 
   return (
-    <section className="magazine-preview section" id="magazine">
-      <div className="magazine-preview__intro reveal">
+    <section className="sneak-peek section" id="magazine">
+      <div className="sneak-peek__intro reveal">
         <div className="section-label"><span>03</span><span>INSIDE THE MAGAZINE</span></div>
         <div>
-          <p className="magazine-preview__kicker">MACHINE FILE 001</p>
-          <h2>誌面から読む、<br />大陸横断マシン。</h2>
-          <p>ガードファクトリーが仕立てた一台を、写真と詳細な解説で紹介。黒の特集扉と白の本文面を組み合わせた、DUST LINEの誌面プレビューです。</p>
+          <p className="sneak-peek__kicker">ISSUE 01 / SNEAK PEEK</p>
+          <h2>世界一周に<br />行こうとしたら。</h2>
+          <p>10ガロンの巨大タンクを海の向こうから取り寄せ、KLR650を世界一周仕様へ。車両選びから加工、そして旅に出られなかった理由までを8ページで追います。</p>
+          <div className="sneak-peek__actions">
+            <a className="button button--accent" href={samplePdf} target="_blank" rel="noreferrer">2ページ試し読み <ArrowIcon /></a>
+            <a className="sneak-peek__notify" href="#newsletter">発売情報を受け取る <ArrowIcon /></a>
+          </div>
         </div>
       </div>
-      <a className="magazine-preview__spread reveal" href={spread} target="_blank" rel="noreferrer" aria-label="MACHINE FILE 001の誌面を拡大表示">
-        <img src={spread} alt="DUST LINE MACHINE FILE 001 ガードファクトリー製大陸横断マシンの見開き記事" />
-        <span>OPEN FULL SPREAD <ArrowIcon /></span>
+
+      <a className="sneak-peek__primary reveal" href={samplePdf} target="_blank" rel="noreferrer" aria-label="創刊号の2ページ試し読みPDFを開く">
+        <span className="sneak-peek__ribbon">SAMPLE / ISSUE 01</span>
+        <div className="sneak-peek__spread">
+          <figure><img src={page026} alt="世界一周に行こうとしたら。扉ページ 026" loading="lazy" /></figure>
+          <figure><img src={page027} alt="計画ルートを掲載した誌面 027" loading="lazy" /></figure>
+        </div>
+        <span className="sneak-peek__open">OPEN 2-PAGE PDF <ArrowIcon /></span>
       </a>
+
+      <div className="sneak-peek__tease reveal" aria-label="創刊号の加工記事を一部公開">
+        <div className="sneak-peek__tease-spread">
+          <img src={page030} alt="タンク装着加工を掲載した誌面 030" loading="lazy" />
+          <img src={page031} alt="燃料系統を解説した誌面 031" loading="lazy" />
+        </div>
+        <div className="sneak-peek__veil">
+          <span>FIELD FIX / CONTINUES...</span>
+          <strong>加工の続きは、創刊号で。</strong>
+          <a href="#newsletter">発売情報を受け取る <ArrowIcon /></a>
+        </div>
+      </div>
     </section>
   )
 }
