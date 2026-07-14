@@ -165,6 +165,7 @@ function StoryGrid() {
 }
 
 function MagazinePreview() {
+  const webArticle = `${import.meta.env.BASE_URL}?article=world-trip`
   const samplePdf = `${import.meta.env.BASE_URL}downloads/dust-line-issue-01-sample.pdf`
   const page026 = assetPath('issue-01/world-trip-026.png')
   const page027 = assetPath('issue-01/world-trip-027.png')
@@ -176,11 +177,12 @@ function MagazinePreview() {
       <div className="sneak-peek__intro reveal">
         <div className="section-label"><span>03</span><span>INSIDE THE MAGAZINE</span></div>
         <div>
-          <p className="sneak-peek__kicker">ISSUE 01 / SNEAK PEEK</p>
+          <p className="sneak-peek__kicker">ISSUE 01 / OPEN FEATURE</p>
           <h2>世界一周に<br />行こうとしたら。</h2>
-          <p>10ガロンの巨大タンクを海の向こうから取り寄せ、KLR650を世界一周仕様へ。車両選びから加工、そして旅に出られなかった理由までを8ページで追います。</p>
+          <p>この記事はWebで全文公開しています。創刊号では、車両選びから加工、旅に出られなかった理由までを、写真とDUST DATAを交えた8ページの誌面で収録します。</p>
           <div className="sneak-peek__actions">
-            <a className="button button--accent" href={samplePdf} target="_blank" rel="noreferrer">2ページ試し読み <ArrowIcon /></a>
+            <a className="button button--accent" href={webArticle}>Web記事を全文読む <ArrowIcon /></a>
+            <a className="sneak-peek__notify" href={samplePdf} target="_blank" rel="noreferrer">誌面を2ページ試し読み <ArrowIcon /></a>
             <a className="sneak-peek__notify" href="#newsletter">発売情報を受け取る <ArrowIcon /></a>
           </div>
         </div>
@@ -195,15 +197,15 @@ function MagazinePreview() {
         <span className="sneak-peek__open">OPEN 2-PAGE PDF <ArrowIcon /></span>
       </a>
 
-      <div className="sneak-peek__tease reveal" aria-label="創刊号の加工記事を一部公開">
+      <div className="sneak-peek__tease reveal" aria-label="創刊号に収録する加工記事の誌面を一部公開">
         <div className="sneak-peek__tease-spread">
           <img src={page030} alt="タンク装着加工を掲載した誌面 030" loading="lazy" />
           <img src={page031} alt="燃料系統を解説した誌面 031" loading="lazy" />
         </div>
         <div className="sneak-peek__veil">
-          <span>FIELD FIX / CONTINUES...</span>
-          <strong>加工の続きは、創刊号で。</strong>
-          <a href="#newsletter">発売情報を受け取る <ArrowIcon /></a>
+          <span>ISSUE 01 / 8-PAGE FEATURE</span>
+          <strong>この記録を、創刊号では8ページで。</strong>
+          <a href={webArticle}>WEB記事を全文読む <ArrowIcon /></a>
         </div>
       </div>
     </section>
