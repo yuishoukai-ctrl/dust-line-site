@@ -239,13 +239,16 @@ function Issue() {
       <div className="issue__background" aria-hidden="true">ISSUE 01</div>
       <div className="issue__visual reveal">
         <div className="issue__cover-wrap">
-          <img src={assetPath('cover-issue-01.png')} alt="DUST LINE ISSUE 01 表紙" />
+          <img
+            src={assetPath('cover-issue-01-r1200gs.png')}
+            alt="ガードファクトリー製R1200GSが砂煙の中を走るDUST LINE創刊号表紙"
+          />
           <span className="issue__tag">DIGITAL EDITION</span>
         </div>
       </div>
       <div className="issue__copy reveal">
         <div className="section-label section-label--light"><span>04</span><span>FIRST ISSUE</span></div>
-        <p className="issue__status">COMING SOON</p>
+        <p className="issue__status">ISSUE 01 / COMING SOON</p>
         <h2>BEYOND<br />THE PAVEMENT</h2>
         <p>
           創刊号は、舗装路の向こう側へ踏み出すための一冊。
