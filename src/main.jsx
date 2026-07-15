@@ -120,6 +120,27 @@ function Manifesto() {
           <p className="manifesto__en">RIDE FAR. PACK LIGHT. STAY CURIOUS.</p>
         </div>
       </div>
+      <div className="company-profile reveal" aria-labelledby="company-profile-title">
+        <div className="company-profile__heading">
+          <p>COMPANY PROFILE</p>
+          <h3 id="company-profile-title">運営情報</h3>
+        </div>
+        <dl className="company-profile__details">
+          <div><dt>運営会社</dt><dd>DUST LINE</dd></div>
+          <div>
+            <dt>所在地</dt>
+            <dd><address>〒421-3115 静岡県静岡市清水区由比西倉澤838-2</address></dd>
+          </div>
+          <div><dt>代表者</dt><dd>小長谷一行</dd></div>
+          <div><dt>事業内容</dt><dd>出版・Webメディア運営・コンテンツ制作</dd></div>
+          <div><dt>運営媒体</dt><dd>DUST LINE</dd></div>
+          <div><dt>URL</dt><dd><a href="https://dustline.jp">dustline.jp</a></dd></div>
+          <div>
+            <dt>お問い合わせ</dt>
+            <dd className="company-profile__pending">お問い合わせフォーム <span>準備中</span></dd>
+          </div>
+        </dl>
+      </div>
     </section>
   )
 }
