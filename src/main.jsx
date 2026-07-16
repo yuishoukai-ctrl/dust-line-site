@@ -7,6 +7,7 @@ import './styles.css'
 const assetPath = (filename) => `${import.meta.env.BASE_URL}images/${filename}`
 const homePath = import.meta.env.BASE_URL
 const companyPagePath = `${homePath}?page=company`
+const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
 
 const stories = [
   {
@@ -171,7 +172,16 @@ function CompanyPage() {
               <div><dt>URL</dt><dd><a href="https://dustline.jp">dustline.jp</a></dd></div>
               <div>
                 <dt>お問い合わせ</dt>
-                <dd className="company-profile__pending">お問い合わせフォーム <span>準備中</span></dd>
+                <dd>
+                  <a
+                    href={contactFormUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="お問い合わせフォーム（新しいタブで開きます）"
+                  >
+                    お問い合わせフォーム
+                  </a>
+                </dd>
               </div>
             </dl>
           </div>
@@ -394,7 +404,7 @@ function Footer({ subpage = false }) {
         <a href={sectionHref('issue')}>Issue</a>
         <a href={sectionHref('about')}>About</a>
         <a href={companyPagePath} aria-current={subpage ? 'page' : undefined}>Company</a>
-        <a href={sectionHref('newsletter')}>Contact</a>
+        <a href={contactFormUrl} target="_blank" rel="noreferrer">Contact</a>
       </div>
       <p>© 2026 DUST LINE. ALL RIGHTS RESERVED.</p>
     </footer>
