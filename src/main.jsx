@@ -4,6 +4,8 @@ import WorldTripArticle from './WorldTripArticle'
 import './styles.css'
 
 const assetPath = (filename) => `${import.meta.env.BASE_URL}images/${filename}`
+const homePath = import.meta.env.BASE_URL
+const companyPagePath = `${homePath}?page=company`
 
 const stories = [
   {
@@ -46,8 +48,9 @@ function MenuIcon({ open }) {
   )
 }
 
-function Header() {
+function Header({ subpage = false }) {
   const [open, setOpen] = useState(false)
+  const sectionHref = (id) => subpage ? `${homePath}#${id}` : `#${id}`
 
   useEffect(() => {
     const close = () => setOpen(false)
@@ -57,16 +60,17 @@ function Header() {
 
   return (
     <header className="site-header">
-      <a className="brand" href="#top" aria-label="DUST LINE ホーム">
+      <a className="brand" href={subpage ? homePath : '#top'} aria-label="DUST LINE ホーム">
         <span>DUST LINE</span>
         <small>ADVENTURE JOURNAL</small>
       </a>
       <nav className={open ? 'nav nav--open' : 'nav'} aria-label="メインナビゲーション">
-        <a href="#stories" onClick={() => setOpen(false)}>Stories</a>
-        <a href="#magazine" onClick={() => setOpen(false)}>Magazine</a>
-        <a href="#issue" onClick={() => setOpen(false)}>Issue 01</a>
-        <a href="#about" onClick={() => setOpen(false)}>About</a>
-        <a className="nav__cta" href="#newsletter" onClick={() => setOpen(false)}>Newsletter</a>
+        <a href={sectionHref('stories')} onClick={() => setOpen(false)}>Stories</a>
+        <a href={sectionHref('magazine')} onClick={() => setOpen(false)}>Magazine</a>
+        <a href={sectionHref('issue')} onClick={() => setOpen(false)}>Issue 01</a>
+        <a href={sectionHref('about')} onClick={() => setOpen(false)}>About</a>
+        <a href={companyPagePath} aria-current={subpage ? 'page' : undefined} onClick={() => setOpen(false)}>Company</a>
+        <a className="nav__cta" href={sectionHref('newsletter')} onClick={() => setOpen(false)}>Newsletter</a>
       </nav>
       <button
         className="menu-button"
@@ -120,28 +124,60 @@ function Manifesto() {
           <p className="manifesto__en">RIDE FAR. PACK LIGHT. STAY CURIOUS.</p>
         </div>
       </div>
-      <div className="company-profile reveal" aria-labelledby="company-profile-title">
-        <div className="company-profile__heading">
-          <p>COMPANY PROFILE</p>
-          <h3 id="company-profile-title">運営情報</h3>
-        </div>
-        <dl className="company-profile__details">
-          <div><dt>運営会社</dt><dd>DUST LINE</dd></div>
-          <div>
-            <dt>所在地</dt>
-            <dd><address>〒421-3115 静岡県静岡市清水区由比西倉澤838-2</address></dd>
-          </div>
-          <div><dt>代表者</dt><dd>小長谷一行</dd></div>
-          <div><dt>事業内容</dt><dd>出版・Webメディア運営・コンテンツ制作</dd></div>
-          <div><dt>運営媒体</dt><dd>DUST LINE</dd></div>
-          <div><dt>URL</dt><dd><a href="https://dustline.jp">dustline.jp</a></dd></div>
-          <div>
-            <dt>お問い合わせ</dt>
-            <dd className="company-profile__pending">お問い合わせフォーム <span>準備中</span></dd>
-          </div>
-        </dl>
-      </div>
     </section>
+  )
+}
+
+function CompanyPage() {
+  useEffect(() => {
+    const previousTitle = document.title
+    document.title = '運営情報 | DUST LINE'
+    window.scrollTo(0, 0)
+    return () => { document.title = previousTitle }
+  }, [])
+
+  return (
+    <>
+      <a className="skip-link" href="#main">本文へ移動</a>
+      <Header subpage />
+      <main className="company-page" id="main">
+        <section className="company-page__hero">
+          <div className="company-page__word" aria-hidden="true">COMPANY</div>
+          <div className="company-page__hero-inner reveal">
+            <p className="eyebrow">DUST LINE / COMPANY PROFILE</p>
+            <h1>運営情報</h1>
+            <p>DUST LINEを発行・運営する事業者の基本情報をご案内します。</p>
+          </div>
+          <div className="company-page__index" aria-hidden="true"><span>DL</span><span>INFO</span><span>JPN</span></div>
+        </section>
+
+        <section className="company-page__content section" aria-labelledby="company-profile-title">
+          <div className="company-profile company-profile--page reveal">
+            <div className="company-profile__heading">
+              <p>COMPANY PROFILE</p>
+              <h2 id="company-profile-title">事業者情報</h2>
+            </div>
+            <dl className="company-profile__details">
+              <div><dt>運営会社</dt><dd>DUST LINE</dd></div>
+              <div>
+                <dt>所在地</dt>
+                <dd><address>〒421-3115 静岡県静岡市清水区由比西倉澤838-2</address></dd>
+              </div>
+              <div><dt>代表者</dt><dd>小長谷一行</dd></div>
+              <div><dt>事業内容</dt><dd>出版・Webメディア運営・コンテンツ制作</dd></div>
+              <div><dt>運営媒体</dt><dd>DUST LINE</dd></div>
+              <div><dt>URL</dt><dd><a href="https://dustline.jp">dustline.jp</a></dd></div>
+              <div>
+                <dt>お問い合わせ</dt>
+                <dd className="company-profile__pending">お問い合わせフォーム <span>準備中</span></dd>
+              </div>
+            </dl>
+          </div>
+          <a className="company-page__back text-link" href={homePath}>DUST LINEトップへ <ArrowIcon /></a>
+        </section>
+      </main>
+      <Footer subpage />
+    </>
   )
 }
 
@@ -340,7 +376,9 @@ function Newsletter() {
   )
 }
 
-function Footer() {
+function Footer({ subpage = false }) {
+  const sectionHref = (id) => subpage ? `${homePath}#${id}` : `#${id}`
+
   return (
     <footer className="footer">
       <div className="footer__brand">
@@ -350,7 +388,11 @@ function Footer() {
         <small>ADVENTURE MOTORCYCLE JOURNAL</small>
       </div>
       <div className="footer__links">
-        <a href="#stories">Stories</a><a href="#issue">Issue</a><a href="#about">About</a><a href="#newsletter">Contact</a>
+        <a href={sectionHref('stories')}>Stories</a>
+        <a href={sectionHref('issue')}>Issue</a>
+        <a href={sectionHref('about')}>About</a>
+        <a href={companyPagePath} aria-current={subpage ? 'page' : undefined}>Company</a>
+        <a href={sectionHref('newsletter')}>Contact</a>
       </div>
       <p>© 2026 DUST LINE. ALL RIGHTS RESERVED.</p>
     </footer>
@@ -374,6 +416,9 @@ function App() {
 
   const article = new URLSearchParams(window.location.search).get('article')
   if (article === 'world-trip') return <WorldTripArticle assetPath={assetPath} />
+
+  const page = new URLSearchParams(window.location.search).get('page')
+  if (page === 'company') return <CompanyPage />
 
   return (
     <>
