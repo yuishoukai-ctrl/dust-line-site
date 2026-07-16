@@ -1,5 +1,6 @@
 import { StrictMode, useEffect, useId, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
+import MachineFileArticle from './MachineFileArticle'
 import WorldTripArticle from './WorldTripArticle'
 import './styles.css'
 
@@ -28,6 +29,7 @@ const stories = [
     title: '大陸横断マシン',
     excerpt: '60Lタンク、トリプルヘッドライト、6mmアーマー。ガードファクトリーが仕立てた一台。',
     image: assetPath('bike-profile.jpg'),
+    href: `${homePath}?article=machine-file-001`,
     className: 'story--compact',
   },
 ]
@@ -416,6 +418,7 @@ function App() {
 
   const article = new URLSearchParams(window.location.search).get('article')
   if (article === 'world-trip') return <WorldTripArticle assetPath={assetPath} />
+  if (article === 'machine-file-001') return <MachineFileArticle assetPath={assetPath} />
 
   const page = new URLSearchParams(window.location.search).get('page')
   if (page === 'company') return <CompanyPage />
