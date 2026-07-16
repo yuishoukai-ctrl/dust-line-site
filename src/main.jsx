@@ -183,28 +183,59 @@ function EditorialTeam({ page = false }) {
         <p>EDITORIAL TEAM</p>
         <h2 id="editorial-team-title">つくる人</h2>
       </div>
-      <article className="editorial-profile">
-        <header className="editorial-profile__header">
-          <p>EDITOR-IN-CHIEF</p>
-          <h3>小長谷 一行 <small>通称 ぽんさん</small></h3>
-        </header>
-        <dl className="editorial-profile__details">
-          <div><dt>バイク歴</dt><dd>14年</dd></div>
-          <div><dt>得意分野</dt><dd>車両整備、溶接、塗装、研磨</dd></div>
-          <div><dt>DUST LINEでの担当</dt><dd>記事制作、車両製作、塗装、溶接</dd></div>
-          <div>
-            <dt>雑誌を作る理由</dt>
-            <dd>
-              紙媒体から電子書籍へと時代が変化し、素晴らしい雑誌が廃刊となっていく中で、
-              さらに面白い記事を作りたかったから。
-            </dd>
+      <div className="editorial-team__profiles">
+        <article className="editorial-profile">
+          <header className="editorial-profile__header">
+            <p>EDITOR-IN-CHIEF</p>
+            <h3>小長谷 一行 <small>通称 ぽんさん</small></h3>
+          </header>
+          <dl className="editorial-profile__details">
+            <div><dt>バイク歴</dt><dd>14年</dd></div>
+            <div><dt>得意分野</dt><dd>車両整備、溶接、塗装、研磨</dd></div>
+            <div><dt>DUST LINEでの担当</dt><dd>記事制作、車両製作、塗装、溶接</dd></div>
+            <div>
+              <dt>雑誌を作る理由</dt>
+              <dd>
+                紙媒体から電子書籍へと時代が変化し、素晴らしい雑誌が廃刊となっていく中で、
+                さらに面白い記事を作りたかったから。
+              </dd>
+            </div>
+            <div>
+              <dt>代表記事</dt>
+              <dd>37L IMSビッグタンク／60Lタンク・トリプルヘッドライト／1190北海道ツーリング</dd>
+            </div>
+          </dl>
+        </article>
+
+        <article className="editorial-profile editorial-profile--with-portrait">
+          <header className="editorial-profile__header">
+            <p>DEPUTY EDITOR-IN-CHIEF</p>
+            <h3>小池 将史 <small>通称 ジュニア</small></h3>
+          </header>
+          <div className="editorial-profile__body">
+            <figure className="editorial-profile__portrait">
+              <img
+                src={`${basePath}images/editorial-koike-junior.jpg`}
+                alt="林道でアドベンチャーバイクに乗る副編集長の小池将史"
+                loading="lazy"
+              />
+            </figure>
+            <dl className="editorial-profile__details">
+              <div><dt>バイク歴</dt><dd>17年</dd></div>
+              <div><dt>愛車</dt><dd>R1300GS、ジェベル250XC</dd></div>
+              <div><dt>得意分野</dt><dd>ツーリング、林道</dd></div>
+              <div><dt>DUST LINEでの担当</dt><dd>ツーリング記事、車両記事、部品製作</dd></div>
+              <div>
+                <dt>雑誌を作る理由</dt>
+                <dd>
+                  ツーリングを通じて自身が感じたことや、皆さんに伝えたいと思ったことを
+                  電子書籍で書けるから。
+                </dd>
+              </div>
+            </dl>
           </div>
-          <div>
-            <dt>代表記事</dt>
-            <dd>37L IMSビッグタンク／60Lタンク・トリプルヘッドライト／1190北海道ツーリング</dd>
-          </div>
-        </dl>
-      </article>
+        </article>
+      </div>
     </div>
   )
 }

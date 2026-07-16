@@ -104,6 +104,11 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .editorial-team--page { margin-top: 0; padding-top: 0; border-top: 0; }
 .editorial-team__heading p { margin: 0 0 14px; font: 800 .62rem/1 var(--display); letter-spacing: .22em; color: var(--accent); }
 .editorial-team__heading h2, .editorial-team__heading h3 { margin: 0; font: 900 clamp(1.8rem, 3vw, 3.2rem)/1 var(--display); letter-spacing: -.045em; }
+.editorial-team__profiles { min-width: 0; }
+.editorial-profile + .editorial-profile { margin-top: clamp(54px, 7vw, 92px); padding-top: clamp(32px, 4vw, 52px); border-top: 1px solid rgba(21,23,25,.25); }
+.editorial-profile__body { display: grid; grid-template-columns: minmax(160px, .36fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 52px); align-items: start; }
+.editorial-profile__portrait { width: 100%; margin: 0; overflow: hidden; border: 1px solid rgba(21,23,25,.16); background: #d9d4c8; }
+.editorial-profile__portrait img { display: block; width: 100%; height: auto; }
 .editorial-profile__header { display: flex; gap: 24px; align-items: baseline; justify-content: space-between; padding-bottom: 24px; }
 .editorial-profile__header p { margin: 0; font: 800 .6rem/1 var(--display); letter-spacing: .18em; color: rgba(21,23,25,.48); }
 .editorial-profile__header h3 { margin: 0; font: 900 clamp(1.55rem, 2.6vw, 2.65rem)/1.1 var(--display); letter-spacing: -.035em; text-align: right; }
@@ -366,6 +371,8 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   .editorial-profile__header { display: block; }
   .editorial-profile__header h3 { margin-top: 12px; text-align: left; }
   .editorial-profile__header small { display: block; margin: 8px 0 0; }
+  .editorial-profile__body { grid-template-columns: 1fr; gap: 28px; }
+  .editorial-profile__portrait { width: min(100%, 260px); }
   .editorial-profile__details > div { grid-template-columns: 1fr; gap: 7px; padding: 14px 0 15px; }
   .company-page__hero { min-height: 560px; padding: 132px 20px 72px; }
   .company-page__hero::before { right: -20%; bottom: 18%; width: 92%; }
