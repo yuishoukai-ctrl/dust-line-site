@@ -215,7 +215,7 @@ function EditorialTeam({ page = false }) {
           <div className="editorial-profile__body">
             <figure className="editorial-profile__portrait">
               <img
-                src={`${basePath}images/editorial-koike-junior.jpg`}
+                src={assetPath('editorial-koike-junior.jpg')}
                 alt="林道でアドベンチャーバイクに乗る副編集長の小池将史"
                 loading="lazy"
               />
