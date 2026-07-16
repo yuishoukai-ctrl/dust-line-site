@@ -100,6 +100,17 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .manifesto h2 { margin: 0; overflow-wrap: anywhere; font: 900 clamp(2.2rem, 4.7vw, 5.1rem)/1.06 var(--display); letter-spacing: -.058em; }
 .manifesto__copy p { margin: 0; overflow-wrap: anywhere; font-size: .94rem; line-height: 2.05; color: rgba(21,23,25,.66); }
 .manifesto__copy .manifesto__en { margin-top: 28px; padding-top: 22px; border-top: 1px solid rgba(21,23,25,.2); font: 800 .67rem/1.4 var(--display); letter-spacing: .17em; color: var(--ink); }
+.editorial-team { display: grid; grid-template-columns: minmax(190px, .58fr) minmax(0, 1.42fr); gap: clamp(44px, 9vw, 138px); max-width: 1360px; margin: clamp(76px, 10vw, 140px) auto 0; padding-top: clamp(30px, 4vw, 52px); border-top: 1px solid rgba(21,23,25,.25); }
+.editorial-team__heading p { margin: 0 0 14px; font: 800 .62rem/1 var(--display); letter-spacing: .22em; color: var(--accent); }
+.editorial-team__heading h3 { margin: 0; font: 900 clamp(1.8rem, 3vw, 3.2rem)/1 var(--display); letter-spacing: -.045em; }
+.editorial-profile__header { display: flex; gap: 24px; align-items: baseline; justify-content: space-between; padding-bottom: 24px; }
+.editorial-profile__header p { margin: 0; font: 800 .6rem/1 var(--display); letter-spacing: .18em; color: rgba(21,23,25,.48); }
+.editorial-profile__header h3 { margin: 0; font: 900 clamp(1.55rem, 2.6vw, 2.65rem)/1.1 var(--display); letter-spacing: -.035em; text-align: right; }
+.editorial-profile__header small { display: inline-block; margin-left: 12px; font: 700 .65rem/1.4 var(--display); letter-spacing: .08em; color: var(--accent); }
+.editorial-profile__details { margin: 0; border-top: 1px solid rgba(21,23,25,.16); }
+.editorial-profile__details > div { display: grid; grid-template-columns: minmax(132px, .32fr) minmax(0, 1fr); gap: 28px; align-items: baseline; padding: 16px 0 17px; border-bottom: 1px solid rgba(21,23,25,.16); }
+.editorial-profile dt { font: 800 .61rem/1.5 var(--display); letter-spacing: .1em; color: rgba(21,23,25,.48); }
+.editorial-profile dd { min-width: 0; margin: 0; overflow-wrap: anywhere; font-size: .88rem; line-height: 1.8; color: rgba(21,23,25,.8); }
 
 .company-page { min-height: 100dvh; color: var(--ink); background: var(--paper); }
 .company-page__hero { position: relative; display: flex; min-height: 58dvh; align-items: flex-end; padding: 150px clamp(20px, 5vw, 80px) clamp(72px, 8vw, 118px); overflow: hidden; color: var(--paper); background: #151719; }
@@ -289,6 +300,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   .hero__content { width: auto; margin-left: clamp(34px, 8vw, 70px); }
   .manifesto__grid, .newsletter { grid-template-columns: 1fr; }
   .manifesto__grid { gap: 46px; }
+  .editorial-team { grid-template-columns: minmax(170px, .5fr) minmax(0, 1.5fr); gap: 54px; }
   .company-profile { grid-template-columns: minmax(170px, .5fr) minmax(0, 1.5fr); gap: 54px; }
   .sneak-peek__intro { grid-template-columns: 1fr; gap: 36px; }
   .issue { grid-template-columns: .85fr 1fr; gap: 50px; }
@@ -310,6 +322,11 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   .section-label { margin-bottom: 42px; }
   .manifesto h2 { max-width: 100%; font-size: clamp(2rem, 10.5vw, 2.85rem); letter-spacing: -.045em; word-break: break-all; }
   .manifesto h2 br { display: none; }
+  .editorial-team { grid-template-columns: 1fr; gap: 30px; margin-top: 68px; padding-top: 30px; }
+  .editorial-profile__header { display: block; }
+  .editorial-profile__header h3 { margin-top: 12px; text-align: left; }
+  .editorial-profile__header small { display: block; margin: 8px 0 0; }
+  .editorial-profile__details > div { grid-template-columns: 1fr; gap: 7px; padding: 14px 0 15px; }
   .company-page__hero { min-height: 560px; padding: 132px 20px 72px; }
   .company-page__hero::before { right: -20%; bottom: 18%; width: 92%; }
   .company-page__hero-inner { width: auto; margin-left: 16px; }

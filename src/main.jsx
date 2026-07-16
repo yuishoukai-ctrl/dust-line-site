@@ -127,6 +127,34 @@ function Manifesto() {
           <p className="manifesto__en">RIDE FAR. PACK LIGHT. STAY CURIOUS.</p>
         </div>
       </div>
+      <div className="editorial-team reveal" aria-labelledby="editorial-team-title">
+        <div className="editorial-team__heading">
+          <p>EDITORIAL TEAM</p>
+          <h3 id="editorial-team-title">つくる人</h3>
+        </div>
+        <article className="editorial-profile">
+          <header className="editorial-profile__header">
+            <p>EDITOR-IN-CHIEF</p>
+            <h3>小長谷 一行 <small>通称 ぽんさん</small></h3>
+          </header>
+          <dl className="editorial-profile__details">
+            <div><dt>バイク歴</dt><dd>14年</dd></div>
+            <div><dt>得意分野</dt><dd>車両整備、溶接、塗装、研磨</dd></div>
+            <div><dt>DUST LINEでの担当</dt><dd>記事制作、車両製作、塗装、溶接</dd></div>
+            <div>
+              <dt>雑誌を作る理由</dt>
+              <dd>
+                紙媒体から電子書籍へと時代が変化し、素晴らしい雑誌が廃刊となっていく中で、
+                さらに面白い記事を作りたかったから。
+              </dd>
+            </div>
+            <div>
+              <dt>代表記事</dt>
+              <dd>37L IMSビッグタンク／60Lタンク・トリプルヘッドライト／1190北海道ツーリング</dd>
+            </div>
+          </dl>
+        </article>
+      </div>
     </section>
   )
 }
