@@ -7,6 +7,7 @@ import './styles.css'
 const assetPath = (filename) => `${import.meta.env.BASE_URL}images/${filename}`
 const homePath = import.meta.env.BASE_URL
 const companyPagePath = `${homePath}?page=company`
+const goodsPagePath = `${homePath}?page=goods`
 const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
 
 const stories = [
@@ -35,6 +36,45 @@ const stories = [
   },
 ]
 
+const goods = [
+  {
+    category: 'T-SHIRT 01 / ADVENTURE',
+    title: 'DUST LINE ORIGINAL',
+    description: 'アドベンチャーバイクと等高線を背面いっぱいに組んだ、最初の公式Tシャツ案。',
+    image: assetPath('goods/dust-line-tshirt-mockup.png'),
+    alt: '黒いDUST LINEオリジナルTシャツの前面と背面',
+  },
+  {
+    category: 'T-SHIRT 02 / ROUTE MAP',
+    title: 'LONG DISTANCE',
+    description: '日本列島を縦断するルートと地形図を、旅の記録として背中に配置。',
+    image: assetPath('goods/dust-line-tshirt-route-map.png'),
+    alt: '日本縦断ルート地図を背面に印刷した黒いDUST LINE Tシャツ',
+  },
+  {
+    category: 'T-SHIRT 03 / WORKSHOP',
+    title: 'BUILT. WELDED. RIDDEN.',
+    description: '溶接、研磨、車両製作。DUST LINEのガレージワークを図面調で表現。',
+    image: assetPath('goods/dust-line-tshirt-workshop.png'),
+    alt: 'バイクフレームと研磨作業を背面に印刷した黒いDUST LINE Tシャツ',
+  },
+  {
+    category: 'T-SHIRT 04 / EDITORIAL',
+    title: 'BEYOND THE PAVEMENT',
+    description: '雑誌の表紙と誌面グリッドを、そのまま着るように組み立てた生成り色の一枚。',
+    image: assetPath('goods/dust-line-tshirt-editorial.png'),
+    alt: '雑誌の誌面風タイポグラフィを印刷した生成り色のDUST LINE Tシャツ',
+  },
+  {
+    category: 'STICKER PACK / GLOSSY',
+    title: 'DUST LINE STICKER PACK',
+    description: 'ロゴ、アドベンチャーバイク、旅の言葉をまとめた、光沢ラミネート仕様の3枚セット。',
+    image: assetPath('goods/dust-line-sticker-pack-glossy.png'),
+    alt: '光沢のあるDUST LINEステッカー3枚セット',
+    wide: true,
+  },
+]
+
 function ArrowIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -51,8 +91,9 @@ function MenuIcon({ open }) {
   )
 }
 
-function Header({ subpage = false }) {
+function Header({ currentPage = null }) {
   const [open, setOpen] = useState(false)
+  const subpage = Boolean(currentPage)
   const sectionHref = (id) => subpage ? `${homePath}#${id}` : `#${id}`
 
   useEffect(() => {
@@ -72,7 +113,8 @@ function Header({ subpage = false }) {
         <a href={sectionHref('magazine')} onClick={() => setOpen(false)}>Magazine</a>
         <a href={sectionHref('issue')} onClick={() => setOpen(false)}>Issue 01</a>
         <a href={sectionHref('about')} onClick={() => setOpen(false)}>About</a>
-        <a href={companyPagePath} aria-current={subpage ? 'page' : undefined} onClick={() => setOpen(false)}>Company</a>
+        <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined} onClick={() => setOpen(false)}>Goods</a>
+        <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined} onClick={() => setOpen(false)}>Company</a>
         <a className="nav__cta" href={sectionHref('newsletter')} onClick={() => setOpen(false)}>Newsletter</a>
       </nav>
       <button
@@ -170,7 +212,7 @@ function CompanyPage() {
   return (
     <>
       <a className="skip-link" href="#main">本文へ移動</a>
-      <Header subpage />
+      <Header currentPage="company" />
       <main className="company-page" id="main">
         <section className="company-page__hero">
           <div className="company-page__word" aria-hidden="true">COMPANY</div>
@@ -216,7 +258,83 @@ function CompanyPage() {
           <a className="company-page__back text-link" href={homePath}>DUST LINEトップへ <ArrowIcon /></a>
         </section>
       </main>
-      <Footer subpage />
+      <Footer currentPage="company" />
+    </>
+  )
+}
+
+function GoodsPage() {
+  useEffect(() => {
+    const previousTitle = document.title
+    document.title = '公式グッズ準備中 | DUST LINE'
+    window.scrollTo(0, 0)
+    return () => { document.title = previousTitle }
+  }, [])
+
+  return (
+    <>
+      <a className="skip-link" href="#main">本文へ移動</a>
+      <Header currentPage="goods" />
+      <main className="goods-page" id="main">
+        <section className="goods-page__hero">
+          <div className="goods-page__word" aria-hidden="true">GOODS</div>
+          <div className="goods-page__hero-inner reveal">
+            <p className="eyebrow">DUST LINE / OFFICIAL GOODS</p>
+            <p className="goods-page__status">COMING SOON / IN DEVELOPMENT</p>
+            <h1>グッズ<br />準備中。</h1>
+            <p>
+              旅と機械、雑誌づくりから生まれたDUST LINEの公式グッズを製作しています。
+              発売時期、価格、仕様は決まり次第お知らせします。
+            </p>
+          </div>
+          <div className="goods-page__index" aria-hidden="true"><span>DL</span><span>GOODS</span><span>001</span></div>
+        </section>
+
+        <section className="goods-page__content section" aria-labelledby="goods-lineup-title">
+          <header className="goods-page__intro reveal">
+            <div className="section-label"><span>01</span><span>IN DEVELOPMENT</span></div>
+            <div>
+              <p>OFFICIAL GOODS / DESIGN PREVIEW</p>
+              <h2 id="goods-lineup-title">現在、製作を進めています。</h2>
+              <p>掲載しているデザインは開発中です。印刷方法、生地、サイズ、細部の仕様は変更になる場合があります。</p>
+            </div>
+          </header>
+
+          <div className="goods-grid">
+            {goods.map((item, index) => (
+              <article
+                className={`goods-card reveal${item.wide ? ' goods-card--wide' : ''}`}
+                key={item.title}
+                style={{ '--delay': `${index * 70}ms` }}
+              >
+                <figure className="goods-card__image">
+                  <img src={item.image} alt={item.alt} loading={index > 0 ? 'lazy' : 'eager'} />
+                  <span>PREPARING</span>
+                </figure>
+                <div className="goods-card__copy">
+                  <p>{item.category}</p>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <aside className="goods-page__notice reveal">
+            <div>
+              <p>RELEASE INFORMATION</p>
+              <h2>発売のお知らせは、<br />DUST LINEから。</h2>
+            </div>
+            <div>
+              <p>発売日や販売方法が決まり次第、公式サイトとニュースレターでお知らせします。</p>
+              <a className="button button--accent" href={`${homePath}#newsletter`}>発売情報を受け取る <ArrowIcon /></a>
+            </div>
+          </aside>
+
+          <a className="goods-page__back text-link" href={homePath}>DUST LINEトップへ <ArrowIcon /></a>
+        </section>
+      </main>
+      <Footer currentPage="goods" />
     </>
   )
 }
@@ -416,7 +534,8 @@ function Newsletter() {
   )
 }
 
-function Footer({ subpage = false }) {
+function Footer({ currentPage = null }) {
+  const subpage = Boolean(currentPage)
   const sectionHref = (id) => subpage ? `${homePath}#${id}` : `#${id}`
 
   return (
@@ -431,7 +550,8 @@ function Footer({ subpage = false }) {
         <a href={sectionHref('stories')}>Stories</a>
         <a href={sectionHref('issue')}>Issue</a>
         <a href={sectionHref('about')}>About</a>
-        <a href={companyPagePath} aria-current={subpage ? 'page' : undefined}>Company</a>
+        <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined}>Goods</a>
+        <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined}>Company</a>
         <a href={contactFormUrl} target="_blank" rel="noreferrer">Contact</a>
       </div>
       <p>© 2026 DUST LINE. ALL RIGHTS RESERVED.</p>
@@ -460,6 +580,7 @@ function App() {
 
   const page = new URLSearchParams(window.location.search).get('page')
   if (page === 'company') return <CompanyPage />
+  if (page === 'goods') return <GoodsPage />
 
   return (
     <>
