@@ -101,8 +101,9 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .manifesto__copy p { margin: 0; overflow-wrap: anywhere; font-size: .94rem; line-height: 2.05; color: rgba(21,23,25,.66); }
 .manifesto__copy .manifesto__en { margin-top: 28px; padding-top: 22px; border-top: 1px solid rgba(21,23,25,.2); font: 800 .67rem/1.4 var(--display); letter-spacing: .17em; color: var(--ink); }
 .editorial-team { display: grid; grid-template-columns: minmax(190px, .58fr) minmax(0, 1.42fr); gap: clamp(44px, 9vw, 138px); max-width: 1360px; margin: clamp(76px, 10vw, 140px) auto 0; padding-top: clamp(30px, 4vw, 52px); border-top: 1px solid rgba(21,23,25,.25); }
+.editorial-team--page { margin-top: 0; padding-top: 0; border-top: 0; }
 .editorial-team__heading p { margin: 0 0 14px; font: 800 .62rem/1 var(--display); letter-spacing: .22em; color: var(--accent); }
-.editorial-team__heading h3 { margin: 0; font: 900 clamp(1.8rem, 3vw, 3.2rem)/1 var(--display); letter-spacing: -.045em; }
+.editorial-team__heading h2, .editorial-team__heading h3 { margin: 0; font: 900 clamp(1.8rem, 3vw, 3.2rem)/1 var(--display); letter-spacing: -.045em; }
 .editorial-profile__header { display: flex; gap: 24px; align-items: baseline; justify-content: space-between; padding-bottom: 24px; }
 .editorial-profile__header p { margin: 0; font: 800 .6rem/1 var(--display); letter-spacing: .18em; color: rgba(21,23,25,.48); }
 .editorial-profile__header h3 { margin: 0; font: 900 clamp(1.55rem, 2.6vw, 2.65rem)/1.1 var(--display); letter-spacing: -.035em; text-align: right; }
@@ -361,6 +362,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   .manifesto h2 { max-width: 100%; font-size: clamp(2rem, 10.5vw, 2.85rem); letter-spacing: -.045em; word-break: break-all; }
   .manifesto h2 br { display: none; }
   .editorial-team { grid-template-columns: 1fr; gap: 30px; margin-top: 68px; padding-top: 30px; }
+  .editorial-team--page { margin-top: 0; padding-top: 0; border-top: 0; }
   .editorial-profile__header { display: block; }
   .editorial-profile__header h3 { margin-top: 12px; text-align: left; }
   .editorial-profile__header small { display: block; margin: 8px 0 0; }
