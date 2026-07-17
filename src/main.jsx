@@ -9,6 +9,7 @@ const homePath = import.meta.env.BASE_URL
 const companyPagePath = `${homePath}?page=company`
 const goodsPagePath = `${homePath}?page=goods`
 const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
+const suzuriShopUrl = 'https://suzuri.jp/dustline'
 
 const stories = [
   {
@@ -38,40 +39,18 @@ const stories = [
 
 const goods = [
   {
-    category: 'T-SHIRT 01 / ADVENTURE',
-    title: 'DUST LINE ORIGINAL',
-    description: 'アドベンチャーバイクと等高線を背面いっぱいに組んだ、最初の公式Tシャツ案。',
+    category: 'T-SHIRT 01 / OFFICIAL',
+    title: 'DUST LINE OFFICIAL T-SHIRT',
+    description: 'アドベンチャーバイクと旅の空気をまとった、DUST LINE最初の公式Tシャツ。',
     image: assetPath('goods/dust-line-tshirt-mockup.png'),
     alt: '黒いDUST LINEオリジナルTシャツの前面と背面',
   },
   {
     category: 'T-SHIRT 02 / ROUTE MAP',
-    title: 'LONG DISTANCE',
-    description: '日本列島を縦断するルートと地形図を、旅の記録として背中に配置。',
+    title: 'ROUTE JAPAN T-SHIRT',
+    description: '日本列島を縦断するルートと地形図を、旅の記録として背中に配置した一枚。',
     image: assetPath('goods/dust-line-tshirt-route-map.png'),
     alt: '日本縦断ルート地図を背面に印刷した黒いDUST LINE Tシャツ',
-  },
-  {
-    category: 'T-SHIRT 03 / WORKSHOP',
-    title: 'BUILT. WELDED. RIDDEN.',
-    description: '溶接、研磨、車両製作。DUST LINEのガレージワークを図面調で表現。',
-    image: assetPath('goods/dust-line-tshirt-workshop.png'),
-    alt: 'バイクフレームと研磨作業を背面に印刷した黒いDUST LINE Tシャツ',
-  },
-  {
-    category: 'T-SHIRT 04 / EDITORIAL',
-    title: 'BEYOND THE PAVEMENT',
-    description: '雑誌の表紙と誌面グリッドを、そのまま着るように組み立てた生成り色の一枚。',
-    image: assetPath('goods/dust-line-tshirt-editorial.png'),
-    alt: '雑誌の誌面風タイポグラフィを印刷した生成り色のDUST LINE Tシャツ',
-  },
-  {
-    category: 'STICKER PACK / GLOSSY',
-    title: 'DUST LINE STICKER PACK',
-    description: 'ロゴ、アドベンチャーバイク、旅の言葉をまとめた、光沢ラミネート仕様の3枚セット。',
-    image: assetPath('goods/dust-line-sticker-pack-glossy.png'),
-    alt: '光沢のあるDUST LINEステッカー3枚セット',
-    wide: true,
   },
 ]
 
@@ -115,7 +94,7 @@ function Header({ currentPage = null }) {
         <a href={sectionHref('about')} onClick={() => setOpen(false)}>About</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined} onClick={() => setOpen(false)}>Goods</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined} onClick={() => setOpen(false)}>Company</a>
-        <a className="nav__cta" href={sectionHref('newsletter')} onClick={() => setOpen(false)}>Newsletter</a>
+        <a className="nav__cta" href={suzuriShopUrl} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>Shop</a>
       </nav>
       <button
         className="menu-button"
@@ -306,7 +285,7 @@ function CompanyPage() {
 function GoodsPage() {
   useEffect(() => {
     const previousTitle = document.title
-    document.title = '公式グッズ準備中 | DUST LINE'
+    document.title = '公式オンラインショップ | DUST LINE'
     window.scrollTo(0, 0)
     return () => { document.title = previousTitle }
   }, [])
@@ -320,23 +299,26 @@ function GoodsPage() {
           <div className="goods-page__word" aria-hidden="true">GOODS</div>
           <div className="goods-page__hero-inner reveal">
             <p className="eyebrow">DUST LINE / OFFICIAL GOODS</p>
-            <p className="goods-page__status">COMING SOON / IN DEVELOPMENT</p>
-            <h1>グッズ<br />準備中。</h1>
-            <p>
-              旅と機械、雑誌づくりから生まれたDUST LINEの公式グッズを製作しています。
-              発売時期、価格、仕様は決まり次第お知らせします。
+            <p className="goods-page__status">ONLINE STORE / NOW OPEN</p>
+            <h1>公式ショップ、<br />公開。</h1>
+            <p className="goods-page__lead">
+              旅と機械、雑誌づくりから生まれたDUST LINEの公式グッズを、SUZURIで販売しています。
+              商品の価格、サイズ、発送予定はショップの商品ページでご確認ください。
             </p>
+            <div className="goods-page__actions">
+              <a className="button button--accent" href={suzuriShopUrl} target="_blank" rel="noreferrer">SUZURIショップを見る <ArrowIcon /></a>
+            </div>
           </div>
           <div className="goods-page__index" aria-hidden="true"><span>DL</span><span>GOODS</span><span>001</span></div>
         </section>
 
         <section className="goods-page__content section" aria-labelledby="goods-lineup-title">
           <header className="goods-page__intro reveal">
-            <div className="section-label"><span>01</span><span>IN DEVELOPMENT</span></div>
+            <div className="section-label"><span>01</span><span>NOW ON SALE</span></div>
             <div>
-              <p>OFFICIAL GOODS / DESIGN PREVIEW</p>
-              <h2 id="goods-lineup-title">現在、製作を進めています。</h2>
-              <p>掲載しているデザインは開発中です。印刷方法、生地、サイズ、細部の仕様は変更になる場合があります。</p>
+              <p>OFFICIAL GOODS / ONLINE STORE</p>
+              <h2 id="goods-lineup-title">SUZURIで販売中。</h2>
+              <p>現在販売中の公式Tシャツです。カラーやアイテムの種類、最新の価格はSUZURIショップでご覧いただけます。</p>
             </div>
           </header>
 
@@ -349,12 +331,13 @@ function GoodsPage() {
               >
                 <figure className="goods-card__image">
                   <img src={item.image} alt={item.alt} loading={index > 0 ? 'lazy' : 'eager'} />
-                  <span>PREPARING</span>
+                  <span>NOW ON SALE</span>
                 </figure>
                 <div className="goods-card__copy">
                   <p>{item.category}</p>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
+                  <a className="goods-card__link" href={suzuriShopUrl} target="_blank" rel="noreferrer">SUZURIで見る <ArrowIcon /></a>
                 </div>
               </article>
             ))}
@@ -362,12 +345,12 @@ function GoodsPage() {
 
           <aside className="goods-page__notice reveal">
             <div>
-              <p>RELEASE INFORMATION</p>
-              <h2>発売のお知らせは、<br />DUST LINEから。</h2>
+              <p>OFFICIAL ONLINE SHOP</p>
+              <h2>走る日にも、<br />つくらない日にも。</h2>
             </div>
             <div>
-              <p>発売日や販売方法が決まり次第、公式サイトとニュースレターでお知らせします。</p>
-              <a className="button button--accent" href={`${homePath}#newsletter`}>発売情報を受け取る <ArrowIcon /></a>
+              <p>DUST LINEの公式グッズは、SUZURIが製造・発送します。最新の商品ラインナップは公式ショップでご確認ください。</p>
+              <a className="button button--accent" href={suzuriShopUrl} target="_blank" rel="noreferrer">公式ショップへ <ArrowIcon /></a>
             </div>
           </aside>
 
@@ -591,6 +574,7 @@ function Footer({ currentPage = null }) {
         <a href={sectionHref('issue')}>Issue</a>
         <a href={sectionHref('about')}>About</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined}>Goods</a>
+        <a href={suzuriShopUrl} target="_blank" rel="noreferrer">Shop</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined}>Company</a>
         <a href={contactFormUrl} target="_blank" rel="noreferrer">Contact</a>
       </div>
