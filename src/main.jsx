@@ -17,7 +17,7 @@ const stories = [
   {
     category: 'BUILD LOG 001',
     title: '世界一周に行こうとしたら。',
-    excerpt: '10ガロンの巨大タンクを取り寄せ、KLR650を世界一周仕様へ作り替えた記録。',
+    excerpt: 'なぜKLR650、なぜ37L。そして旅が止まった理由。世界一周仕様を作った記録。',
     image: assetPath('world-trip/completed-klr650.jpg'),
     href: `${import.meta.env.BASE_URL}?article=world-trip`,
     className: 'story--wide',
@@ -483,9 +483,9 @@ function MagazinePreview() {
         <div>
           <p className="sneak-peek__kicker">ISSUE 01 / OPEN FEATURE</p>
           <h2>世界一周に<br />行こうとしたら。</h2>
-          <p>この記事はWebで全文公開しています。創刊号では、車両選びから加工、旅に出られなかった理由までを、写真とDUST DATAを交えた8ページの誌面で収録します。</p>
+          <p>WEBでは計画と車両選び、加工の要点をダイジェストで紹介。創刊号では全工程とDUST DATAを8ページで収録します。</p>
           <div className="sneak-peek__actions">
-            <a className="button button--accent" href={webArticle}>Web記事を全文読む <ArrowIcon /></a>
+            <a className="button button--accent" href={webArticle}>WEBダイジェストを読む <ArrowIcon /></a>
             <a className="sneak-peek__notify" href={samplePdf} target="_blank" rel="noreferrer">誌面を2ページ試し読み <ArrowIcon /></a>
             <a className="sneak-peek__notify" href={officialXUrl} target="_blank" rel="noreferrer">公式Xで発売情報を見る <ArrowIcon /></a>
           </div>
@@ -508,8 +508,8 @@ function MagazinePreview() {
         </div>
         <div className="sneak-peek__veil">
           <span>ISSUE 01 / 8-PAGE FEATURE</span>
-          <strong>この記録を、創刊号では8ページで。</strong>
-          <a href={webArticle}>WEB記事を全文読む <ArrowIcon /></a>
+          <strong>準備の全記録は、創刊号で。</strong>
+          <a href={webArticle}>WEBダイジェストを読む <ArrowIcon /></a>
         </div>
       </div>
     </section>

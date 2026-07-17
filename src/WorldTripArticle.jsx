@@ -9,249 +9,252 @@ function ArticleArrow() {
   )
 }
 
-function Figure({ src, alt, caption, className = '' }) {
+function Figure({ src, alt, caption, className = '', priority = false }) {
   return (
     <figure className={`world-figure ${className}`}>
-      <img src={src} alt={alt} />
+      <img
+        src={src}
+        alt={alt}
+        loading={priority ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : undefined}
+        decoding={priority ? 'sync' : 'async'}
+      />
       {caption && <figcaption>{caption}</figcaption>}
     </figure>
   )
 }
 
+const chapters = [
+  ['machine', '01', '速さより、直せること'],
+  ['tank', '02', '37Lを海の向こうから'],
+  ['fit', '03', '載せると何も合わない'],
+  ['fuel', '04', '燃料を最後まで使う'],
+  ['make', '05', '売っていないなら作る'],
+  ['stopped', '06', '完成した一台、止まった旅'],
+]
+
 export default function WorldTripArticle({ assetPath }) {
   const root = import.meta.env.BASE_URL
   const image = (name) => assetPath(`world-trip/${name}`)
+  const samplePdf = `${root}downloads/dust-line-issue-01-sample.pdf`
+  const hokkaidoArticle = `${root}?article=hokkaido-1190`
 
   useEffect(() => {
     const previousTitle = document.title
-    document.title = '世界一周に行こうとしたら。 | DUST LINE'
+    document.title = '世界一周に行こうとしたら。KLR650世界一周仕様 | DUST LINE'
     window.scrollTo(0, 0)
     return () => { document.title = previousTitle }
   }, [])
 
   return (
-    <div className="article-page">
+    <div className="article-page world-digest">
       <header className="article-header">
         <a className="article-header__brand" href={root}>DUST LINE</a>
-        <a className="article-header__back" href={root}><ArticleArrow /> BACK TO JOURNAL</a>
+        <a className="article-header__back" href={root}><ArticleArrow /> 記事一覧へ</a>
       </header>
 
       <main>
         <article>
           <header className="article-hero">
             <div className="article-hero__copy">
-              <p className="article-kicker">BUILD LOG 001 / WORLD TOUR MACHINE</p>
+              <p className="article-kicker">WEB DIGEST / BUILD LOG 001</p>
               <h1>世界一周に<br />行こうとしたら。</h1>
               <p className="article-deck">
-                ユーラシア大陸とアメリカ大陸を横断するために選んだのは、KLR650。
-                10ガロンの巨大タンクを海の向こうから取り寄せ、世界一周仕様へ作り替えた記録。
+                KLR650を選び、37Lタンクを載せ、足りない部品は作った。
+                車両が完成したとき、旅を始められない理由が残った。
               </p>
-              <div className="article-byline"><span>WORDS & PHOTOS</span><strong>DUST LINE編集部</strong><span>2026.07.13</span></div>
+              <div className="article-byline"><span>WORDS & PHOTOS</span><strong>DUST LINE編集部</strong><span>WEB EDITION</span></div>
             </div>
-            <Figure src={image('route-map.jpg')} alt="日本からロシアを経由してヨーロッパへ向かう計画ルート" caption="計画していたユーラシア大陸横断ルート。旅は車両選びから始まった。" className="article-hero__map" />
+            <Figure
+              src={image('completed-klr650.jpg')}
+              alt="37Lタンクとパニアステーを装着した世界一周仕様のKLR650"
+              caption="車両は完成した。これは、出発しなかった旅の入口だ。"
+              className="article-hero__machine"
+              priority
+            />
           </header>
 
-          <div className="article-intro">
+          <div className="article-intro world-digest__intro">
             <p className="article-dropcap">
-              編集長である筆者が、ロシアによるウクライナ侵攻以前に計画していたユーラシア大陸横断とアメリカ大陸横断。その旅のために作った一台を紹介しよう。
+              世界一周は、国境を越える前から始まっていた。ユーラシア大陸とアメリカ大陸の横断を見据え、選んだのは欧州仕様のKLR650。故障したときに直しやすく、給油地点の少ない土地を走れる一台を目指した。
             </p>
             <p>
-              2024年から2025年のどちらかで、世界一周へ出ようと決めていた。新型コロナウイルスによる各国のロックダウンが終わり、世界が再び動き始めた頃だ。
+              WEB版では、長い準備を6つの判断に絞ってたどる。切断、溶接、燃料系統、ワンオフ部品の詳しい工程は、創刊号の8ページに残した。
             </p>
-            <p>
-              日本から韓国・東海へ渡り、そこからロシア・ウラジオストクへ向かうフェリーが復活したことで、バイクや車とともにロシアへ入るルートが現実味を帯びた。そうと決まれば、さまざまな準備が必要になる。まずは車両作りからだ。
-            </p>
+
+            <aside className="web-edition-note" aria-label="WEB版と誌面版の違い">
+              <span>WEB EDITION</span>
+              <strong>ここでは、旅と車両製作の全体像を。</strong>
+              <p>加工の細部、連続写真、DUST DATAは誌面版で読めます。</p>
+            </aside>
+
+            <dl className="web-edition-stats">
+              <div><dt>MACHINE</dt><dd>KLR650<small>EUROPEAN SPEC.</small></dd></div>
+              <div><dt>FUEL</dt><dd>37<small>LITERS</small></dd></div>
+              <div><dt>EST. RANGE</dt><dd>800<small>KM / CALCULATED</small></dd></div>
+              <div><dt>PLAN</dt><dd>2<small>CONTINENTS</small></dd></div>
+            </dl>
           </div>
 
-          <section className="article-section article-section--dark">
+          <nav className="article-toc" aria-label="記事の目次">
+            <p>6 DECISIONS BEFORE DEPARTURE</p>
+            <ol>
+              {chapters.map(([id, number, label]) => (
+                <li key={id}><a href={`#${id}`}><span>{number}</span>{label}</a></li>
+              ))}
+            </ol>
+          </nav>
+
+          <section className="article-section article-section--dark" id="machine">
             <div className="article-section__number">01</div>
             <div className="article-section__heading">
               <p>CHOOSING THE MACHINE</p>
-              <h2>壊れにくく、<br />直せるバイク。</h2>
+              <h2>速さより、<br />直せること。</h2>
             </div>
-            <div className="article-columns">
+            <div className="web-copy-grid">
               <p>
-                定番のBMW R1200GSで行くか、KTM 1190 Adventureで行くか。だが本音をいえば、なるべく故障の少ないバイクで行きたかった。
+                整備拠点が限られる地域で故障したら、その場で旅が終わる。だから選定基準は、最新かどうかでも、速いかどうかでもなかった。海外で流通し、構造を理解しやすく、手を入れられること。XR650LとKLR650まで候補を絞り、最終的に欧州仕様のKLR650を選んだ。
               </p>
-              <p>
-                ユーラシア大陸を走り、中央アジアにも寄り道する。整備拠点が限られる地域で故障したとき、本当に修理できるのかという不安があった。BMWのRシリーズはシャフトドライブのため日常的なチェーンメンテナンスは不要だが、駆動系が故障すれば、その場で旅が終わる可能性もある。それが荒野の真ん中なのか、砂漠地帯の途中なのかは誰にも予想できない。
-              </p>
-              <p>
-                そこで、海外でも販売されている国産車なら、現地でも部品を見つけやすいのではないかと考えた。候補を絞り込んだ結果、残ったのはホンダXR650LとカワサキKLR650の2台だった。
-              </p>
+              <div className="web-decision"><span>DECISION</span><strong>KLR650 / EUROPEAN SPEC.</strong><small>故障率をゼロにするより、故障しても先へ進める一台。</small></div>
             </div>
-            <div className="candidate-grid">
-              <Figure src={image('xr650l.jpg')} alt="ホンダXR650L" caption="候補車1：セルスターターを備えるホンダXR650L。" />
-              <Figure src={image('klr650-stock.jpg')} alt="カワサキKLR650" caption="候補車2：長年販売されてきたカワサキKLR650。" />
-            </div>
-            <div className="article-columns article-columns--after">
-              <p>
-                XR650Rは、バハラリーで砂漠を駆けるレーサーとして知られる。キックスタートのみを備える一方、XR650Lはセルスターターを採用し、キックは持たない。Rに比べれば穏やかな性格のモデルだ。
-              </p>
-              <p>
-                もう1台のKLR650は、1980年代から販売されているロングセラーモデル。世代によってトランスミッションに違いがあり、北米仕様と欧州仕様でも細部が異なる。世界一周用として購入したのは、KLR650の欧州仕様だった。
-              </p>
-              <p>
-                古い北米仕様は部品がすでに廃番になっている可能性があり、車両状態にも不安があった。1990年代から2000年代初頭に世界を走った先輩ライダーの記録には、「300km先までガソリンスタンドがない」「国境を目指して200km進んだら道が消え、また200km戻った」といった話が出てくる。想像以上に過酷な旅路だ。
-              </p>
+            <div className="candidate-grid world-digest__machine-images">
+              <Figure src={image('route-map.jpg')} alt="日本からロシアを経由してヨーロッパへ向かう当時の計画ルート" caption="当時計画していたユーラシア横断ルート。" />
+              <Figure src={image('klr650-stock.jpg')} alt="世界一周用のベース車両に選んだKLR650" caption="世界一周仕様のベースに選んだ欧州仕様KLR650。" />
             </div>
           </section>
 
-          <section className="article-section article-section--paper">
-            <div className="article-section__number">02</div>
-            <div className="article-section__heading">
-              <p>THE 10-GALLON ANSWER</p>
-              <h2>世界一周なら、<br />ビッグタンク。</h2>
-            </div>
-            <div className="article-feature-grid">
-              <div className="article-prose">
-                <p>
-                  世界一周へ行くなら、やはりビッグタンクだ。海外サイトで見つけた樹脂製タンクの定番メーカーがIMSだった。フロリダ州のショップへ連絡し、日本へ売ってもらえるか問い合わせた。
-                </p>
-                <blockquote>
-                  「なぜ日本人がIMSのビッグタンクを買うんだ？　詐欺じゃないのか？」
-                </blockquote>
-                <p>
-                  返ってきたのは、かなり辛辣なメッセージだった。だが、こちらも同じライダーとして引くわけにはいかない。
-                </p>
-                <blockquote>
-                  「KLR650で世界一周に行く。必要だから売ってくれないか？」
-                </blockquote>
-                <p>
-                  そう伝えると、相手の反応は一変した。「それはすごい。ぜひ、うちの店にも寄ってくれよ」。免許証の画像を送り、本人確認が済んでから購入できることになった。価格は680ドル。当時の円安と送料を合わせると、総額は約14万円になった。
-                </p>
-              </div>
-              <Figure src={image('ims-listing.jpg')} alt="IMS製10ガロンタンクの販売ページ" caption="フロリダのショップで見つけたIMS製10ガロンタンク。" />
-            </div>
-          </section>
-
-          <section className="article-section article-section--arrival">
+          <section className="article-section article-section--arrival" id="tank">
             <div className="arrival-copy">
-              <p className="article-kicker">TANK ARRIVAL</p>
-              <h2>10ガロン、<br />37リットル。</h2>
+              <p className="article-kicker">THE 10-GALLON ANSWER</p>
+              <h2>37Lを、<br />海の向こうから。</h2>
               <p>
-                ついにタンクが届いた。郵便局の職員から「大きな荷物が届いていますよ」と声をかけられ、箱を開けて出てきたのがこれだ。
+                給油地点の少ない土地を想定して選んだのは、IMS製の10ガロンタンク。フロリダのショップから680ドルで取り寄せ、当時の送料などを含む総額は約14万円になった。
               </p>
               <p className="arrival-shout">でかい。</p>
-              <p>
-                容量は10ガロン。リットル換算で約37Lになる。KLR650欧州仕様の燃費を約22km/Lとして単純計算すると、航続距離は約800km。これなら余裕だと思い、装着作業を始めた。
-              </p>
               <dl className="article-specs">
                 <div><dt>CAPACITY</dt><dd>10 gal / 約37L</dd></div>
+                <div><dt>PRICE</dt><dd>$680 / 総額約14万円</dd></div>
                 <div><dt>EST. RANGE</dt><dd>約800km</dd></div>
-                <div><dt>TANK COLOR</dt><dd>Natural</dd></div>
               </dl>
+              <p className="web-calculation-note">※航続距離は37L×約22km/Lによる机上計算。実走値ではありません。</p>
             </div>
-            <Figure src={image('tank-arrival.jpg')} alt="床に置かれたIMS製37Lタンク" caption="アメリカから届いたナチュラルカラーのIMS製タンク。" />
+            <Figure src={image('tank-arrival.jpg')} alt="海外から届いたIMS製10ガロンタンク" caption="箱から出てきた10ガロン、約37Lの樹脂タンク。" />
           </section>
 
-          <section className="article-section article-section--workshop">
+          <section className="article-section article-section--workshop" id="fit">
             <div className="article-section__number">03</div>
             <div className="article-section__heading">
               <p>NOT A BOLT-ON PART</p>
-              <h2>載せてみると、<br />何も合わない。</h2>
+              <h2>載せると、<br />何も合わない。</h2>
             </div>
-            <div className="workshop-lead">
+            <div className="workshop-lead world-digest__workshop-lead">
               <p>
-                いざタンクを載せてみると、さまざまな部分が合わなかった。理由は明確だ。このタンクは北米仕様向けであり、筆者のKLR650は欧州仕様だからである。
+                タンクは北米仕様向け。車両は欧州仕様。取付ステー、フロントウインカー、エンジンガードのどれも、そのままでは使えなかった。
               </p>
               <p>
-                取付ステーは合わず、切断して作り直すことになった。フロントウインカーもタンクへ接触するため、位置を変更しなければならない。切って、合わせて、位置を変える。加工を重ね、ようやく車体へ装着できた。
+                合わない理由を一つずつ見つけ、切って、位置を変え、必要な隙間を作る。取り付けではなく、車体側まで含めた製作になった。
               </p>
             </div>
-            <div className="workshop-gallery">
-              <Figure src={image('test-fit.jpg')} alt="KLR650へIMSタンクを仮組みしている様子" caption="まずは車体へ仮組み。欧州仕様にはそのまま装着できなかった。" />
-              <Figure src={image('tank-bracket-close.jpg')} alt="タンク取付部のクローズアップ" caption="タンクと車体側ステーの位置関係を確認する。" />
-              <Figure src={image('tank-bracket.jpg')} alt="加工したタンクステー" caption="合わない取付ステーは切断し、車体に合わせて加工。" />
-              <Figure src={image('indicator-clearance.jpg')} alt="タンクとウインカーの干渉箇所" caption="フロントウインカーもタンクと干渉。位置変更が必要だった。" />
+            <div className="web-problem-list" aria-label="主な加工点">
+              <div><span>01</span><strong>MOUNT</strong><p>取付ステーを切断し、欧州仕様の車体へ合わせて再製作。</p></div>
+              <div><span>02</span><strong>INDICATOR</strong><p>タンクへ接触するフロントウインカーの位置を変更。</p></div>
+              <div><span>03</span><strong>CLEARANCE</strong><p>タンクとガードが接触しない距離を確保。</p></div>
+            </div>
+            <div className="workshop-gallery workshop-gallery--three">
+              <Figure src={image('test-fit.jpg')} alt="KLR650へIMSタンクを仮合わせしている様子" caption="TEST FIT / まず載せ、合わない場所を探す。" />
+              <Figure src={image('tank-bracket-close.jpg')} alt="作り直したタンク取付部の拡大" caption="MOUNT / 取付位置を車体へ合わせる。" />
+              <Figure src={image('indicator-clearance.jpg')} alt="タンクとの干渉を避けたフロントウインカー" caption="RELOCATE / ウインカーの位置を移す。" />
             </div>
           </section>
 
-          <section className="article-section article-section--paper">
-            <div className="article-section__number">04</div>
-            <div className="article-section__heading">
-              <p>SEE THE FUEL</p>
-              <h2>燃料が見える、<br />という保険。</h2>
+          <aside className="article-magazine-break">
+            <div>
+              <p>ISSUE 01 / 8-PAGE FEATURE</p>
+              <h2>ここから先は、<br />写真で見る加工記録。</h2>
             </div>
-            <div className="article-feature-grid article-feature-grid--reverse">
-              <div className="article-prose">
-                <p>
-                  タンクをナチュラルカラーにしたのには理由がある。旅先でトリップメーターが壊れ、残りの燃料が分からなくなる事態を想定したからだ。半透明のタンクなら、外側から燃料の残量を直接確認できる。トラブルへの対処もシンプルになる。
-                </p>
-                <p>
-                  37Lタンクは大きいため、既存のエンジンガードもそのままでは装着できず、こちらも加工が必要になった。ガードとタンクの距離が近すぎれば、接触によってタンクへ食い込む恐れがある。破損すれば、37Lの半分近いガソリンが漏れ出す可能性もある。十分なクリアランスを確保しなければならない。
-                </p>
-              </div>
-              <div className="article-image-pair">
-                <Figure src={image('tank-front.jpg')} alt="車体前方から見た大型タンク" caption="前方から見ると、タンクの張り出しがよく分かる。" />
-                <Figure src={image('engine-guard.jpg')} alt="大型タンクとエンジンガード" caption="タンクとの接触を避けるため、エンジンガードも加工した。" />
-              </div>
+            <div>
+              <p>北米仕様のタンクを欧州仕様のKLR650へ合わせるまで。切断、溶接、燃料系統、パニア製作の細部を、創刊号では8ページで収録します。</p>
+              <a href={samplePdf} target="_blank" rel="noreferrer">創刊号を2ページ試し読み <ArticleArrow /></a>
             </div>
-          </section>
+          </aside>
 
-          <section className="article-section article-section--fuel">
-            <Figure src={image('fuel-system.jpg')} alt="IMS製タンク下部の燃料配管" caption="ナチュラルカラーなら燃料残量を目視できる。下部の燃料を吸い上げる配管も組み込まれている。" />
+          <section className="article-section article-section--fuel" id="fuel">
+            <Figure src={image('fuel-system.jpg')} alt="IMSタンクからキャブレターへつながる燃料系統" caption="左右の低い位置に残る燃料を、負圧ポンプで送る構成。" />
             <div>
               <p className="article-kicker">VACUUM FUEL PUMP</p>
-              <h2>重力だけでは、<br />最後まで使えない。</h2>
+              <h2>燃料を、<br />最後まで使う。</h2>
               <p>
-                IMSタンクは非常に大きく、左右の最下部がキャブレターより低い位置にくる。そのため、最も低い部分の燃料は重力だけではキャブレターへ落ちていかない。
-              </p>
-              <p>
-                そこでIMSが採用したのが、キャブレターの負圧を利用するポンプだ。原理はスクーターの負圧式燃料コックと同じ。タンクから伸びるホースの奥側がキャブレターへつながり、負圧ポンプが左右の最下部から燃料を吸い上げ、燃料コック付近の液だまりへ供給する仕組みになっている。
+                半透明のタンクなら、メーターに頼らず残量を目で確認できる。一方、タンクの最下部はキャブレターより低く、重力だけでは燃料を使い切れない。そこで負圧ポンプを使い、左右の低い場所から燃料を吸い上げる構成にした。仕組みとホースの取り回しは誌面版で詳しく紹介している。
               </p>
             </div>
           </section>
 
-          <section className="article-section article-section--workshop">
+          <section className="article-section article-section--workshop" id="make">
             <div className="article-section__number">05</div>
             <div className="article-section__heading">
               <p>ONE-OFF PANNIER RACK</p>
-              <h2>売っていないなら、<br />作るしかない。</h2>
+              <h2>売っていないなら、<br />作る。</h2>
             </div>
-            <div className="workshop-lead">
-              <p>
-                KLR650欧州仕様に対応するパニアステーは、ほとんど販売されていなかった。そのため、パニアステーもワンオフで製作することにした。ベースに選んだのはヤマハMT-07用。車体へ合わせて切断・溶接し、KLR650へ装着できる形へ作り替えた。
-              </p>
-              <p>
-                下の写真は加工を終え、塗装する前のパニアステーだ。既製品を探して終わるはずだった準備は、タンクだけでなく、周辺部品まで作るプロジェクトになっていった。
-              </p>
-            </div>
-            <div className="workshop-gallery workshop-gallery--three">
-              <Figure src={image('tank-mounted-side.jpg')} alt="タンクを装着したKLR650の側面" caption="タンクを装着し、周辺部品との位置を確認。" />
-              <Figure src={image('pannier-frame.jpg')} alt="KLR650に仮組みしたパニアステー" caption="MT-07用をベースに、KLR650へワンオフ装着。" />
-              <Figure src={image('pannier-parts.jpg')} alt="加工と溶接を終えたパニアステー" caption="加工を終え、塗装前の状態となったパニアステー。" />
+            <div className="article-feature-grid world-digest__pannier">
+              <div className="article-prose">
+                <p>
+                  欧州仕様KLR650に合うパニアステーは、ほとんど見つからなかった。ベースにしたのはヤマハMT-07用。車体へ合わせて切断し、溶接し、KLR650用へ作り替えた。
+                </p>
+                <p>
+                  既製品を取り付けて終わるはずだった準備は、タンクから周辺部品までを作るプロジェクトへ広がっていった。
+                </p>
+              </div>
+              <Figure src={image('pannier-frame.jpg')} alt="KLR650へ仮組みしたワンオフのパニアステー" caption="塗装前のワンオフ・パニアステー。" />
             </div>
           </section>
 
-          <section className="article-finale">
+          <section className="article-finale" id="stopped">
             <div className="article-finale__copy">
               <p className="article-kicker">THE TRIP THAT STOPPED</p>
-              <h2>車両は完成した。<br />旅の時だけが、来なかった。</h2>
+              <h2>車両は完成した。<br />旅だけが始まらなかった。</h2>
               <p>
-                こうして、37Lタンクを備えた世界一周仕様のKLR650が完成した。知人とのツーリングでも走らせ、車両としての形は整った。
+                37Lタンクを備えたKLR650は完成し、知人とのツーリングでも走らせた。車両は、出発できる形になった。
               </p>
               <p>
-                しかし、世界一周へ出るタイミングを失ってしまった。ロシアによるウクライナ侵攻が始まり、日本を含む主要国はロシア政府から「非友好国」に指定された。情勢が悪化するなか、当初計画していたロシア横断は現実的な選択肢ではなくなった。
+                しかし、ロシアによるウクライナ侵攻後、当時計画していたロシア横断ルートを実行することは難しくなった。これは計画当時の経緯を記したもので、現在の渡航可否を示すものではない。
               </p>
-              <p>
-                さらに、ロシア国内ではガソリン不足が起き、ガソリン車をLPG仕様へ変更する人も出ているという話も耳にした。準備していたルートを、そのまま走れる状況ではない。
-              </p>
-              <p className="article-finale__last">次に世界一周へ行けるタイミングは、いつになるのだろう。</p>
+              <p className="article-finale__last">旅は始まらなかった。けれど、作った一台と判断の跡は残った。</p>
               <aside className="article-note">
-                <strong>編集部注</strong>
-                <p>ロシアによる日本の位置づけは、原稿の「仮想敵国」から、外務省が使用する「非友好国」へ表現を修正した。旅行の可否や安全情報は、渡航時点の公的情報を必ず確認してほしい。</p>
+                <strong>TRAVEL INFORMATION</strong>
+                <p>国際情勢、国境、交通機関の情報は変化します。渡航を検討する際は、必ず最新の公的情報を確認してください。</p>
                 <a href="https://www.anzen.mofa.go.jp/m/mbcrimesituation_178.html" target="_blank" rel="noreferrer">外務省海外安全情報</a>
               </aside>
             </div>
-            <div className="article-finale__images">
-              <Figure src={image('completed-klr650.jpg')} alt="37Lタンクとパニアステーを装着した完成状態のKLR650" caption="完成したKLR650、37Lタンク仕様。" />
-              <Figure src={image('group-ride.jpg')} alt="知人とのツーリングに参加したKLR650" caption="知人とのツーリング。旅の準備はできていた。" />
+            <div className="article-finale__images article-finale__images--single">
+              <Figure src={image('group-ride.jpg')} alt="知人とのツーリングに参加した世界一周仕様のKLR650" caption="知人とのツーリング。車両の準備はできていた。" />
             </div>
           </section>
 
+          <section className="magazine-cta" aria-labelledby="magazine-cta-title">
+            <div>
+              <p className="article-kicker">CONTINUE IN ISSUE 01</p>
+              <h2 id="magazine-cta-title">準備の全記録は、<br />創刊号で。</h2>
+              <p>WEBで省いた加工の細部と写真を、8ページの誌面にまとめました。</p>
+            </div>
+            <ul>
+              <li>候補車の比較と、KLR650を選んだ理由</li>
+              <li>37Lタンクの切断・位置変更・取付工程</li>
+              <li>負圧ポンプ、エンジンガード、パニア製作</li>
+              <li>全17点の写真とDUST DATA</li>
+            </ul>
+            <div className="magazine-cta__actions">
+              <a className="magazine-cta__primary" href={samplePdf} target="_blank" rel="noreferrer">誌面を2ページ試し読み <ArticleArrow /></a>
+              <a href={`${root}#issue`}>創刊号について見る <ArticleArrow /></a>
+            </div>
+          </section>
+
+          <aside className="article-next-read">
+            <p>NEXT STORY / TRAVEL REPORT</p>
+            <a href={hokkaidoArticle}><strong>1190で行く、北海道・離島の旅。</strong><span>約3,500km、10日間の記録 <ArticleArrow /></span></a>
+          </aside>
+
           <footer className="article-footer">
-            <span>DUST LINE / BUILD LOG 001</span>
+            <span>DUST LINE / WEB DIGEST 001</span>
             <a href={root}>JOURNALへ戻る</a>
           </footer>
         </article>
