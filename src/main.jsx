@@ -39,6 +39,31 @@ const stories = [
 
 const goods = [
   {
+    category: 'LIMITED EDITION / FOUNDING & SUPPORT CREW',
+    title: '創始者・サポーターエディション',
+    description: 'DUST LINEの立ち上げを共にした創始者・サポートメンバーのための期間限定モデル。白T・黒Tの2カラーを用意しています。',
+    href: suzuriShopUrl,
+    linkLabel: '限定版をSUZURIで見る',
+    badge: 'LIMITED EDITION',
+    wide: true,
+    images: [
+      {
+        src: assetPath('goods/suzuri/dust-line-founding-support-white-artwork.webp'),
+        alt: '創始者・サポーターエディションの白T用デザイン',
+        side: 'WHITE T',
+        appearance: 'light',
+        artwork: true,
+      },
+      {
+        src: assetPath('goods/suzuri/dust-line-founding-support-black-artwork.webp'),
+        alt: '創始者・サポーターエディションの黒T用デザイン',
+        side: 'BLACK T',
+        appearance: 'dark',
+        artwork: true,
+      },
+    ],
+  },
+  {
     category: 'T-SHIRT 01 / OFFICIAL',
     title: 'DUST LINE OFFICIAL T-SHIRT',
     description: '白ボディの胸元にDUST LINEロゴ、背面に日本縦断ルートを配置した公式モデル。',
@@ -322,7 +347,7 @@ function GoodsPage() {
           <div className="goods-page__hero-inner reveal">
             <p className="eyebrow">DUST LINE / OFFICIAL GOODS</p>
             <p className="goods-page__status">ONLINE STORE / NOW OPEN</p>
-            <h1>公式ショップ、<br />公開。</h1>
+            <h1><span>公式ショップ、</span><span>公開。</span></h1>
             <p className="goods-page__lead">
               旅と機械、雑誌づくりから生まれたDUST LINEの公式グッズを、SUZURIで販売しています。
               商品の価格、サイズ、発送予定はショップの商品ページでご確認ください。
@@ -353,18 +378,21 @@ function GoodsPage() {
               >
                 <figure className="goods-card__image goods-card__image--pair">
                   {item.images.map((image, imageIndex) => (
-                    <div className="goods-card__side" key={image.side}>
+                    <div
+                      className={`goods-card__side${image.appearance ? ` goods-card__side--${image.appearance}` : ''}${image.artwork ? ' goods-card__side--artwork' : ''}`}
+                      key={image.side}
+                    >
                       <img src={image.src} alt={image.alt} loading={index > 0 || imageIndex > 0 ? 'lazy' : 'eager'} />
                       <small>{image.side}</small>
                     </div>
                   ))}
-                  <span>NOW ON SALE</span>
+                  <span>{item.badge || 'NOW ON SALE'}</span>
                 </figure>
                 <div className="goods-card__copy">
                   <p>{item.category}</p>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
-                  <a className="goods-card__link" href={item.href} target="_blank" rel="noreferrer">この商品をSUZURIで見る <ArrowIcon /></a>
+                  <a className="goods-card__link" href={item.href} target="_blank" rel="noreferrer">{item.linkLabel || 'この商品をSUZURIで見る'} <ArrowIcon /></a>
                 </div>
               </article>
             ))}
