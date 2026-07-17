@@ -1,5 +1,6 @@
 import { StrictMode, useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
+import HokkaidoArticle from './HokkaidoArticle'
 import MachineFileArticle from './MachineFileArticle'
 import WorldTripArticle from './WorldTripArticle'
 import './styles.css'
@@ -420,16 +421,16 @@ function FeaturedStory() {
   return (
     <section className="feature section" id="stories">
       <div className="section-label section-label--light reveal"><span>02</span><span>LATEST STORY</span></div>
-      <div className="feature__frame feature__frame--pending reveal" aria-label="風が抜ける高原へ。記事準備中">
-        <img src={assetPath('plateau-ride.jpg')} alt="高原道路に停めた二台のアドベンチャーバイク" />
+      <a className="feature__frame reveal" href={`${import.meta.env.BASE_URL}?article=hokkaido-1190`}>
+        <img src={assetPath('hokkaido-1190/hero-ktm-ferry-departure.jpg')} alt="北海道行きのフェリーを前に停めたKTM 1190 ADVENTURE" />
         <div className="feature__shade" />
         <div className="feature__copy">
-          <p>LONG RIDE / HIGH LAND</p>
-          <h2>風が抜ける高原へ。</h2>
-          <span>遠くへ行くために必要だったもの、置いてきたもの。<strong className="content-status">記事準備中</strong></span>
+          <p>TRAVEL REPORT / 3,500 KM</p>
+          <h2>1190で行く、<br />北海道・離島の旅。</h2>
+          <span>10日間。北の端、その先にある島へ。<ArrowIcon /></span>
         </div>
         <div className="feature__number" aria-hidden="true">01</div>
-      </div>
+      </a>
     </section>
   )
 }
@@ -633,6 +634,7 @@ function App() {
   }, [])
 
   const article = new URLSearchParams(window.location.search).get('article')
+  if (article === 'hokkaido-1190') return <HokkaidoArticle assetPath={assetPath} />
   if (article === 'world-trip') return <WorldTripArticle assetPath={assetPath} />
   if (article === 'machine-file-001') return <MachineFileArticle assetPath={assetPath} />
 
