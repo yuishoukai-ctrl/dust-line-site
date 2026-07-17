@@ -40,26 +40,23 @@ const stories = [
 const goods = [
   {
     category: 'LIMITED EDITION / FOUNDING & SUPPORT CREW',
-    title: '創始者・サポーターエディション',
-    description: 'DUST LINEの立ち上げを共にした創始者・サポートメンバーのための期間限定モデル。白T・黒Tの2カラーを用意しています。',
+    title: 'ファウンディング、サポーターエディション',
+    titleLines: ['ファウンディング、', 'サポーターエディション'],
+    description: 'DUST LINEの立ち上げに関わったファウンディングメンバーとサポーターのための期間限定モデル。白T・黒Tの2カラーを用意しています。',
     href: suzuriShopUrl,
     linkLabel: '限定版をSUZURIで見る',
     badge: 'LIMITED EDITION',
     wide: true,
     images: [
       {
-        src: assetPath('goods/suzuri/dust-line-founding-support-white-artwork.webp'),
-        alt: '創始者・サポーターエディションの白T用デザイン',
+        src: assetPath('goods/suzuri/dust-line-founding-support-white-back-suzuri.webp'),
+        alt: 'SUZURIで販売中のファウンディング、サポーターエディション白T背面',
         side: 'WHITE T',
-        appearance: 'light',
-        artwork: true,
       },
       {
-        src: assetPath('goods/suzuri/dust-line-founding-support-black-artwork.webp'),
-        alt: '創始者・サポーターエディションの黒T用デザイン',
+        src: assetPath('goods/suzuri/dust-line-founding-support-black-back-suzuri.webp'),
+        alt: 'SUZURIで販売中のファウンディング、サポーターエディション黒T背面',
         side: 'BLACK T',
-        appearance: 'dark',
-        artwork: true,
       },
     ],
   },
@@ -378,10 +375,7 @@ function GoodsPage() {
               >
                 <figure className="goods-card__image goods-card__image--pair">
                   {item.images.map((image, imageIndex) => (
-                    <div
-                      className={`goods-card__side${image.appearance ? ` goods-card__side--${image.appearance}` : ''}${image.artwork ? ' goods-card__side--artwork' : ''}`}
-                      key={image.side}
-                    >
+                    <div className="goods-card__side" key={image.side}>
                       <img src={image.src} alt={image.alt} loading={index > 0 || imageIndex > 0 ? 'lazy' : 'eager'} />
                       <small>{image.side}</small>
                     </div>
@@ -390,7 +384,11 @@ function GoodsPage() {
                 </figure>
                 <div className="goods-card__copy">
                   <p>{item.category}</p>
-                  <h3>{item.title}</h3>
+                  <h3>
+                    {item.titleLines
+                      ? item.titleLines.map((line) => <span key={line}>{line}</span>)
+                      : item.title}
+                  </h3>
                   <p>{item.description}</p>
                   <a className="goods-card__link" href={item.href} target="_blank" rel="noreferrer">{item.linkLabel || 'この商品をSUZURIで見る'} <ArrowIcon /></a>
                 </div>
