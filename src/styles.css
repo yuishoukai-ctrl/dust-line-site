@@ -305,6 +305,11 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .newsletter__copy .section-label { margin-bottom: 35px; }
 .newsletter h2 { margin: 0; font: 900 clamp(3.1rem, 6vw, 6.8rem)/.88 var(--display); letter-spacing: -.065em; }
 .newsletter__copy > p { max-width: 45ch; margin: 30px 0 38px; font-size: .9rem; line-height: 1.9; color: rgba(21,23,25,.63); }
+.newsletter__pending { display: grid; gap: 14px; max-width: 620px; padding: clamp(24px, 3vw, 36px); border: 1px solid rgba(21,23,25,.18); background: rgba(240,236,223,.52); }
+.newsletter__pending > span { font: 800 .58rem/1 var(--display); letter-spacing: .18em; color: var(--accent); }
+.newsletter__pending > strong { font: 900 clamp(1.8rem, 3vw, 3rem)/1 var(--display); letter-spacing: -.04em; }
+.newsletter__pending > p { max-width: 44ch; margin: 0 0 8px; font-size: .82rem; line-height: 1.8; color: rgba(21,23,25,.62); }
+.newsletter__pending .button { width: max-content; }
 .newsletter form { max-width: 620px; }
 .newsletter label { display: block; margin-bottom: 10px; font: 800 .62rem/1 var(--display); letter-spacing: .17em; }
 .email-field { display: grid; grid-template-columns: 1fr auto; border-bottom: 2px solid var(--ink); }

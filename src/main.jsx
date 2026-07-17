@@ -1,4 +1,4 @@
-import { StrictMode, useEffect, useId, useRef, useState } from 'react'
+import { StrictMode, useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import MachineFileArticle from './MachineFileArticle'
 import WorldTripArticle from './WorldTripArticle'
@@ -10,6 +10,7 @@ const companyPagePath = `${homePath}?page=company`
 const goodsPagePath = `${homePath}?page=goods`
 const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
 const suzuriShopUrl = 'https://suzuri.jp/dustline'
+const officialXUrl = 'https://x.com/DUSTLINE_ADV'
 
 const stories = [
   {
@@ -552,24 +553,6 @@ function RouteStrip() {
 }
 
 function Newsletter() {
-  const [email, setEmail] = useState('')
-  const [state, setState] = useState('idle')
-  const inputId = useId()
-  const timerRef = useRef(null)
-
-  useEffect(() => () => clearTimeout(timerRef.current), [])
-
-  const submit = (event) => {
-    event.preventDefault()
-    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-    if (!valid) {
-      setState('error')
-      return
-    }
-    setState('loading')
-    timerRef.current = window.setTimeout(() => setState('success'), 700)
-  }
-
   return (
     <section className="newsletter section" id="newsletter">
       <div className="newsletter__image reveal"><img src={assetPath('mountain-stop.jpg')} alt="山を望む道路に停めたアドベンチャーバイク" /></div>
@@ -577,34 +560,20 @@ function Newsletter() {
         <div className="section-label"><span>05</span><span>FIELD LETTER</span></div>
         <h2>次の旅を、<br />受信箱へ。</h2>
         <p>新しい記事、創刊号の発売情報、誌面に入りきらなかったルートノートを届けます。</p>
-        {state === 'success' ? (
-          <div className="form-success" role="status">
-            <span>登録を受け付けました。</span>
-            <small>DUST LINEからの次の便りをお待ちください。</small>
-          </div>
-        ) : (
-          <form onSubmit={submit} noValidate>
-            <label htmlFor={inputId}>EMAIL ADDRESS</label>
-            <div className={state === 'error' ? 'email-field email-field--error' : 'email-field'}>
-              <input
-                id={inputId}
-                type="email"
-                value={email}
-                onChange={(event) => { setEmail(event.target.value); if (state === 'error') setState('idle') }}
-                placeholder="ride@example.com"
-                aria-describedby={`${inputId}-help`}
-                aria-invalid={state === 'error'}
-                disabled={state === 'loading'}
-              />
-              <button type="submit" disabled={state === 'loading'}>
-                {state === 'loading' ? <span className="button-loading">送信中</span> : <>登録する <ArrowIcon /></>}
-              </button>
-            </div>
-            <small id={`${inputId}-help`} className={state === 'error' ? 'form-help form-help--error' : 'form-help'}>
-              {state === 'error' ? '有効なメールアドレスを入力してください。' : '配信停止はいつでも可能です。広告メールは送りません。'}
-            </small>
-          </form>
-        )}
+        <div className="newsletter__pending" role="status">
+          <span>NEWSLETTER / PREPARING</span>
+          <strong>登録準備中</strong>
+          <p>ニュースレターの配信準備を進めています。最新情報はDUST LINE公式Xでお知らせします。</p>
+          <a
+            className="button button--accent"
+            href={officialXUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="DUST LINE公式Xを新しいタブで開く"
+          >
+            公式Xを見る <ArrowIcon />
+          </a>
+        </div>
       </div>
     </section>
   )
@@ -630,6 +599,7 @@ function Footer({ currentPage = null }) {
         <a href={suzuriShopUrl} target="_blank" rel="noreferrer">Shop</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined}>Company</a>
         <a href={contactFormUrl} target="_blank" rel="noreferrer">Contact</a>
+        <a href={officialXUrl} target="_blank" rel="noreferrer" aria-label="DUST LINE公式X">Official X</a>
       </div>
       <p>© 2026 DUST LINE. ALL RIGHTS RESERVED.</p>
     </footer>
