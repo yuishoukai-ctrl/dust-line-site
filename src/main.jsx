@@ -424,7 +424,11 @@ function FeaturedStory() {
   return (
     <section className="feature section" id="stories">
       <div className="section-label section-label--light reveal"><span>02</span><span>LATEST STORY</span></div>
-      <a className="feature__frame reveal" href={`${import.meta.env.BASE_URL}?article=hokkaido-1190`}>
+      <a
+        className="feature__frame reveal"
+        href={`${import.meta.env.BASE_URL}?article=hokkaido-1190`}
+        style={{ '--feature-image': `url(${assetPath('hokkaido-1190/hero-ktm-ferry-departure.jpg')})` }}
+      >
         <img src={assetPath('hokkaido-1190/hero-ktm-ferry-departure.jpg')} alt="北海道行きのフェリーを前に停めたKTM 1190 ADVENTURE" loading="lazy" decoding="async" />
         <div className="feature__shade" />
         <div className="feature__copy">

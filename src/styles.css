@@ -399,7 +399,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 
 @media (max-width: 700px) {
   .hero { min-height: 800px; }
-  .hero__image { background-position: 56% 44%; }
+  .hero__image { background-color: var(--ink); background-position: 35% top; background-size: auto 86%; }
   .hero__veil { background: linear-gradient(0deg, rgba(13,15,16,.96) 0%, rgba(13,15,16,.33) 70%), linear-gradient(90deg, rgba(13,15,16,.62), transparent); }
   .hero__content { margin: 0 20px 76px 36px; }
   .hero h1 { font-size: clamp(3.35rem, 17vw, 5.4rem); }
@@ -446,8 +446,11 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   .goods-card__copy { gap: 10px; }
   .goods-page__notice { grid-template-columns: 1fr; gap: 34px; margin: 92px -20px 0; padding: 54px 20px; }
   .feature { padding-bottom: 0; }
-  .feature__frame { min-height: 620px; }
-  .feature__frame img { object-position: 56% center; }
+  .feature__frame { min-height: 650px; background: var(--ink); }
+  .feature__frame::before { content: ""; position: absolute; inset: -22px; background: var(--feature-image) center/cover no-repeat; filter: blur(18px) saturate(.64); opacity: .38; transform: scale(1.05); }
+  .feature__frame img { inset: 0 auto auto 0; height: auto; object-fit: contain; object-position: center top; transform: none; }
+  .feature__frame:not(.feature__frame--pending):hover img { transform: none; }
+  .feature__shade { background: linear-gradient(0deg, rgba(16,18,19,.98) 0%, rgba(16,18,19,.84) 45%, rgba(16,18,19,.08) 78%); }
   .feature__copy { right: 20px; bottom: 28px; left: 20px; }
   .feature__copy h2 { font-size: 3.05rem; }
   .feature__copy span { align-items: flex-start; max-width: 29ch; line-height: 1.6; }
