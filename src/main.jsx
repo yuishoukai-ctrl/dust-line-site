@@ -167,7 +167,7 @@ function Hero() {
           そしてライダーの選択を記録するデジタル・ジャーナルです。
         </p>
         <div className="hero__actions">
-          <a className="button button--accent" href="#issue">創刊号を見る <ArrowIcon /></a>
+          <a className="button button--accent" href="#issue">創刊号について見る <ArrowIcon /></a>
           <a className="text-link" href="#stories">最新の記録を読む <ArrowIcon /></a>
         </div>
       </div>
@@ -420,16 +420,16 @@ function FeaturedStory() {
   return (
     <section className="feature section" id="stories">
       <div className="section-label section-label--light reveal"><span>02</span><span>LATEST STORY</span></div>
-      <a className="feature__frame reveal" href="#newsletter">
+      <div className="feature__frame feature__frame--pending reveal" aria-label="風が抜ける高原へ。記事準備中">
         <img src={assetPath('plateau-ride.jpg')} alt="高原道路に停めた二台のアドベンチャーバイク" />
         <div className="feature__shade" />
         <div className="feature__copy">
           <p>LONG RIDE / HIGH LAND</p>
           <h2>風が抜ける高原へ。</h2>
-          <span>遠くへ行くために必要だったもの、置いてきたもの。<ArrowIcon /></span>
+          <span>遠くへ行くために必要だったもの、置いてきたもの。<strong className="content-status">記事準備中</strong></span>
         </div>
         <div className="feature__number" aria-hidden="true">01</div>
-      </a>
+      </div>
     </section>
   )
 }
@@ -438,9 +438,9 @@ function StoryGrid() {
   return (
     <section className="story-section section">
       <div className="story-grid">
-        {stories.map((story, index) => (
-          <article className={`story ${story.className} reveal`} key={story.title} style={{ '--delay': `${index * 90}ms` }}>
-            <a href={story.href || '#newsletter'} aria-label={`${story.title}を読む`}>
+        {stories.map((story, index) => {
+          const content = (
+            <>
               <div className="story__image"><img src={story.image} alt="" /></div>
               <div className="story__meta">
                 <p>{story.category}</p>
@@ -448,9 +448,20 @@ function StoryGrid() {
               </div>
               <h3>{story.title}</h3>
               <p className="story__excerpt">{story.excerpt}</p>
-            </a>
-          </article>
-        ))}
+              {!story.href && <span className="story__status">記事準備中</span>}
+            </>
+          )
+
+          return (
+            <article className={`story ${story.className} reveal`} key={story.title} style={{ '--delay': `${index * 90}ms` }}>
+              {story.href ? (
+                <a href={story.href} aria-label={`${story.title}を読む`}>{content}</a>
+              ) : (
+                <div className="story__pending" aria-label={`${story.title} 記事準備中`}>{content}</div>
+              )}
+            </article>
+          )
+        })}
       </div>
     </section>
   )
@@ -475,7 +486,7 @@ function MagazinePreview() {
           <div className="sneak-peek__actions">
             <a className="button button--accent" href={webArticle}>Web記事を全文読む <ArrowIcon /></a>
             <a className="sneak-peek__notify" href={samplePdf} target="_blank" rel="noreferrer">誌面を2ページ試し読み <ArrowIcon /></a>
-            <a className="sneak-peek__notify" href="#newsletter">発売情報を受け取る <ArrowIcon /></a>
+            <a className="sneak-peek__notify" href={officialXUrl} target="_blank" rel="noreferrer">公式Xで発売情報を見る <ArrowIcon /></a>
           </div>
         </div>
       </div>
@@ -530,7 +541,7 @@ function Issue() {
           <div><dt>LANGUAGE</dt><dd>Japanese</dd></div>
           <div><dt>RELEASE</dt><dd>Coming soon</dd></div>
         </dl>
-        <a className="button button--outline" href="#newsletter">発売情報を受け取る <ArrowIcon /></a>
+        <a className="button button--outline" href={officialXUrl} target="_blank" rel="noreferrer">公式Xで発売情報を見る <ArrowIcon /></a>
       </div>
     </section>
   )
