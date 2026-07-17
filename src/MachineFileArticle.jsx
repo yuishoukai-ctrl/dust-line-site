@@ -11,7 +11,8 @@ function BackArrow() {
 
 export default function MachineFileArticle({ assetPath }) {
   const root = import.meta.env.BASE_URL
-  const spread = assetPath('machine-file-001-spread.png')
+  const spread = assetPath('machine-file-001-spread.webp')
+  const samplePdf = `${root}downloads/dust-line-issue-01-sample.pdf`
 
   useEffect(() => {
     const previousTitle = document.title
@@ -41,15 +42,15 @@ export default function MachineFileArticle({ assetPath }) {
 
         <section className="machine-reader__canvas" aria-label="大陸横断マシン 2ページ試し読み">
           <figure className="machine-reader__spread">
-            <img src={spread} alt="DUST LINE 大陸横断マシンの記事見開き、026ページと027ページ" />
+            <img src={spread} alt="DUST LINE 大陸横断マシンの記事見開き、026ページと027ページ" loading="lazy" decoding="async" />
           </figure>
 
           <div className="machine-reader__pages">
             <figure className="machine-reader__page machine-reader__page--left">
-              <img src={spread} alt="大陸横断マシンの記事 026ページ" />
+              <img src={spread} alt="大陸横断マシンの記事 026ページ" loading="lazy" decoding="async" />
             </figure>
             <figure className="machine-reader__page machine-reader__page--right">
-              <img src={spread} alt="大陸横断マシンの記事 027ページ" />
+              <img src={spread} alt="大陸横断マシンの記事 027ページ" loading="lazy" decoding="async" />
             </figure>
           </div>
 
@@ -57,6 +58,13 @@ export default function MachineFileArticle({ assetPath }) {
             <p>DUST LINE創刊号に収録予定の誌面から、2ページを公開しています。</p>
             <a href={root}><BackArrow /> JOURNALへ戻る</a>
           </div>
+
+          <nav className="machine-reader__links" aria-label="記事を読んだ後のリンク">
+            <a href={`${root}?article=world-trip`}><span>NEXT STORY</span><strong>世界一周に行こうとしたら。</strong><BackArrow /></a>
+            <a href={samplePdf} target="_blank" rel="noreferrer"><span>ISSUE 01</span><strong>創刊号を2ページ試し読み</strong><BackArrow /></a>
+            <a href="https://x.com/DUSTLINE_ADV" target="_blank" rel="noreferrer"><span>OFFICIAL X</span><strong>発売情報を見る</strong><BackArrow /></a>
+            <a href={`${root}?page=goods`}><span>OFFICIAL GOODS</span><strong>グッズを見る</strong><BackArrow /></a>
+          </nav>
         </section>
       </main>
 

@@ -141,6 +141,7 @@ function Header({ currentPage = null }) {
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined} onClick={() => setOpen(false)}>Goods</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined} onClick={() => setOpen(false)}>Company</a>
         <a className="nav__cta" href={suzuriShopUrl} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>Shop</a>
+        <a className="nav__mobile-x" href={officialXUrl} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>Official X</a>
       </nav>
       <button
         className="menu-button"
@@ -243,6 +244,7 @@ function EditorialTeam({ page = false }) {
                 src={assetPath('editorial-koike-junior.jpg')}
                 alt="林道でアドベンチャーバイクに乗る副編集長の小池将史"
                 loading="lazy"
+                decoding="async"
               />
             </figure>
             <dl className="editorial-profile__details">
@@ -378,7 +380,7 @@ function GoodsPage() {
                 <figure className="goods-card__image goods-card__image--pair">
                   {item.images.map((image, imageIndex) => (
                     <div className="goods-card__side" key={image.side}>
-                      <img src={image.src} alt={image.alt} loading={index > 0 || imageIndex > 0 ? 'lazy' : 'eager'} />
+                      <img src={image.src} alt={image.alt} loading={index > 0 || imageIndex > 0 ? 'lazy' : 'eager'} decoding="async" />
                       <small>{image.side}</small>
                     </div>
                   ))}
@@ -422,7 +424,7 @@ function FeaturedStory() {
     <section className="feature section" id="stories">
       <div className="section-label section-label--light reveal"><span>02</span><span>LATEST STORY</span></div>
       <a className="feature__frame reveal" href={`${import.meta.env.BASE_URL}?article=hokkaido-1190`}>
-        <img src={assetPath('hokkaido-1190/hero-ktm-ferry-departure.jpg')} alt="北海道行きのフェリーを前に停めたKTM 1190 ADVENTURE" />
+        <img src={assetPath('hokkaido-1190/hero-ktm-ferry-departure.jpg')} alt="北海道行きのフェリーを前に停めたKTM 1190 ADVENTURE" loading="lazy" decoding="async" />
         <div className="feature__shade" />
         <div className="feature__copy">
           <p>TRAVEL REPORT / 3,500 KM</p>
@@ -442,7 +444,7 @@ function StoryGrid() {
         {stories.map((story, index) => {
           const content = (
             <>
-              <div className="story__image"><img src={story.image} alt="" /></div>
+              <div className="story__image"><img src={story.image} alt="" loading="lazy" decoding="async" /></div>
               <div className="story__meta">
                 <p>{story.category}</p>
                 <span>0{index + 2}</span>
@@ -471,10 +473,10 @@ function StoryGrid() {
 function MagazinePreview() {
   const webArticle = `${import.meta.env.BASE_URL}?article=world-trip`
   const samplePdf = `${import.meta.env.BASE_URL}downloads/dust-line-issue-01-sample.pdf`
-  const page026 = assetPath('issue-01/world-trip-026.png')
-  const page027 = assetPath('issue-01/world-trip-027.png')
-  const page030 = assetPath('issue-01/world-trip-030.png')
-  const page031 = assetPath('issue-01/world-trip-031.png')
+  const page026 = assetPath('issue-01/world-trip-026.webp')
+  const page027 = assetPath('issue-01/world-trip-027.webp')
+  const page030 = assetPath('issue-01/world-trip-030.webp')
+  const page031 = assetPath('issue-01/world-trip-031.webp')
 
   return (
     <section className="sneak-peek section" id="magazine">
@@ -495,16 +497,16 @@ function MagazinePreview() {
       <a className="sneak-peek__primary reveal" href={samplePdf} target="_blank" rel="noreferrer" aria-label="創刊号の2ページ試し読みPDFを開く">
         <span className="sneak-peek__ribbon">SAMPLE / ISSUE 01</span>
         <div className="sneak-peek__spread">
-          <figure><img src={page026} alt="世界一周に行こうとしたら。扉ページ 026" loading="lazy" /></figure>
-          <figure><img src={page027} alt="計画ルートを掲載した誌面 027" loading="lazy" /></figure>
+          <figure><img src={page026} alt="世界一周に行こうとしたら。扉ページ 026" loading="lazy" decoding="async" /></figure>
+          <figure><img src={page027} alt="計画ルートを掲載した誌面 027" loading="lazy" decoding="async" /></figure>
         </div>
         <span className="sneak-peek__open">OPEN 2-PAGE PDF <ArrowIcon /></span>
       </a>
 
       <div className="sneak-peek__tease reveal" aria-label="創刊号に収録する加工記事の誌面を一部公開">
         <div className="sneak-peek__tease-spread">
-          <img src={page030} alt="タンク装着加工を掲載した誌面 030" loading="lazy" />
-          <img src={page031} alt="燃料系統を解説した誌面 031" loading="lazy" />
+          <img src={page030} alt="タンク装着加工を掲載した誌面 030" loading="lazy" decoding="async" />
+          <img src={page031} alt="燃料系統を解説した誌面 031" loading="lazy" decoding="async" />
         </div>
         <div className="sneak-peek__veil">
           <span>ISSUE 01 / 8-PAGE FEATURE</span>
@@ -523,8 +525,10 @@ function Issue() {
       <div className="issue__visual reveal">
         <div className="issue__cover-wrap">
           <img
-            src={assetPath('cover-issue-01-r1200gs.png')}
+            src={assetPath('cover-issue-01-r1200gs.webp')}
             alt="ガードファクトリー製R1200GSが砂煙の中を走るDUST LINE創刊号表紙"
+            loading="lazy"
+            decoding="async"
           />
           <span className="issue__tag">DIGITAL EDITION</span>
         </div>
@@ -551,7 +555,7 @@ function Issue() {
 function RouteStrip() {
   return (
     <section className="route-strip" aria-label="旅の写真">
-      <div className="route-strip__image route-strip__image--one"><img src={assetPath('coastal-view.jpg')} alt="海を望む峠に停めたバイク" /></div>
+      <div className="route-strip__image route-strip__image--one"><img src={assetPath('coastal-view.jpg')} alt="海を望む峠に停めたバイク" loading="lazy" decoding="async" /></div>
       <div className="route-strip__statement reveal">
         <span>THE DISTANCE IS NOT THE POINT.</span>
         <strong><span>遠くへ行くことより、</span><span>何を持ち帰ったか。</span></strong>
@@ -567,7 +571,7 @@ function RouteStrip() {
 function Newsletter() {
   return (
     <section className="newsletter section" id="newsletter">
-      <div className="newsletter__image reveal"><img src={assetPath('mountain-stop.jpg')} alt="山を望む道路に停めたアドベンチャーバイク" /></div>
+      <div className="newsletter__image reveal"><img src={assetPath('mountain-stop.jpg')} alt="山を望む道路に停めたアドベンチャーバイク" loading="lazy" decoding="async" /></div>
       <div className="newsletter__copy reveal">
         <div className="section-label"><span>05</span><span>FIELD LETTER</span></div>
         <h2>次の旅を、<br />受信箱へ。</h2>
@@ -599,7 +603,7 @@ function Footer({ currentPage = null }) {
     <footer className="footer">
       <div className="footer__brand">
         <div className="footer__logo-frame">
-          <img className="footer__logo" src={assetPath('dust-line-logo.png')} alt="DUST LINE" />
+          <img className="footer__logo" src={assetPath('dust-line-logo.webp')} alt="DUST LINE" loading="lazy" decoding="async" />
         </div>
         <small>ADVENTURE MOTORCYCLE JOURNAL</small>
       </div>

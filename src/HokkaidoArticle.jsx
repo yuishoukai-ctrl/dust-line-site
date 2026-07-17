@@ -267,8 +267,10 @@ export default function HokkaidoArticle({ assetPath }) {
             <div><p>CONTINUE THE JOURNEY</p><h2>次の記録へ。</h2></div>
             <div className="hokkaido-next__links">
               <a href={`${root}?article=world-trip`}>世界一周仕様のKLR650を読む <ForwardArrow /></a>
+              <a href={`${root}downloads/dust-line-issue-01-sample.pdf`} target="_blank" rel="noreferrer">創刊号を2ページ試し読み <ForwardArrow /></a>
               <a href={`${root}#issue`}>創刊号について見る <ForwardArrow /></a>
               <a href="https://x.com/DUSTLINE_ADV" target="_blank" rel="noreferrer">公式Xを見る <ForwardArrow /></a>
+              <a href={`${root}?page=goods`}>DUST LINE公式グッズを見る <ForwardArrow /></a>
             </div>
           </aside>
 

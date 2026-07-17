@@ -245,6 +245,8 @@ export default function WorldTripArticle({ assetPath }) {
             <div className="magazine-cta__actions">
               <a className="magazine-cta__primary" href={samplePdf} target="_blank" rel="noreferrer">誌面を2ページ試し読み <ArticleArrow /></a>
               <a href={`${root}#issue`}>創刊号について見る <ArticleArrow /></a>
+              <a href="https://x.com/DUSTLINE_ADV" target="_blank" rel="noreferrer">公式Xを見る <ArticleArrow /></a>
+              <a href={`${root}?page=goods`}>公式グッズを見る <ArticleArrow /></a>
             </div>
           </section>
 
