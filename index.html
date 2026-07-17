@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#151719" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta
       name="description"
       content="DUST LINEは、道の先にある風景と、そこへ向かうライダーの物語を記録するアドベンチャーモーターサイクル・ジャーナルです。"
@@ -29,6 +33,37 @@
       content="道の先にある風景と、そこへ向かうライダーの物語を記録するアドベンチャーモーターサイクル・ジャーナル。"
     />
     <meta name="twitter:image" content="https://dustline.jp/og.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://dustline.jp/#organization",
+            "name": "DUST LINE",
+            "url": "https://dustline.jp/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://dustline.jp/images/dust-line-logo.png"
+            },
+            "sameAs": [
+              "https://x.com/DUSTLINE_ADV"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://dustline.jp/#website",
+            "url": "https://dustline.jp/",
+            "name": "DUST LINE",
+            "description": "道の先にある風景と、そこへ向かうライダーの物語を記録するアドベンチャーモーターサイクル・ジャーナル。",
+            "inLanguage": "ja-JP",
+            "publisher": {
+              "@id": "https://dustline.jp/#organization"
+            }
+          }
+        ]
+      }
+    </script>
     <title>DUST LINE | Adventure Motorcycle Journal</title>
   </head>
   <body>

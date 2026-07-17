@@ -9,6 +9,7 @@ const assetPath = (filename) => `${import.meta.env.BASE_URL}images/${filename}`
 const homePath = import.meta.env.BASE_URL
 const companyPagePath = `${homePath}?page=company`
 const goodsPagePath = `${homePath}?page=goods`
+const privacyPagePath = `${homePath}?page=privacy`
 const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
 const suzuriShopUrl = 'https://suzuri.jp/dustline'
 const officialXUrl = 'https://x.com/DUSTLINE_ADV'
@@ -595,6 +596,104 @@ function Newsletter() {
   )
 }
 
+function PrivacyPage() {
+  useEffect(() => {
+    const previousTitle = document.title
+    document.title = 'プライバシー・免責事項 | DUST LINE'
+    window.scrollTo(0, 0)
+    return () => { document.title = previousTitle }
+  }, [])
+
+  return (
+    <>
+      <a className="skip-link" href="#main">本文へ移動</a>
+      <Header currentPage="privacy" />
+      <main className="company-page legal-page" id="main">
+        <section className="company-page__hero legal-page__hero">
+          <div className="company-page__word" aria-hidden="true">POLICY</div>
+          <div className="company-page__hero-inner reveal">
+            <p className="eyebrow">DUST LINE / SITE POLICY</p>
+            <h1>プライバシー<br />・免責事項</h1>
+            <p>当サイトをご利用いただく際の、情報の取り扱いと注意事項をご案内します。</p>
+          </div>
+          <div className="company-page__index" aria-hidden="true"><span>DL</span><span>POLICY</span><span>JPN</span></div>
+        </section>
+
+        <section className="legal-page__content section" aria-labelledby="legal-title">
+          <header className="legal-page__intro reveal">
+            <p>PRIVACY &amp; DISCLAIMER</p>
+            <h2 id="legal-title">安心して読んでいただくために。</h2>
+            <p>DUST LINE（以下「当サイト」）は、読者の皆さまの情報を必要な範囲で適切に取り扱います。本ページでは、現在のサイト運営に即した方針を記載しています。</p>
+          </header>
+
+          <div className="legal-page__sections">
+            <section className="legal-block reveal">
+              <div className="legal-block__heading"><span>01</span><h3>取得する情報</h3></div>
+              <div className="legal-block__body">
+                <p>お問い合わせフォームをご利用の場合、氏名、メールアドレス、お問い合わせ内容など、送信者が入力した情報を受け取ることがあります。</p>
+                <p>ニュースレターは現在準備中であり、当サイト上ではメールアドレスの登録を受け付けていません。また、当サイト独自のアクセス解析ツールも現在導入していません。</p>
+                <p>ただし、サイトや外部フォームの提供事業者が、サービスの維持や安全確保のためにアクセス情報等を取り扱う場合があります。詳細は各事業者の方針をご確認ください。</p>
+              </div>
+            </section>
+
+            <section className="legal-block reveal">
+              <div className="legal-block__heading"><span>02</span><h3>利用目的</h3></div>
+              <div className="legal-block__body">
+                <p>お預かりした情報は、お問い合わせへの回答、必要な連絡、サイト運営上の確認、不正利用や安全上の問題への対応のために利用します。</p>
+                <p>ご本人の同意がある場合、または法令に基づく場合などを除き、利用目的を超えて取り扱うことはありません。</p>
+              </div>
+            </section>
+
+            <section className="legal-block reveal">
+              <div className="legal-block__heading"><span>03</span><h3>第三者提供と管理</h3></div>
+              <div className="legal-block__body">
+                <p>法令に基づく場合や、人の生命・身体・財産の保護のために必要な場合などを除き、個人情報を本人の同意なく第三者へ提供しません。</p>
+                <p>取得した情報について、紛失、漏えい、不正アクセスなどを防ぐため、運営上合理的な範囲で安全管理に努めます。</p>
+              </div>
+            </section>
+
+            <section className="legal-block reveal">
+              <div className="legal-block__heading"><span>04</span><h3>外部サービス</h3></div>
+              <div className="legal-block__body">
+                <p>当サイトには、SUZURI、X、Googleフォームなど外部サービスへのリンクがあります。リンク先で提供されるサービスや情報の取り扱いには、それぞれの利用規約・プライバシーポリシーが適用されます。</p>
+                <p>外部サイトの内容、商品の購入、決済、配送、アカウント管理等については、各サービス提供者へご確認ください。</p>
+              </div>
+            </section>
+
+            <section className="legal-block reveal">
+              <div className="legal-block__heading"><span>05</span><h3>免責事項</h3></div>
+              <div className="legal-block__body">
+                <p>当サイトでは、掲載内容の正確性や安全性に配慮していますが、完全性、最新性、有用性を保証するものではありません。内容は予告なく変更・削除することがあります。</p>
+                <p>ツーリング、車両整備、部品製作、溶接、塗装などの記事は、編集部の経験や取材に基づく情報です。実施にあたっては、車両の取扱説明書やメーカーの案内、法令、道路状況を確認し、必要に応じて専門家へご相談ください。</p>
+                <p>当サイトの利用または掲載情報を参考にしたことにより生じた損害について、当サイトは法令上認められる範囲で責任を負いかねます。外部リンク先の利用についても同様です。</p>
+              </div>
+            </section>
+
+            <section className="legal-block reveal">
+              <div className="legal-block__heading"><span>06</span><h3>著作権</h3></div>
+              <div className="legal-block__body">
+                <p>当サイトに掲載する文章、写真、画像、ロゴ等の権利は、DUST LINEまたは各権利者に帰属します。私的利用や法令で認められる引用の範囲を超えた無断転載・複製・改変はご遠慮ください。</p>
+              </div>
+            </section>
+
+            <section className="legal-block reveal">
+              <div className="legal-block__heading"><span>07</span><h3>改定・お問い合わせ</h3></div>
+              <div className="legal-block__body">
+                <p>サービス内容や法令等の変更に応じて、本方針を見直すことがあります。重要な変更がある場合は当サイト上でお知らせします。</p>
+                <p>情報の取り扱いに関するお問い合わせは、<a href={contactFormUrl} target="_blank" rel="noreferrer">お問い合わせフォーム</a>からご連絡ください。</p>
+                <p className="legal-block__date">制定日：2026年7月17日</p>
+              </div>
+            </section>
+          </div>
+
+          <a className="company-page__back text-link" href={homePath}>DUST LINEトップへ <ArrowIcon /></a>
+        </section>
+      </main>
+      <Footer currentPage="privacy" />
+    </>
+  )
+}
+
 function Footer({ currentPage = null }) {
   const subpage = Boolean(currentPage)
   const sectionHref = (id) => subpage ? `${homePath}#${id}` : `#${id}`
@@ -616,6 +715,7 @@ function Footer({ currentPage = null }) {
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined}>Company</a>
         <a href={contactFormUrl} target="_blank" rel="noreferrer">Contact</a>
         <a href={officialXUrl} target="_blank" rel="noreferrer" aria-label="DUST LINE公式X">Official X</a>
+        <a href={privacyPagePath} aria-current={currentPage === 'privacy' ? 'page' : undefined}>プライバシー・免責事項</a>
       </div>
       <p>© 2026 DUST LINE. ALL RIGHTS RESERVED.</p>
     </footer>
@@ -645,6 +745,7 @@ function App() {
   const page = new URLSearchParams(window.location.search).get('page')
   if (page === 'company') return <CompanyPage />
   if (page === 'goods') return <GoodsPage />
+  if (page === 'privacy') return <PrivacyPage />
 
   return (
     <>

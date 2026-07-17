@@ -145,6 +145,23 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .company-profile__pending span { padding: 5px 8px 4px; border: 1px solid rgba(21,23,25,.25); font: 800 .52rem/1 var(--display); letter-spacing: .13em; color: rgba(21,23,25,.5); }
 .company-page__back { margin: clamp(48px, 7vw, 86px) 0 0 auto; color: var(--ink); }
 
+.legal-page__hero h1 { font-size: clamp(3.1rem, 6.2vw, 6.4rem); line-height: .94; }
+.legal-page__content { max-width: 1360px; margin: 0 auto; }
+.legal-page__intro { display: grid; grid-template-columns: minmax(190px, .58fr) minmax(0, 1.42fr); gap: 20px clamp(44px, 9vw, 138px); padding-bottom: clamp(52px, 7vw, 92px); border-bottom: 1px solid rgba(21,23,25,.25); }
+.legal-page__intro > p:first-child { margin: 8px 0 0; font: 800 .62rem/1.4 var(--display); letter-spacing: .22em; color: var(--accent); }
+.legal-page__intro h2 { margin: 0; font: 900 clamp(2.2rem, 4.2vw, 4.8rem)/1 var(--display); letter-spacing: -.055em; }
+.legal-page__intro > p:last-child { grid-column: 2; max-width: 60ch; margin: 8px 0 0; font-size: .9rem; line-height: 1.95; color: rgba(21,23,25,.66); }
+.legal-page__sections { margin-top: clamp(18px, 3vw, 36px); }
+.legal-block { display: grid; grid-template-columns: minmax(190px, .58fr) minmax(0, 1.42fr); gap: clamp(44px, 9vw, 138px); padding: clamp(38px, 5vw, 66px) 0; border-bottom: 1px solid rgba(21,23,25,.16); }
+.legal-block__heading { display: grid; grid-template-columns: 34px 1fr; gap: 14px; align-content: start; }
+.legal-block__heading span { padding-top: 6px; font: 800 .58rem/1 var(--display); letter-spacing: .15em; color: var(--accent); }
+.legal-block__heading h3 { margin: 0; font: 900 clamp(1.35rem, 2vw, 2rem)/1.2 var(--display); letter-spacing: -.03em; }
+.legal-block__body { max-width: 70ch; }
+.legal-block__body p { margin: 0; font-size: .9rem; line-height: 2; color: rgba(21,23,25,.76); }
+.legal-block__body p + p { margin-top: 16px; }
+.legal-block__body a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+.legal-block__date { font: 700 .68rem/1.7 var(--display); letter-spacing: .08em; color: rgba(21,23,25,.48) !important; }
+
 .goods-page { min-height: 100dvh; color: var(--ink); background: var(--paper); }
 .goods-page__hero { position: relative; display: flex; min-height: 76dvh; align-items: flex-end; padding: 150px clamp(20px, 5vw, 80px) clamp(72px, 8vw, 118px); overflow: hidden; color: var(--paper); background: radial-gradient(circle at 74% 42%, rgba(217,101,49,.2), transparent 27%), #151719; }
 .goods-page__hero::before { content: ""; position: absolute; right: -8%; bottom: 21%; width: 72%; height: 1px; background: var(--accent); transform: rotate(-7deg); transform-origin: right; }
@@ -405,10 +422,17 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   .company-page__hero::before { right: -20%; bottom: 18%; width: 92%; }
   .company-page__hero-inner { width: auto; margin-left: 16px; }
   .company-page__hero h1 { font-size: clamp(3.3rem, 17vw, 5rem); }
+  .legal-page__hero h1 { font-size: clamp(2.8rem, 13.5vw, 4.2rem); }
   .company-page__word, .company-page__index { display: none; }
   .company-profile { grid-template-columns: 1fr; gap: 30px; margin-top: 68px; padding-top: 30px; }
   .company-profile--page { margin-top: 0; padding-top: 0; }
   .company-profile__details > div { grid-template-columns: 1fr; gap: 7px; padding: 14px 0 15px; }
+  .legal-page__intro { grid-template-columns: 1fr; gap: 22px; padding-bottom: 52px; }
+  .legal-page__intro h2 { font-size: clamp(2.25rem, 11vw, 3.4rem); }
+  .legal-page__intro > p:last-child { grid-column: 1; margin-top: 0; }
+  .legal-block { grid-template-columns: 1fr; gap: 22px; padding: 38px 0; }
+  .legal-block__heading { grid-template-columns: 30px 1fr; }
+  .legal-block__body p { font-size: .86rem; line-height: 1.95; }
   .goods-page__hero { min-height: 680px; padding: 132px 20px 72px; }
   .goods-page__hero::before { right: -24%; bottom: 18%; width: 104%; }
   .goods-page__hero-inner { width: auto; margin-left: 16px; }
