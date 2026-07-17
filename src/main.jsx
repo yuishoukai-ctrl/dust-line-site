@@ -41,16 +41,38 @@ const goods = [
   {
     category: 'T-SHIRT 01 / OFFICIAL',
     title: 'DUST LINE OFFICIAL T-SHIRT',
-    description: 'アドベンチャーバイクと旅の空気をまとった、DUST LINE最初の公式Tシャツ。',
-    image: assetPath('goods/dust-line-tshirt-mockup.png'),
-    alt: '黒いDUST LINEオリジナルTシャツの前面と背面',
+    description: '白ボディの胸元にDUST LINEロゴ、背面に日本縦断ルートを配置した公式モデル。',
+    href: 'https://suzuri.jp/dustline/20413142/t-shirt/s/white',
+    images: [
+      {
+        src: assetPath('goods/suzuri/dust-line-official-white-front-suzuri.webp'),
+        alt: 'SUZURIで販売中の白いDUST LINE公式Tシャツ前面',
+        side: 'FRONT',
+      },
+      {
+        src: assetPath('goods/suzuri/dust-line-official-white-back-suzuri.webp'),
+        alt: 'SUZURIで販売中の白いDUST LINE公式Tシャツ背面',
+        side: 'BACK',
+      },
+    ],
   },
   {
     category: 'T-SHIRT 02 / ROUTE MAP',
     title: 'ROUTE JAPAN T-SHIRT',
-    description: '日本列島を縦断するルートと地形図を、旅の記録として背中に配置した一枚。',
-    image: assetPath('goods/dust-line-tshirt-route-map.png'),
-    alt: '日本縦断ルート地図を背面に印刷した黒いDUST LINE Tシャツ',
+    description: 'アッシュボディの胸元に淡色ロゴ、背面に日本列島と縦断ルートを大きく配置。',
+    href: 'https://suzuri.jp/dustline/20413378/t-shirt/s/ash',
+    images: [
+      {
+        src: assetPath('goods/suzuri/dust-line-route-japan-ash-front-suzuri.webp'),
+        alt: 'SUZURIで販売中のアッシュ色ROUTE JAPAN Tシャツ前面',
+        side: 'FRONT',
+      },
+      {
+        src: assetPath('goods/suzuri/dust-line-route-japan-ash-back-suzuri.webp'),
+        alt: 'SUZURIで販売中のアッシュ色ROUTE JAPAN Tシャツ背面',
+        side: 'BACK',
+      },
+    ],
   },
 ]
 
@@ -318,7 +340,7 @@ function GoodsPage() {
             <div>
               <p>OFFICIAL GOODS / ONLINE STORE</p>
               <h2 id="goods-lineup-title">SUZURIで販売中。</h2>
-              <p>現在販売中の公式Tシャツです。カラーやアイテムの種類、最新の価格はSUZURIショップでご覧いただけます。</p>
+              <p>現在販売中の公式Tシャツです。画像はSUZURIの商品ページと同じ前面・背面プレビューを掲載しています。</p>
             </div>
           </header>
 
@@ -329,15 +351,20 @@ function GoodsPage() {
                 key={item.title}
                 style={{ '--delay': `${index * 70}ms` }}
               >
-                <figure className="goods-card__image">
-                  <img src={item.image} alt={item.alt} loading={index > 0 ? 'lazy' : 'eager'} />
+                <figure className="goods-card__image goods-card__image--pair">
+                  {item.images.map((image, imageIndex) => (
+                    <div className="goods-card__side" key={image.side}>
+                      <img src={image.src} alt={image.alt} loading={index > 0 || imageIndex > 0 ? 'lazy' : 'eager'} />
+                      <small>{image.side}</small>
+                    </div>
+                  ))}
                   <span>NOW ON SALE</span>
                 </figure>
                 <div className="goods-card__copy">
                   <p>{item.category}</p>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
-                  <a className="goods-card__link" href={suzuriShopUrl} target="_blank" rel="noreferrer">SUZURIで見る <ArrowIcon /></a>
+                  <a className="goods-card__link" href={item.href} target="_blank" rel="noreferrer">この商品をSUZURIで見る <ArrowIcon /></a>
                 </div>
               </article>
             ))}
