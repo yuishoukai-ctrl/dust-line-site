@@ -51,7 +51,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .brand { display: flex; align-items: baseline; gap: 14px; width: max-content; }
 .brand span { font: 900 1.35rem/.85 var(--display); letter-spacing: -.045em; }
 .brand small { font: 700 .56rem/1 var(--display); letter-spacing: .22em; color: var(--dust); }
-.nav { display: flex; align-items: center; gap: clamp(20px, 3vw, 46px); font: 700 .69rem/1 var(--display); letter-spacing: .15em; text-transform: uppercase; }
+.nav { display: flex; align-items: center; gap: clamp(18px, 2.2vw, 36px); font: 700 .76rem/1 var(--display); letter-spacing: .15em; text-transform: uppercase; }
 .nav a { position: relative; padding: 12px 0; color: rgba(240,236,223,.76); transition: color .3s cubic-bezier(.16,1,.3,1); }
 .nav a::after { content: ""; position: absolute; right: 0; bottom: 5px; left: 0; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: right; transition: transform .3s cubic-bezier(.16,1,.3,1); }
 .nav a:hover { color: var(--paper); }
