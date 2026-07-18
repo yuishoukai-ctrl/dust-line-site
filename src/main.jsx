@@ -9,6 +9,7 @@ const assetPath = (filename) => `${import.meta.env.BASE_URL}images/${filename}`
 const homePath = import.meta.env.BASE_URL
 const companyPagePath = `${homePath}?page=company`
 const goodsPagePath = `${homePath}?page=goods`
+const advertisePagePath = `${homePath}?page=advertise`
 const privacyPagePath = `${homePath}?page=privacy`
 const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
 const suzuriShopUrl = 'https://suzuri.jp/dustline'
@@ -141,6 +142,7 @@ function Header({ currentPage = null }) {
         <a href={sectionHref('about')} onClick={() => setOpen(false)}>About</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined} onClick={() => setOpen(false)}>Goods</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined} onClick={() => setOpen(false)}>Company</a>
+        <a href={advertisePagePath} aria-current={currentPage === 'advertise' ? 'page' : undefined} onClick={() => setOpen(false)}>広告募集</a>
         <a className="nav__cta" href={suzuriShopUrl} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>Shop</a>
         <a className="nav__mobile-x" href={officialXUrl} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>Official X</a>
       </nav>
@@ -416,6 +418,115 @@ function GoodsPage() {
         </section>
       </main>
       <Footer currentPage="goods" />
+    </>
+  )
+}
+
+function AdvertisePage() {
+  useEffect(() => {
+    const previousTitle = document.title
+    document.title = '創刊号 広告募集 | DUST LINE'
+    window.scrollTo(0, 0)
+    return () => { document.title = previousTitle }
+  }, [])
+
+  const partnerCategories = [
+    ['01', 'バイクショップ', '販売・整備・カスタム・レンタルなど、ライダーの拠点になるお店。'],
+    ['02', '工具・設備', 'ハンドツール、工作機械、ガレージ設備、ケミカル用品など。'],
+    ['03', 'パーツ・用品', '車両パーツ、装備、ウェア、キャンプ・ツーリング用品など。'],
+    ['04', '溶接・加工', '金属加工、部品製作、ワンオフ製作、修理に関わる事業者様。'],
+    ['05', '塗装・鈑金', '車両塗装、補修、鈑金、表面処理、仕上げに関わる事業者様。'],
+    ['06', '旅を支える仕事', '宿泊、輸送、フェリー、アウトドアなど、バイク旅に関わるサービス。'],
+  ]
+
+  return (
+    <>
+      <a className="skip-link" href="#main">本文へ移動</a>
+      <Header currentPage="advertise" />
+      <main className="advertise-page" id="main">
+        <section className="advertise-hero">
+          <div className="advertise-hero__word" aria-hidden="true">PARTNERS</div>
+          <div className="advertise-hero__copy reveal">
+            <p className="eyebrow">DUST LINE / ISSUE 01 AD PARTNERS</p>
+            <p className="advertise-hero__status">創刊号 / 掲載料無料</p>
+            <h1>バイクに関わる仕事を、<br />誌面へ。</h1>
+            <p>創刊号に掲載する、バイク関連事業者様の広告を募集しています。広告掲載料は無料です。</p>
+            <div className="advertise-hero__actions">
+              <a className="button button--accent" href={contactFormUrl} target="_blank" rel="noreferrer">掲載を相談する <ArrowIcon /></a>
+              <a className="text-link" href={officialXUrl} target="_blank" rel="noreferrer">公式Xを見る <ArrowIcon /></a>
+            </div>
+          </div>
+          <div className="advertise-hero__index" aria-hidden="true"><span>DL</span><span>AD</span><span>001</span></div>
+        </section>
+
+        <section className="advertise-page__content section" aria-labelledby="advertise-title">
+          <header className="advertise-intro reveal">
+            <div className="section-label"><span>01</span><span>PARTNERS WANTED</span></div>
+            <div>
+              <p>FREE MAGAZINE / FREE AD SPACE</p>
+              <h2 id="advertise-title">創刊号、無料。<br />広告掲載も、無料。</h2>
+              <p>DUST LINEの誌面を通して、読者に知ってほしい店、技術、道具、サービスをご紹介ください。規模の大小を問わず、バイクに関わる事業者様からのご相談を受け付けています。</p>
+            </div>
+          </header>
+
+          <figure className="advertise-visual reveal">
+            <img
+              src={assetPath('ad-recruitment-issue-01-cover.webp')}
+              alt="DUST LINE創刊号の無料広告募集。創刊号表紙と募集対象業種を掲載した案内画像"
+              loading="eager"
+              decoding="async"
+            />
+            <figcaption>ISSUE 01 / AD PARTNERS WANTED</figcaption>
+          </figure>
+
+          <section className="advertise-categories" aria-labelledby="advertise-categories-title">
+            <div className="advertise-section-heading reveal">
+              <p>WHO WE ARE LOOKING FOR</p>
+              <h2 id="advertise-categories-title">こんな事業者様を<br />募集しています。</h2>
+            </div>
+            <div className="advertise-category-grid">
+              {partnerCategories.map(([number, title, description], index) => (
+                <article className="advertise-category reveal" key={title} style={{ '--delay': `${index * 55}ms` }}>
+                  <span>{number}</span>
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="advertise-details" aria-labelledby="advertise-details-title">
+            <div className="advertise-details__heading reveal">
+              <p>ISSUE 01 / CONDITIONS</p>
+              <h2 id="advertise-details-title">掲載について。</h2>
+            </div>
+            <dl className="advertise-details__list reveal">
+              <div><dt>掲載料</dt><dd>創刊号の広告掲載料は無料です。</dd></div>
+              <div><dt>募集対象</dt><dd>バイク、工具、部品製作、溶接、塗装・鈑金、ツーリングなど、バイクに関連する事業者様。</dd></div>
+              <div><dt>掲載枠</dt><dd>誌面の掲載枠には限りがあります。ご相談の受付順や内容により、掲載できない場合があります。</dd></div>
+              <div><dt>掲載内容</dt><dd>店名・事業内容・WebサイトやSNS・写真・ロゴ・読者へ伝えたいことなど。原稿が未完成でもご相談いただけます。</dd></div>
+              <div><dt>誌面調整</dt><dd>DUST LINEの誌面に合わせ、文章やレイアウトを編集部で調整する場合があります。掲載前に内容をご確認いただきます。</dd></div>
+            </dl>
+          </section>
+
+          <aside className="advertise-cta reveal">
+            <div>
+              <p>CONTACT / AD PARTNERS</p>
+              <h2>まずは、掲載希望と<br />お知らせください。</h2>
+            </div>
+            <div>
+              <p>お問い合わせフォームの本文に「広告掲載希望」とご記入ください。掲載したい内容やWebサイト・SNSが決まっている場合は、あわせてお送りください。公式Xからのご相談も受け付けています。</p>
+              <div className="advertise-cta__actions">
+                <a className="button button--accent" href={contactFormUrl} target="_blank" rel="noreferrer">お問い合わせフォーム <ArrowIcon /></a>
+                <a className="button advertise-cta__x" href={officialXUrl} target="_blank" rel="noreferrer">公式X @DUSTLINE_ADV <ArrowIcon /></a>
+              </div>
+            </div>
+          </aside>
+
+          <a className="advertise-page__back text-link" href={homePath}>DUST LINEトップへ <ArrowIcon /></a>
+        </section>
+      </main>
+      <Footer currentPage="advertise" />
     </>
   )
 }
@@ -717,6 +828,7 @@ function Footer({ currentPage = null }) {
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined}>Goods</a>
         <a href={suzuriShopUrl} target="_blank" rel="noreferrer">Shop</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined}>Company</a>
+        <a href={advertisePagePath} aria-current={currentPage === 'advertise' ? 'page' : undefined}>広告募集</a>
         <a href={contactFormUrl} target="_blank" rel="noreferrer">Contact</a>
         <a href={officialXUrl} target="_blank" rel="noreferrer" aria-label="DUST LINE公式X">Official X</a>
         <a href={privacyPagePath} aria-current={currentPage === 'privacy' ? 'page' : undefined}>プライバシー・免責事項</a>
@@ -749,6 +861,7 @@ function App() {
   const page = new URLSearchParams(window.location.search).get('page')
   if (page === 'company') return <CompanyPage />
   if (page === 'goods') return <GoodsPage />
+  if (page === 'advertise') return <AdvertisePage />
   if (page === 'privacy') return <PrivacyPage />
 
   return (
