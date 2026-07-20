@@ -25,23 +25,23 @@ function Figure({ src, alt, caption, className = '', priority = false }) {
 }
 
 const chapters = [
-  ['machine', '01', '速さより、直せること'],
-  ['tank', '02', '37Lを海の向こうから'],
-  ['fit', '03', '載せると何も合わない'],
-  ['fuel', '04', '燃料を最後まで使う'],
-  ['make', '05', '売っていないなら作る'],
-  ['stopped', '06', '完成した一台、止まった旅'],
+  ['machine', '01', 'KLR650を選んだ理由'],
+  ['tank', '02', 'IMS 37Lタンクを輸入'],
+  ['fit', '03', '37Lタンクを車体へ合わせる'],
+  ['fuel', '04', '負圧ポンプで燃料を使い切る'],
+  ['make', '05', 'パニアステーを製作'],
+  ['stopped', '06', '完成したKLR650、止まった旅'],
 ]
 
 export default function WorldTripArticle({ assetPath }) {
   const root = import.meta.env.BASE_URL
   const image = (name) => assetPath(`world-trip/${name}`)
   const samplePdf = `${root}downloads/dust-line-issue-01-sample.pdf`
-  const hokkaidoArticle = `${root}?article=hokkaido-1190`
+  const hokkaidoArticle = '/articles/hokkaido-1190/'
 
   useEffect(() => {
     const previousTitle = document.title
-    document.title = '世界一周に行こうとしたら。KLR650世界一周仕様 | DUST LINE'
+    document.title = 'KLR650で世界一周へ｜IMS 37Lビッグタンク製作記 | DUST LINE'
     window.scrollTo(0, 0)
     return () => { document.title = previousTitle }
   }, [])
@@ -58,16 +58,16 @@ export default function WorldTripArticle({ assetPath }) {
           <header className="article-hero">
             <div className="article-hero__copy">
               <p className="article-kicker">WEB DIGEST / BUILD LOG 001</p>
-              <h1>世界一周に<br />行こうとしたら。</h1>
+              <h1>KLR650で<br />世界一周へ。<br />37Lを積む。</h1>
               <p className="article-deck">
-                KLR650を選び、37Lタンクを載せ、足りない部品は作った。
+                KLR650を選び、IMS 37Lビッグタンクを載せ、足りない部品は作った。
                 車両が完成したとき、旅を始められない理由が残った。
               </p>
               <div className="article-byline"><span>WORDS & PHOTOS</span><strong>DUST LINE編集部</strong><span>WEB EDITION</span></div>
             </div>
             <Figure
               src={image('completed-klr650.jpg')}
-              alt="37Lタンクとパニアステーを装着した世界一周仕様のKLR650"
+              alt="IMS 37Lビッグタンクとパニアステーを装着した世界一周仕様のKLR650"
               caption="車両は完成した。これは、出発しなかった旅の入口だ。"
               className="article-hero__machine"
               priority
@@ -76,7 +76,7 @@ export default function WorldTripArticle({ assetPath }) {
 
           <div className="article-intro world-digest__intro">
             <p className="article-dropcap">
-              世界一周は、国境を越える前から始まっていた。ユーラシア大陸とアメリカ大陸の横断を見据え、選んだのは欧州仕様のKLR650。故障したときに直しやすく、給油地点の少ない土地を走れる一台を目指した。
+              世界一周は、国境を越える前から始まっていた。ユーラシア大陸とアメリカ大陸の横断を見据え、選んだのは欧州仕様のKLR650。故障したときに直しやすく、IMS 37Lビッグタンクで給油地点の少ない土地を走れる一台を目指した。
             </p>
             <p>
               WEB版では、長い準備を6つの判断に絞ってたどる。切断、溶接、燃料系統、ワンオフ部品の詳しい工程は、創刊号の8ページに残した。
@@ -109,7 +109,7 @@ export default function WorldTripArticle({ assetPath }) {
             <div className="article-section__number">01</div>
             <div className="article-section__heading">
               <p>CHOOSING THE MACHINE</p>
-              <h2>速さより、<br />直せること。</h2>
+              <h2>世界一周の相棒に<br />KLR650を選んだ理由。</h2>
             </div>
             <div className="web-copy-grid">
               <p>
@@ -126,7 +126,7 @@ export default function WorldTripArticle({ assetPath }) {
           <section className="article-section article-section--arrival" id="tank">
             <div className="arrival-copy">
               <p className="article-kicker">THE 10-GALLON ANSWER</p>
-              <h2>37Lを、<br />海の向こうから。</h2>
+              <h2>IMS 37Lビッグタンクを、<br />海の向こうから。</h2>
               <p>
                 給油地点の少ない土地を想定して選んだのは、IMS製の10ガロンタンク。フロリダのショップから680ドルで取り寄せ、当時の送料などを含む総額は約14万円になった。
               </p>
@@ -145,7 +145,7 @@ export default function WorldTripArticle({ assetPath }) {
             <div className="article-section__number">03</div>
             <div className="article-section__heading">
               <p>NOT A BOLT-ON PART</p>
-              <h2>載せると、<br />何も合わない。</h2>
+              <h2>KLR650に37Lタンクを載せる。<br />何も合わない。</h2>
             </div>
             <div className="workshop-lead world-digest__workshop-lead">
               <p>
@@ -182,7 +182,7 @@ export default function WorldTripArticle({ assetPath }) {
             <Figure src={image('fuel-system.jpg')} alt="IMSタンクからキャブレターへつながる燃料系統" caption="左右の低い位置に残る燃料を、負圧ポンプで送る構成。" />
             <div>
               <p className="article-kicker">VACUUM FUEL PUMP</p>
-              <h2>燃料を、<br />最後まで使う。</h2>
+              <h2>負圧ポンプで37Lの燃料を、<br />最後まで使う。</h2>
               <p>
                 半透明のタンクなら、メーターに頼らず残量を目で確認できる。一方、タンクの最下部はキャブレターより低く、重力だけでは燃料を使い切れない。そこで負圧ポンプを使い、左右の低い場所から燃料を吸い上げる構成にした。仕組みとホースの取り回しは誌面版で詳しく紹介している。
               </p>
@@ -193,7 +193,7 @@ export default function WorldTripArticle({ assetPath }) {
             <div className="article-section__number">05</div>
             <div className="article-section__heading">
               <p>ONE-OFF PANNIER RACK</p>
-              <h2>売っていないなら、<br />作る。</h2>
+              <h2>パニアステーとガード。<br />売っていないなら作る。</h2>
             </div>
             <div className="article-feature-grid world-digest__pannier">
               <div className="article-prose">
@@ -211,7 +211,7 @@ export default function WorldTripArticle({ assetPath }) {
           <section className="article-finale" id="stopped">
             <div className="article-finale__copy">
               <p className="article-kicker">THE TRIP THAT STOPPED</p>
-              <h2>車両は完成した。<br />旅だけが始まらなかった。</h2>
+              <h2>KLR650は完成した。<br />旅だけが始まらなかった。</h2>
               <p>
                 37Lタンクを備えたKLR650は完成し、知人とのツーリングでも走らせた。車両は、出発できる形になった。
               </p>
@@ -233,7 +233,7 @@ export default function WorldTripArticle({ assetPath }) {
           <section className="magazine-cta" aria-labelledby="magazine-cta-title">
             <div>
               <p className="article-kicker">CONTINUE IN ISSUE 01</p>
-              <h2 id="magazine-cta-title">準備の全記録は、<br />創刊号で。</h2>
+               <h2 id="magazine-cta-title">KLR650製作の全記録は、<br />創刊号で。</h2>
               <p>WEBで省いた加工の細部と写真を、8ページの誌面にまとめました。</p>
             </div>
             <ul>
@@ -244,6 +244,8 @@ export default function WorldTripArticle({ assetPath }) {
             </ul>
             <div className="magazine-cta__actions">
               <a className="magazine-cta__primary" href={samplePdf} target="_blank" rel="noreferrer">誌面を2ページ試し読み <ArticleArrow /></a>
+              <a href="/build/">車両製作の記事を見る <ArticleArrow /></a>
+              <a href="/garage/">溶接・加工の記事を見る <ArticleArrow /></a>
               <a href={`${root}#issue`}>創刊号について見る <ArticleArrow /></a>
               <a href="https://x.com/DUSTLINE_ADV" target="_blank" rel="noreferrer">公式Xを見る <ArticleArrow /></a>
               <a href={`${root}?page=goods`}>公式グッズを見る <ArticleArrow /></a>
@@ -252,7 +254,7 @@ export default function WorldTripArticle({ assetPath }) {
 
           <aside className="article-next-read">
             <p>NEXT STORY / TRAVEL REPORT</p>
-            <a href={hokkaidoArticle}><strong>1190で行く、北海道・離島の旅。</strong><span>約3,500km、10日間の記録 <ArticleArrow /></span></a>
+            <a href={hokkaidoArticle}><strong>KTM 1190 Adventureで行く北海道・利尻島・礼文島。</strong><span>約3,500km、10日間の記録 <ArticleArrow /></span></a>
           </aside>
 
           <footer className="article-footer">

@@ -3,14 +3,18 @@ import { createRoot } from 'react-dom/client'
 import HokkaidoArticle from './HokkaidoArticle'
 import MachineFileArticle from './MachineFileArticle'
 import WorldTripArticle from './WorldTripArticle'
+import CategoryPage from './CategoryPages'
 import './styles.css'
 
 const assetPath = (filename) => `${import.meta.env.BASE_URL}images/${filename}`
 const homePath = import.meta.env.BASE_URL
-const companyPagePath = `${homePath}?page=company`
-const goodsPagePath = `${homePath}?page=goods`
-const advertisePagePath = `${homePath}?page=advertise`
-const privacyPagePath = `${homePath}?page=privacy`
+const companyPagePath = `${homePath}company/`
+const goodsPagePath = `${homePath}goods/`
+const advertisePagePath = `${homePath}advertise/`
+const privacyPagePath = `${homePath}privacy/`
+const travelPagePath = `${homePath}travel/`
+const buildPagePath = `${homePath}build/`
+const garagePagePath = `${homePath}garage/`
 const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
 const suzuriShopUrl = 'https://suzuri.jp/dustline'
 const officialXUrl = 'https://x.com/DUSTLINE_ADV'
@@ -21,7 +25,7 @@ const stories = [
     title: '世界一周に行こうとしたら。',
     excerpt: 'なぜKLR650、なぜ37L。そして旅が止まった理由。世界一周仕様を作った記録。',
     image: assetPath('world-trip/completed-klr650.jpg'),
-    href: `${import.meta.env.BASE_URL}?article=world-trip`,
+    href: `${homePath}articles/world-trip/`,
     className: 'story--wide',
   },
   {
@@ -36,7 +40,7 @@ const stories = [
     title: '大陸横断マシン',
     excerpt: '60Lタンク、トリプルヘッドライト、6mmアーマー。ガードファクトリーが仕立てた一台。',
     image: assetPath('bike-profile.jpg'),
-    href: `${homePath}?article=machine-file-001`,
+    href: `${homePath}articles/machine-file-001/`,
     className: 'story--compact',
   },
 ]
@@ -136,10 +140,10 @@ function Header({ currentPage = null }) {
         <small>ADVENTURE JOURNAL</small>
       </a>
       <nav className={open ? 'nav nav--open' : 'nav'} aria-label="メインナビゲーション">
-        <a href={sectionHref('stories')} onClick={() => setOpen(false)}>Stories</a>
-        <a href={sectionHref('magazine')} onClick={() => setOpen(false)}>Magazine</a>
+        <a href={travelPagePath} aria-current={currentPage === 'travel' ? 'page' : undefined} onClick={() => setOpen(false)}>Travel</a>
+        <a href={buildPagePath} aria-current={currentPage === 'build' ? 'page' : undefined} onClick={() => setOpen(false)}>Build</a>
+        <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined} onClick={() => setOpen(false)}>Garage</a>
         <a href={sectionHref('issue')} onClick={() => setOpen(false)}>Issue 01</a>
-        <a href={sectionHref('about')} onClick={() => setOpen(false)}>About</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined} onClick={() => setOpen(false)}>Goods</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined} onClick={() => setOpen(false)}>Company</a>
         <a href={advertisePagePath} aria-current={currentPage === 'advertise' ? 'page' : undefined} onClick={() => setOpen(false)}>広告募集</a>
@@ -537,7 +541,7 @@ function FeaturedStory() {
       <div className="section-label section-label--light reveal"><span>02</span><span>LATEST STORY</span></div>
       <a
         className="feature__frame reveal"
-        href={`${import.meta.env.BASE_URL}?article=hokkaido-1190`}
+        href={`${homePath}articles/hokkaido-1190/`}
         style={{ '--feature-image': `url(${assetPath('hokkaido-1190/hero-ktm-ferry-departure.jpg')})` }}
       >
         <img src={assetPath('hokkaido-1190/hero-ktm-ferry-departure.jpg')} alt="北海道行きのフェリーを前に停めたKTM 1190 ADVENTURE" loading="lazy" decoding="async" />
@@ -587,7 +591,7 @@ function StoryGrid() {
 }
 
 function MagazinePreview() {
-  const webArticle = `${import.meta.env.BASE_URL}?article=world-trip`
+  const webArticle = `${homePath}articles/world-trip/`
   const samplePdf = `${import.meta.env.BASE_URL}downloads/dust-line-issue-01-sample.pdf`
   const page026 = assetPath('issue-01/world-trip-026.webp')
   const page027 = assetPath('issue-01/world-trip-027.webp')
@@ -822,9 +826,10 @@ function Footer({ currentPage = null }) {
         <small>ADVENTURE MOTORCYCLE JOURNAL</small>
       </div>
       <div className="footer__links">
-        <a href={sectionHref('stories')}>Stories</a>
+        <a href={travelPagePath} aria-current={currentPage === 'travel' ? 'page' : undefined}>Travel</a>
+        <a href={buildPagePath} aria-current={currentPage === 'build' ? 'page' : undefined}>Build</a>
+        <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined}>Garage</a>
         <a href={sectionHref('issue')}>Issue</a>
-        <a href={sectionHref('about')}>About</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined}>Goods</a>
         <a href={suzuriShopUrl} target="_blank" rel="noreferrer">Shop</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined}>Company</a>
@@ -853,16 +858,47 @@ function App() {
     return () => observer.disconnect()
   }, [])
 
-  const article = new URLSearchParams(window.location.search).get('article')
+  const pathname = window.location.pathname === '/'
+    ? '/'
+    : `${window.location.pathname.replace(/\/+$/, '')}/`
+  const routeArticle = {
+    '/articles/hokkaido-1190/': 'hokkaido-1190',
+    '/articles/world-trip/': 'world-trip',
+    '/articles/machine-file-001/': 'machine-file-001',
+  }[pathname]
+  const article = routeArticle || new URLSearchParams(window.location.search).get('article')
   if (article === 'hokkaido-1190') return <HokkaidoArticle assetPath={assetPath} />
   if (article === 'world-trip') return <WorldTripArticle assetPath={assetPath} />
   if (article === 'machine-file-001') return <MachineFileArticle assetPath={assetPath} />
 
-  const page = new URLSearchParams(window.location.search).get('page')
+  const routePage = {
+    '/company/': 'company',
+    '/goods/': 'goods',
+    '/advertise/': 'advertise',
+    '/privacy/': 'privacy',
+  }[pathname]
+  const page = routePage || new URLSearchParams(window.location.search).get('page')
   if (page === 'company') return <CompanyPage />
   if (page === 'goods') return <GoodsPage />
   if (page === 'advertise') return <AdvertisePage />
   if (page === 'privacy') return <PrivacyPage />
+
+  const category = {
+    '/travel/': 'travel',
+    '/build/': 'machines',
+    '/garage/': 'garage',
+  }[pathname]
+  if (category) {
+    const currentPage = category === 'machines' ? 'build' : category
+    return (
+      <>
+        <a className="skip-link" href="#main">本文へ移動</a>
+        <Header currentPage={currentPage} />
+        <CategoryPage category={category} assetPath={assetPath} />
+        <Footer currentPage={currentPage} />
+      </>
+    )
+  }
 
   return (
     <>

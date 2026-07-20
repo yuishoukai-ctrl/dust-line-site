@@ -38,7 +38,7 @@ export default function HokkaidoArticle({ assetPath }) {
 
   useEffect(() => {
     const previousTitle = document.title
-    document.title = 'KTM 1190 ADVENTUREで行く 北海道・離島の旅 | DUST LINE'
+    document.title = 'KTM 1190 Adventureで行く北海道・利尻島・礼文島3,500km | DUST LINE'
     window.scrollTo(0, 0)
     return () => { document.title = previousTitle }
   }, [])
@@ -55,15 +55,15 @@ export default function HokkaidoArticle({ assetPath }) {
           <header className="hokkaido-hero">
             <TravelFigure
               src={image('hero-ktm-ferry-departure.jpg')}
-              alt="北海道を走ったオレンジ色のKTM 1190 ADVENTURE"
+              alt="北海道ツーリングで利尻島・礼文島を巡ったオレンジ色のKTM 1190 Adventure"
               className="hokkaido-hero__image"
               priority
             />
             <div className="hokkaido-hero__veil" />
             <div className="hokkaido-hero__copy">
               <p className="article-kicker">TRAVEL REPORT / LONG DISTANCE</p>
-              <h1><span>KTM 1190 ADVENTUREで行く</span>北海道・離島の旅</h1>
-              <p className="hokkaido-hero__deck">約3,500km、10日間。静岡から北海道を北へ走り、宗谷岬の先にある利尻島と礼文島へ渡った。</p>
+              <h1><span>KTM 1190 ADVENTUREで行く</span>北海道・利尻島・礼文島 3,500kmの旅</h1>
+              <p className="hokkaido-hero__deck">約3,500km、10日間。静岡から北上し、宗谷岬、利尻島、礼文島、道東、襟裳岬をつないだ北海道ツーリングの記録。</p>
               <div className="article-byline"><span>WORDS & PHOTOS</span><strong>DUST LINE編集部</strong></div>
             </div>
             <div className="hokkaido-hero__index" aria-hidden="true"><span>TR</span><span>1190</span><span>JPN</span></div>
@@ -77,12 +77,12 @@ export default function HokkaidoArticle({ assetPath }) {
               <div><dt>MACHINE</dt><dd>1190<small>ADVENTURE</small></dd></div>
             </dl>
             <nav className="hokkaido-toc" aria-label="記事の目次">
-              <a href="#preparation">旅の準備</a>
-              <a href="#northbound">北海道上陸</a>
-              <a href="#trouble">積丹のトラブル</a>
-              <a href="#far-north">最北端と離島</a>
-              <a href="#eastern-arc">道東から襟裳岬</a>
-              <a href="#impression">1190の所感</a>
+              <a href="#preparation">1190の出発前整備</a>
+              <a href="#northbound">青森から北海道へ</a>
+              <a href="#trouble">積丹のエンジン停止</a>
+              <a href="#far-north">利尻島・礼文島</a>
+              <a href="#eastern-arc">道東・襟裳岬</a>
+              <a href="#impression">1190の旅性能</a>
             </nav>
           </section>
 
@@ -96,7 +96,7 @@ export default function HokkaidoArticle({ assetPath }) {
             <div className="article-section__number">01</div>
             <div className="article-section__heading">
               <p>PRE-RIDE CHECK</p>
-              <h2>旅の始点は、<br />出発前にある。</h2>
+              <h2>KTM 1190 Adventure、<br />出発前の整備。</h2>
             </div>
             <div className="hokkaido-split">
               <div className="article-prose">
@@ -118,7 +118,7 @@ export default function HokkaidoArticle({ assetPath }) {
             <div className="article-section__number">02</div>
             <div className="article-section__heading">
               <p>DAY 01–02 / NORTHBOUND</p>
-              <h2>北へ。<br />まず862km。</h2>
+              <h2>静岡から青森862km。<br />フェリーで北海道へ。</h2>
             </div>
             <div className="hokkaido-story-grid">
               <div className="article-prose">
@@ -138,7 +138,7 @@ export default function HokkaidoArticle({ assetPath }) {
             </div>
             <div className="hokkaido-trouble__copy">
               <p className="article-kicker">TROUBLE LOG / SHAKOTAN</p>
-              <h2>積丹で止まった<br />エンジン。</h2>
+              <h2>積丹でエンジン停止。<br />燃料キャップを疑う。</h2>
               <p>函館から札幌へ向かう途中、積丹半島でガス欠に似た症状が出た。時間を置くと何事もなかったように始動する。頭の中のトラブルシューティングをたどり、燃料キャップの通気穴を疑った。</p>
               <p>当時は応急措置として燃料キャップを半開きにして走り、小樽のホームセンターで取り外して通気穴を清掃した。ドレン側から泥のような汚れが出ると、症状は改善した。</p>
               <aside className="hokkaido-warning">
@@ -152,7 +152,7 @@ export default function HokkaidoArticle({ assetPath }) {
             <div className="article-section__number">03</div>
             <div className="article-section__heading">
               <p>FURANO / ORORON LINE / THE NORTH</p>
-              <h2>10分の富良野。<br />10時間の北上。</h2>
+              <h2>富良野からオロロンライン、<br />宗谷岬へ。</h2>
             </div>
             <div className="hokkaido-gallery hokkaido-gallery--lead">
               <TravelFigure src={image('03-furano-lavender-fields.jpg')} alt="富良野のラベンダー畑" caption="札幌を朝5時に出発。富良野で足を止められたのは約10分だった。" />
@@ -174,7 +174,7 @@ export default function HokkaidoArticle({ assetPath }) {
             <div className="article-section__number">04</div>
             <div className="article-section__heading">
               <p>RISHIRI / REBUN ISLAND</p>
-              <h2>宗谷岬の先へ。<br />行くぜ、離島。</h2>
+              <h2>宗谷岬の先、<br />利尻島・礼文島へ。</h2>
             </div>
             <div className="hokkaido-gallery hokkaido-gallery--islands">
               <TravelFigure src={image('05-northern-canary-park-bikes.jpg')} alt="礼文島の北のカナリアパークに停めた2台のバイク" caption="海を渡った2台。島では、走る時間の密度が変わる。" />
@@ -204,7 +204,7 @@ export default function HokkaidoArticle({ assetPath }) {
             <div className="article-section__number">05</div>
             <div className="article-section__heading">
               <p>SARUFUTSU / EASTERN ARC / CAPE ERIMO</p>
-              <h2>一本の線を、<br />道東へ。</h2>
+              <h2>エサヌカ線から道東、<br />襟裳岬へ。</h2>
             </div>
             <TravelFigure src={image('08-esanuka-straight-road.jpg')} alt="北海道猿払村の真っすぐなエサヌカ線" caption="ガードレールも電柱もない直線。農作業車や地域の通行を妨げず、速度を控えて走りたい。" className="hokkaido-wide-figure" />
             <div className="hokkaido-chapter-grid">
@@ -235,7 +235,7 @@ export default function HokkaidoArticle({ assetPath }) {
           <section className="hokkaido-impression" id="impression">
             <div className="hokkaido-impression__copy">
               <p className="article-kicker">MACHINE IMPRESSION</p>
-              <h2>R1200GSと<br />1190 ADVENTURE。</h2>
+              <h2>北海道3,500kmで分かった<br />1190 Adventureの旅性能。</h2>
               <p>今回1190 ADVENTUREを選んだのは、空冷R1200GSとの違いを試したかったからでもある。2台で同じ北海道を走ったら、何を感じるのか。</p>
               <p>R1200GSは一定の巡航速度を保ちながら流していく。対して1190 ADVENTUREは、次の目的地へ向けてアクセルを開け、加速していくのが似合う。BMWとKTM、それぞれのフラッグシップ・アドベンチャーには違う良さがある。</p>
               <p>旅の後半、今回の個体は高回転まできっちり回らなくなってきた。走行距離は約3,500km。車両の状態と走り方を踏まえ、筆者は3,000kmほどを目安にオイル交換を考えたほうがよさそうだと感じた。これは今回の一台で得た所感である。</p>
@@ -266,7 +266,9 @@ export default function HokkaidoArticle({ assetPath }) {
           <aside className="hokkaido-next">
             <div><p>CONTINUE THE JOURNEY</p><h2>次の記録へ。</h2></div>
             <div className="hokkaido-next__links">
-              <a href={`${root}?article=world-trip`}>世界一周仕様のKLR650を読む <ForwardArrow /></a>
+              <a href="/travel/">北海道・ロングツーリングの記事を見る <ForwardArrow /></a>
+              <a href="/articles/world-trip/">KLR650とIMS 37Lタンクの製作記を読む <ForwardArrow /></a>
+              <a href="/articles/machine-file-001/">BMW R1200GS 60L大陸横断マシンを読む <ForwardArrow /></a>
               <a href={`${root}downloads/dust-line-issue-01-sample.pdf`} target="_blank" rel="noreferrer">創刊号を2ページ試し読み <ForwardArrow /></a>
               <a href={`${root}#issue`}>創刊号について見る <ForwardArrow /></a>
               <a href="https://x.com/DUSTLINE_ADV" target="_blank" rel="noreferrer">公式Xを見る <ForwardArrow /></a>

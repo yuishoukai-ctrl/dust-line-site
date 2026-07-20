@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  // Relative assets work on both the legacy project URL and dustline.jp.
-  base: './',
+  // Canonical production routes live at the dustline.jp origin root.
+  base: '/',
 })
