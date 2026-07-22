@@ -1,6 +1,7 @@
 import { StrictMode, useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import HokkaidoArticle from './HokkaidoArticle'
+import Ktm990Article from './Ktm990Article'
 import MachineFileArticle from './MachineFileArticle'
 import WorldTripArticle from './WorldTripArticle'
 import CategoryPage from './CategoryPages'
@@ -541,17 +542,17 @@ function FeaturedStory() {
       <div className="section-label section-label--light reveal"><span>02</span><span>LATEST STORY</span></div>
       <a
         className="feature__frame reveal"
-        href={`${homePath}articles/hokkaido-1190/`}
-        style={{ '--feature-image': `url(${assetPath('hokkaido-1190/hero-ktm-ferry-departure.jpg')})` }}
+        href={`${homePath}articles/ktm-990-adv-s/`}
+        style={{ '--feature-image': `url(${assetPath('ktm-990-adv-s/01-dirt-slide.webp')})` }}
       >
-        <img src={assetPath('hokkaido-1190/hero-ktm-ferry-departure.jpg')} alt="北海道行きのフェリーを前に停めたKTM 1190 ADVENTURE" loading="lazy" decoding="async" />
+        <img src={assetPath('ktm-990-adv-s/01-dirt-slide.webp')} alt="ダートでKTM 990 ADVENTURE Sをスライドさせるライダー" loading="lazy" decoding="async" />
         <div className="feature__shade" />
         <div className="feature__copy">
-          <p>TRAVEL REPORT / 3,500 KM</p>
-          <h2>1190で行く、<br />北海道・離島の旅。</h2>
-          <span>10日間。北の端、その先にある島へ。<ArrowIcon /></span>
+          <p>MACHINE PROFILE / 12 YEARS</p>
+          <h2>KTM 990<br />ADVENTURE S。</h2>
+          <span>12年乗って分かった、ダートで際立つLC8。<ArrowIcon /></span>
         </div>
-        <div className="feature__number" aria-hidden="true">01</div>
+        <div className="feature__number" aria-hidden="true">03</div>
       </a>
     </section>
   )
@@ -863,11 +864,13 @@ function App() {
     : `${window.location.pathname.replace(/\/+$/, '')}/`
   const routeArticle = {
     '/articles/hokkaido-1190/': 'hokkaido-1190',
+    '/articles/ktm-990-adv-s/': 'ktm-990-adv-s',
     '/articles/world-trip/': 'world-trip',
     '/articles/machine-file-001/': 'machine-file-001',
   }[pathname]
   const article = routeArticle || new URLSearchParams(window.location.search).get('article')
   if (article === 'hokkaido-1190') return <HokkaidoArticle assetPath={assetPath} />
+  if (article === 'ktm-990-adv-s') return <Ktm990Article assetPath={assetPath} />
   if (article === 'world-trip') return <WorldTripArticle assetPath={assetPath} />
   if (article === 'machine-file-001') return <MachineFileArticle assetPath={assetPath} />
 

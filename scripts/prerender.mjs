@@ -10,7 +10,7 @@ const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = join(projectRoot, 'dist')
 const siteOrigin = 'https://dustline.jp'
 const publishedDate = '2026-07-17'
-const modifiedDate = '2026-07-20'
+const modifiedDate = '2026-07-22'
 
 const routes = [
   {
@@ -73,6 +73,19 @@ const routes = [
     schemaType: 'Article',
     section: '旅・ツーリング',
     expectedText: 'KTM 1190 ADVENTUREで行く',
+  },
+  {
+    path: '/articles/ktm-990-adv-s/',
+    source: '/?article=ktm-990-adv-s',
+    title: 'KTM 990 ADVENTURE S｜12年乗って分かったダートで際立つLC8｜DUST LINE',
+    description: '2007年型KTM 990 ADVENTURE Sを12年所有したライダーが語る、LC8の手応え、前後265mmの足、ダートでの走り、40Lタンクなど3つの変更。',
+    image: '/images/ktm-990-adv-s/01-dirt-slide.webp',
+    imageAlt: 'ダートでKTM 990 ADVENTURE Sをスライドさせるライダー',
+    schemaType: 'Article',
+    section: '車両・インプレッション',
+    publishedDate: '2026-07-22',
+    modifiedDate: '2026-07-22',
+    expectedText: '12年乗って分かった',
   },
   {
     path: '/articles/world-trip/',
@@ -349,8 +362,8 @@ const pageSchema = (route) => {
       headline: route.title.replace(/｜DUST LINE(?: GARAGE)?$/, ''),
       description: route.description,
       image: [image],
-      datePublished: publishedDate,
-      dateModified: modifiedDate,
+      datePublished: route.publishedDate ?? publishedDate,
+      dateModified: route.modifiedDate ?? modifiedDate,
       articleSection: route.section,
       inLanguage: 'ja-JP',
       author: { '@type': 'Organization', name: 'DUST LINE編集部', url: `${siteOrigin}/company/` },

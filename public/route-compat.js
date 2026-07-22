@@ -10,6 +10,7 @@
     '?page=advertise': '/advertise/',
     '?page=privacy': '/privacy/',
     '?article=hokkaido-1190': '/articles/hokkaido-1190/',
+    '?article=ktm-990-adv-s': '/articles/ktm-990-adv-s/',
     '?article=world-trip': '/articles/world-trip/',
     '?article=machine-file-001': '/articles/machine-file-001/',
   }
@@ -21,6 +22,7 @@
     '/advertise/',
     '/privacy/',
     '/articles/hokkaido-1190/',
+    '/articles/ktm-990-adv-s/',
     '/articles/world-trip/',
     '/articles/machine-file-001/',
     '/travel/',
