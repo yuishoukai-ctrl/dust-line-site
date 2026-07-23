@@ -313,6 +313,21 @@ function CompanyPage() {
               </div>
               <div><dt>代表者</dt><dd>小長谷一行</dd></div>
               <div><dt>事業内容</dt><dd>出版・Webメディア運営・コンテンツ制作</dd></div>
+              <div>
+                <dt>関連事業</dt>
+                <dd>
+                  <a
+                    href="https://apps.dustline.jp/"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="DUSTLINE アプリ開発事業部（新しいタブで開きます）"
+                  >
+                    DUSTLINE アプリ開発事業部
+                  </a>
+                  <br />
+                  iOS / Androidアプリの企画・開発・運用、アプリ利用者向けサポート
+                </dd>
+              </div>
               <div><dt>運営媒体</dt><dd>DUST LINE</dd></div>
               <div><dt>URL</dt><dd><a href="https://dustline.jp">dustline.jp</a></dd></div>
               <div>
