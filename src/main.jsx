@@ -312,6 +312,7 @@ function CompanyPage() {
                 <dd><address>〒421-3115 静岡県静岡市清水区由比西倉澤838-2</address></dd>
               </div>
               <div><dt>代表者</dt><dd>小長谷一行</dd></div>
+              <div><dt>電話番号</dt><dd><a href="tel:+815017850018">050-1785-0018</a></dd></div>
               <div><dt>事業内容</dt><dd>出版・Webメディア運営・コンテンツ制作</dd></div>
               <div>
                 <dt>関連事業</dt>
