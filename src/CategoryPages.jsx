@@ -93,6 +93,10 @@ const CATEGORY_CONTENT = {
     lead: '走るための加工を、現場の手順で。溶接、塗装、研磨、車両整備を、実車で確認した寸法と失敗しないための判断から伝えます。',
     statement: '火花の先に、次の一台がある。',
     description: 'GARAGEの公開記事は、現在準備中です。サイドスタンド拡張、ワンオフ部品、塗装と下地づくりなど、編集部が実際に手を動かした工程を順次公開します。',
+    serviceLink: {
+      href: '/paint/',
+      label: '塗装価格と依頼方法を見る',
+    },
     heroImage: 'bike-profile.jpg',
     heroAlt: 'DUST LINEで製作したアドベンチャーバイクの車両ディテール',
     cards: [
@@ -181,6 +185,11 @@ export default function CategoryPage({ category = 'travel', assetPath }) {
         <div className="dl-category-intro__body">
           <h2 id="category-statement">{content.statement}</h2>
           <p>{content.description}</p>
+          {content.serviceLink && (
+            <a className="dl-category-intro__service" href={content.serviceLink}>
+              {content.serviceLink.label}<span aria-hidden="true">→</span>
+            </a>
+          )}
         </div>
       </section>
 

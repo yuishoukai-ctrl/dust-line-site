@@ -10,7 +10,7 @@ const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = join(projectRoot, 'dist')
 const siteOrigin = 'https://dustline.jp'
 const publishedDate = '2026-07-17'
-const modifiedDate = '2026-07-22'
+const modifiedDate = '2026-07-29'
 
 const routes = [
   {
@@ -138,6 +138,16 @@ const routes = [
     imageAlt: 'DUST LINE GARAGEの車両製作・整備',
     schemaType: 'CollectionPage',
     expectedText: '溶接・塗装・整備',
+  },
+  {
+    path: '/paint/',
+    source: '/?page=paint',
+    title: 'バイク部品の塗装価格・見積依頼｜DUST LINE GARAGE',
+    description: 'パウダーコート、ガンコート、セラコートの参考価格を掲載。バイク部品の写真を送って見積を依頼できます。',
+    image: '/og.png',
+    imageAlt: 'DUST LINE GARAGEのバイク部品塗装サービス',
+    schemaType: 'Service',
+    expectedText: '走る部品を',
   },
 ]
 

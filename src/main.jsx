@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import HokkaidoArticle from './HokkaidoArticle'
 import Ktm990Article from './Ktm990Article'
 import MachineFileArticle from './MachineFileArticle'
+import PaintPricePage from './PaintPricePage'
 import WorldTripArticle from './WorldTripArticle'
 import CategoryPage from './CategoryPages'
 import './styles.css'
@@ -16,6 +17,7 @@ const privacyPagePath = `${homePath}privacy/`
 const travelPagePath = `${homePath}travel/`
 const buildPagePath = `${homePath}build/`
 const garagePagePath = `${homePath}garage/`
+const paintPagePath = `${homePath}paint/`
 const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
 const suzuriShopUrl = 'https://suzuri.jp/dustline'
 const officialXUrl = 'https://x.com/DUSTLINE_ADV'
@@ -846,6 +848,7 @@ function Footer({ currentPage = null }) {
         <a href={travelPagePath} aria-current={currentPage === 'travel' ? 'page' : undefined}>Travel</a>
         <a href={buildPagePath} aria-current={currentPage === 'build' ? 'page' : undefined}>Build</a>
         <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined}>Garage</a>
+        <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined}>塗装依頼</a>
         <a href={sectionHref('issue')}>Issue</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined}>Goods</a>
         <a href={suzuriShopUrl} target="_blank" rel="noreferrer">Shop</a>
@@ -895,12 +898,23 @@ function App() {
     '/goods/': 'goods',
     '/advertise/': 'advertise',
     '/privacy/': 'privacy',
+    '/paint/': 'paint',
   }[pathname]
   const page = routePage || new URLSearchParams(window.location.search).get('page')
   if (page === 'company') return <CompanyPage />
   if (page === 'goods') return <GoodsPage />
   if (page === 'advertise') return <AdvertisePage />
   if (page === 'privacy') return <PrivacyPage />
+  if (page === 'paint') {
+    return (
+      <>
+        <a className="skip-link" href="#main">本文へ移動</a>
+        <Header currentPage="paint" />
+        <PaintPricePage formUrl={contactFormUrl} />
+        <Footer currentPage="paint" />
+      </>
+    )
+  }
 
   const category = {
     '/travel/': 'travel',

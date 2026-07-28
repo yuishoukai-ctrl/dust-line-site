@@ -236,6 +236,26 @@
   color: rgba(21, 23, 25, .69);
 }
 
+.dl-category-intro__service {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 34px;
+  min-height: 54px;
+  margin-top: 28px;
+  padding: 0 20px;
+  color: #fff8ed;
+  background: var(--category-accent);
+  font: 800 .71rem/1 var(--category-display);
+  letter-spacing: .1em;
+  transition: transform .25s ease, background .25s ease;
+}
+
+.dl-category-intro__service:hover {
+  transform: translateY(-3px);
+  background: #bd5428;
+}
+
 .dl-category-stories {
   padding: clamp(84px, 10vw, 150px) clamp(22px, 5vw, 80px);
   color: var(--category-paper);
