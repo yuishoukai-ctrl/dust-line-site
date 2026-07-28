@@ -186,7 +186,7 @@ export default function CategoryPage({ category = 'travel', assetPath }) {
           <h2 id="category-statement">{content.statement}</h2>
           <p>{content.description}</p>
           {content.serviceLink && (
-            <a className="dl-category-intro__service" href={content.serviceLink}>
+            <a className="dl-category-intro__service" href={content.serviceLink.href}>
               {content.serviceLink.label}<span aria-hidden="true">→</span>
             </a>
           )}
