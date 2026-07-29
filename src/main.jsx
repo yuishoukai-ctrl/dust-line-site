@@ -147,6 +147,7 @@ function Header({ currentPage = null }) {
         <a href={travelPagePath} aria-current={currentPage === 'travel' ? 'page' : undefined} onClick={() => setOpen(false)}>Travel</a>
         <a href={buildPagePath} aria-current={currentPage === 'build' ? 'page' : undefined} onClick={() => setOpen(false)}>Build</a>
         <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined} onClick={() => setOpen(false)}>Garage</a>
+        <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined} onClick={() => setOpen(false)}>Paint</a>
         <a href={sectionHref('issue')} onClick={() => setOpen(false)}>Issue 01</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined} onClick={() => setOpen(false)}>Goods</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined} onClick={() => setOpen(false)}>Company</a>
@@ -849,7 +850,7 @@ function Footer({ currentPage = null }) {
         <a href={travelPagePath} aria-current={currentPage === 'travel' ? 'page' : undefined}>Travel</a>
         <a href={buildPagePath} aria-current={currentPage === 'build' ? 'page' : undefined}>Build</a>
         <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined}>Garage</a>
-        <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined}>塗装依頼</a>
+        <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined}>Paint</a>
         <a href={sectionHref('issue')}>Issue</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined}>Goods</a>
         <a href={suzuriShopUrl} target="_blank" rel="noreferrer">Shop</a>
