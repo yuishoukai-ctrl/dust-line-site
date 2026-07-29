@@ -19,6 +19,7 @@ const buildPagePath = `${homePath}build/`
 const garagePagePath = `${homePath}garage/`
 const paintPagePath = `${homePath}paint/`
 const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
+const paintFormUrl = 'https://forms.gle/GxxkzYxkqjCHdfm46'
 const suzuriShopUrl = 'https://suzuri.jp/dustline'
 const officialXUrl = 'https://x.com/DUSTLINE_ADV'
 
@@ -910,7 +911,7 @@ function App() {
       <>
         <a className="skip-link" href="#main">本文へ移動</a>
         <Header currentPage="paint" />
-        <PaintPricePage formUrl={contactFormUrl} />
+        <PaintPricePage formUrl={paintFormUrl} />
         <Footer currentPage="paint" />
       </>
     )
