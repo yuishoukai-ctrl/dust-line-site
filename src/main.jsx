@@ -611,6 +611,39 @@ function StoryGrid() {
   )
 }
 
+function PaintServiceBanner() {
+  return (
+    <section className="paint-service-banner" aria-labelledby="paint-service-banner-title">
+      <div className="paint-service-banner__word" aria-hidden="true">PAINT</div>
+      <div className="paint-service-banner__inner">
+        <div className="paint-service-banner__copy reveal">
+          <p>DUST LINE GARAGE / PAINT SERVICE</p>
+          <h2 id="paint-service-banner-title">
+            <span>走る部品を、</span>
+            <span>もう一度</span>
+            <span>仕上げる。</span>
+          </h2>
+          <span>
+            パウダーコート、ガンコート、セラコート。施工内容と参考価格を確認し、
+            写真を添えて見積もりを依頼できます。
+          </span>
+          <a className="button button--accent" href={paintPagePath}>
+            塗装依頼・価格表を見る <ArrowIcon />
+          </a>
+        </div>
+        <div className="paint-service-banner__visual reveal">
+          <img
+            src={assetPath('paint-service/paint-finish-composite-transparent-v3.png')}
+            alt="DUST LINEが塗装したホイール、キャリパー、小物部品"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function MagazinePreview() {
   const webArticle = `${homePath}articles/world-trip/`
   const samplePdf = `${import.meta.env.BASE_URL}downloads/dust-line-issue-01-sample.pdf`
@@ -944,6 +977,7 @@ function App() {
         <Manifesto />
         <FeaturedStory />
         <StoryGrid />
+        <PaintServiceBanner />
         <MagazinePreview />
         <Issue />
         <RouteStrip />
