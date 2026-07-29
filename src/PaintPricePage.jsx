@@ -6,7 +6,7 @@ const CATEGORY_META = {
     index: '01',
     label: 'パウダーコート',
     english: 'POWDER COATING',
-    use: 'フレーム / ガード / スタンド / ホイール',
+    use: 'ガード / スタンド / ホイール',
     description: '厚膜で耐食性と耐衝撃性を確保。日常の傷や飛び石に晒される車体部品へ。',
   },
   gunkote: {
