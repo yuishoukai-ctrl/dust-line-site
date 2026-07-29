@@ -34,6 +34,47 @@ const CATEGORY_META = {
 
 const CATEGORY_ORDER = ['powder-coating', 'gunkote', 'cerakote', 'other']
 
+const paintAsset = (filename) => `${import.meta.env.BASE_URL}images/paint-service/${filename}`
+
+const RECENT_FINISHES = [
+  {
+    className: 'paint-price__work-item--wheels',
+    image: paintAsset('paint-finish-wheels-black.webp'),
+    width: 1477,
+    height: 1108,
+    label: 'POWDER COAT / GLOSS BLACK',
+    title: 'ホイール',
+    alt: '艶あり黒で塗装された前後のモーターサイクルホイール',
+  },
+  {
+    className: 'paint-price__work-item--parts',
+    image: paintAsset('paint-finish-parts-black.webp'),
+    width: 1108,
+    height: 1477,
+    label: 'POWDER COAT / PARTS',
+    title: 'ステップ・ブラケット類',
+    alt: '艶あり黒で塗装されたステップ、ブラケット、キャリア部品',
+  },
+  {
+    className: 'paint-price__work-item--silver',
+    image: paintAsset('paint-finish-caliper-silver.webp'),
+    width: 1108,
+    height: 1477,
+    label: 'CALIPER / SILVER',
+    title: 'ブレーキキャリパー',
+    alt: 'シルバーで塗装されたモーターサイクル用ブレーキキャリパー',
+  },
+  {
+    className: 'paint-price__work-item--red',
+    image: paintAsset('paint-finish-caliper-red.webp'),
+    width: 1108,
+    height: 1477,
+    label: 'CALIPER / RED',
+    title: 'ブレーキキャリパー',
+    alt: '赤で塗装されたモーターサイクル用ブレーキキャリパー',
+  },
+]
+
 function LoadingPriceList() {
   return (
     <div className="paint-price__loading" role="status" aria-live="polite">
@@ -135,7 +176,50 @@ export default function PaintPricePage({ formUrl }) {
             写真で見積を依頼する <span aria-hidden="true">→</span>
           </a>
         </div>
+        <figure className="paint-price__hero-visual">
+          <img
+            src={paintAsset('paint-finish-composite-transparent-v3.png')}
+            width="1856"
+            height="1088"
+            alt="塗装を終えた黒いホイールと部品、シルバーと赤のブレーキキャリパー"
+            fetchPriority="high"
+          />
+          <figcaption>
+            <span>RECENT FINISHES</span>
+            <strong>WHEELS / CALIPERS / PARTS</strong>
+          </figcaption>
+        </figure>
         <div className="paint-price__hero-mark" aria-hidden="true">PAINT</div>
+      </section>
+
+      <section className="paint-price__work" aria-labelledby="paint-work-title">
+        <header className="paint-price__work-head">
+          <p>RECENT FINISHES / ACTUAL WORK</p>
+          <div>
+            <h2 id="paint-work-title">色と艶は、<br />写真で見る。</h2>
+            <span>
+              実際に塗装したホイール、車体部品、ブレーキキャリパーです。
+              仕上がりは部品の状態、下地、塗色によって異なります。
+            </span>
+          </div>
+        </header>
+        <div className="paint-price__work-grid">
+          {RECENT_FINISHES.map((item) => (
+            <figure className={`paint-price__work-item ${item.className}`} key={item.image}>
+              <img
+                src={item.image}
+                width={item.width}
+                height={item.height}
+                alt={item.alt}
+                loading="lazy"
+              />
+              <figcaption>
+                <span>{item.label}</span>
+                <strong>{item.title}</strong>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
       </section>
 
       <section className="paint-price__intro" aria-labelledby="paint-intro-title">
