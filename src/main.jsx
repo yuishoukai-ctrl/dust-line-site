@@ -228,7 +228,7 @@ function EditorialTeam({ page = false }) {
             <h3>小長谷 一行 <small>通称 ぽんさん</small></h3>
           </header>
           <dl className="editorial-profile__details">
-            <div><dt>バイク歴</dt><dd>14年</dd></div>
+            <div><dt>バイク歴</dt><dd>17年</dd></div>
             <div><dt>得意分野</dt><dd>車両整備、溶接、塗装、研磨</dd></div>
             <div><dt>DUST LINEでの担当</dt><dd>記事制作、車両製作、塗装、溶接</dd></div>
             <div>
