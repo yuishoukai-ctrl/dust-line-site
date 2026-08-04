@@ -274,6 +274,13 @@ function EditorialTeam({ page = false }) {
             </dl>
           </div>
         </article>
+
+        <article className="editorial-profile">
+          <header className="editorial-profile__header">
+            <p>TEST RIDER</p>
+            <h3>村松 大 <small>通称 D</small></h3>
+          </header>
+        </article>
       </div>
     </div>
   )
