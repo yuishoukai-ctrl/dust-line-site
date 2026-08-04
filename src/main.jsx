@@ -275,11 +275,28 @@ function EditorialTeam({ page = false }) {
           </div>
         </article>
 
-        <article className="editorial-profile">
+        <article className="editorial-profile editorial-profile--with-portrait">
           <header className="editorial-profile__header">
             <p>TEST RIDER</p>
             <h3>村松 大 <small>通称 D</small></h3>
           </header>
+          <div className="editorial-profile__body">
+            <figure className="editorial-profile__portrait">
+              <img
+                src={assetPath('editorial-muramatsu-d.jpg')}
+                alt="アドベンチャーバイクで走るテストライダーの村松大"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <dl className="editorial-profile__details">
+              <div><dt>バイク歴</dt><dd>25年</dd></div>
+              <div><dt>愛車</dt><dd>990ADVENTURE S、XR125、RG125</dd></div>
+              <div><dt>得意分野</dt><dd>バイク遊び</dd></div>
+              <div><dt>DUST LINEでの担当</dt><dd>企画、記事制作</dd></div>
+              <div><dt>雑誌を作る理由</dt><dd>雑誌はロマン</dd></div>
+            </dl>
+          </div>
         </article>
       </div>
     </div>
