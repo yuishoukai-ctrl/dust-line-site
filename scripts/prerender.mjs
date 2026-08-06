@@ -10,14 +10,14 @@ const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = join(projectRoot, 'dist')
 const siteOrigin = 'https://dustline.jp'
 const publishedDate = '2026-07-17'
-const modifiedDate = '2026-07-29'
+const modifiedDate = '2026-08-06'
 
 const routes = [
   {
     path: '/',
     source: '/',
-    title: 'DUST LINE｜アドベンチャーバイク・オフロードの無料WEBマガジン',
-    description: 'DUST LINEは、アドベンチャーバイクとオフロードの旅、実車製作、溶接・塗装・整備を一次取材で届ける無料WEBマガジンです。',
+    title: 'オフロードバイク雑誌 DUST LINE｜アドベンチャー・カスタム・旅',
+    description: 'DUST LINEは、オフロードバイクとアドベンチャーバイクの旅、実車製作、カスタム、溶接・塗装を届ける季刊誌。創刊号は2026年9月1日無料公開。',
     image: '/og.png',
     imageAlt: 'DUST LINE ISSUE 01とアドベンチャーバイクの公式ビジュアル',
     schemaType: 'WebPage',
@@ -138,6 +138,16 @@ const routes = [
     imageAlt: 'DUST LINE GARAGEの車両製作・整備',
     schemaType: 'CollectionPage',
     expectedText: '溶接・塗装・整備',
+  },
+  {
+    path: '/offroad-bike-magazine/',
+    source: '/offroad-bike-magazine/',
+    title: 'オフロードバイク雑誌 DUST LINEとは｜2026年9月1日創刊',
+    description: 'オフロードバイクとアドベンチャーバイクの旅、車両製作、カスタム、溶接・塗装を届ける季刊誌DUST LINE。創刊号は2026年9月1日無料公開。',
+    image: '/images/hero-rider.jpg',
+    imageAlt: 'ダートを走るアドベンチャーバイク',
+    schemaType: 'AboutPage',
+    expectedText: 'オフロードバイク雑誌を',
   },
   {
     path: '/paint/',
@@ -358,7 +368,7 @@ const pageSchema = (route) => {
       '@id': `${siteOrigin}/#website`,
       url: `${siteOrigin}/`,
       name: 'DUST LINE',
-      description: 'アドベンチャーバイクとオフロードの旅、実車製作、溶接・塗装・整備を一次取材で届ける無料WEBマガジン。',
+      description: 'オフロードバイクとアドベンチャーバイクの旅、実車製作、カスタム、溶接・塗装を実走と実作業から届ける季刊誌。',
       inLanguage: 'ja-JP',
       publisher: { '@id': `${siteOrigin}/#organization` },
     },

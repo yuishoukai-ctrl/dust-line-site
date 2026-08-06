@@ -6,6 +6,7 @@ import MachineFileArticle from './MachineFileArticle'
 import PaintPricePage from './PaintPricePage'
 import WorldTripArticle from './WorldTripArticle'
 import CategoryPage from './CategoryPages'
+import OffroadMagazinePage from './OffroadMagazinePage'
 import './styles.css'
 
 const assetPath = (filename) => `${import.meta.env.BASE_URL}images/${filename}`
@@ -18,6 +19,7 @@ const travelPagePath = `${homePath}travel/`
 const buildPagePath = `${homePath}build/`
 const garagePagePath = `${homePath}garage/`
 const paintPagePath = `${homePath}paint/`
+const magazinePagePath = `${homePath}offroad-bike-magazine/`
 const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
 const paintFormUrl = 'https://forms.gle/GxxkzYxkqjCHdfm46'
 const suzuriShopUrl = 'https://suzuri.jp/dustline'
@@ -148,7 +150,7 @@ function Header({ currentPage = null }) {
         <a href={buildPagePath} aria-current={currentPage === 'build' ? 'page' : undefined} onClick={() => setOpen(false)}>Build</a>
         <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined} onClick={() => setOpen(false)}>Garage</a>
         <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined} onClick={() => setOpen(false)}>Paint</a>
-        <a href={sectionHref('issue')} onClick={() => setOpen(false)}>Issue 01</a>
+        <a href={magazinePagePath} aria-current={currentPage === 'magazine' ? 'page' : undefined} onClick={() => setOpen(false)}>Magazine</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined} onClick={() => setOpen(false)}>Goods</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined} onClick={() => setOpen(false)}>Company</a>
         <a href={advertisePagePath} aria-current={currentPage === 'advertise' ? 'page' : undefined} onClick={() => setOpen(false)}>広告募集</a>
@@ -177,12 +179,12 @@ function Hero() {
         <p className="eyebrow">ADVENTURE MOTORCYCLE JOURNAL</p>
         <h1><span>道の先ではなく、</span><span>道の外へ。</span></h1>
         <p className="hero__lead">
-          地図に残らない時間を走る。DUST LINEは、旅と道具、
-          そしてライダーの選択を記録するデジタル・ジャーナルです。
+          地図に残らない時間を走る。DUST LINEは、オフロードバイクとアドベンチャーバイクの旅、
+          車両製作、道具、そしてライダーの選択を記録する季刊誌です。
         </p>
         <div className="hero__actions">
           <a className="button button--accent" href="#issue">創刊号について見る <ArrowIcon /></a>
-          <a className="text-link" href="#stories">最新の記録を読む <ArrowIcon /></a>
+          <a className="text-link" href={magazinePagePath}>DUST LINEとは <ArrowIcon /></a>
         </div>
       </div>
       <div className="hero__index" aria-hidden="true">
@@ -202,7 +204,8 @@ function Manifesto() {
         <div className="manifesto__copy reveal">
           <p>
             マシンの個性、選んだ道具、どこへ向かい、どこで引き返したか。
-            DUST LINEは実走と取材から生まれた情報を、写真と文章で丁寧に編みます。
+            DUST LINEはオフロードバイクとアドベンチャーバイクの実走、車両製作、
+            カスタム、溶接・塗装から生まれた情報を、写真と文章で丁寧に編みます。
           </p>
           <p className="manifesto__en">RIDE FAR. PACK LIGHT. STAY CURIOUS.</p>
         </div>
@@ -733,16 +736,16 @@ function Issue() {
       </div>
       <div className="issue__copy reveal">
         <div className="section-label section-label--light"><span>04</span><span>FIRST ISSUE</span></div>
-        <p className="issue__status">ISSUE 01 / COMING SOON</p>
+        <p className="issue__status">ISSUE 01 / 2026.09.01 / FREE</p>
         <h2>BEYOND<br />THE PAVEMENT</h2>
         <p>
           創刊号は、舗装路の向こう側へ踏み出すための一冊。
           ロングライド、積載、装備、そして旅の途中で出会った風景を収録します。
         </p>
         <dl className="issue__details">
-          <div><dt>FORMAT</dt><dd>Kindle Edition</dd></div>
-          <div><dt>LANGUAGE</dt><dd>Japanese</dd></div>
-          <div><dt>RELEASE</dt><dd>Coming soon</dd></div>
+          <div><dt>FORMAT</dt><dd>Digital Edition</dd></div>
+          <div><dt>PRICE</dt><dd>Free</dd></div>
+          <div><dt>RELEASE</dt><dd><time dateTime="2026-09-01">2026.09.01</time></dd></div>
         </dl>
         <a className="button button--outline" href={officialXUrl} target="_blank" rel="noreferrer">公式Xで発売情報を見る <ArrowIcon /></a>
       </div>
@@ -908,7 +911,7 @@ function Footer({ currentPage = null }) {
         <a href={buildPagePath} aria-current={currentPage === 'build' ? 'page' : undefined}>Build</a>
         <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined}>Garage</a>
         <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined}>Paint</a>
-        <a href={sectionHref('issue')}>Issue</a>
+        <a href={magazinePagePath} aria-current={currentPage === 'magazine' ? 'page' : undefined}>Magazine</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined}>Goods</a>
         <a href={suzuriShopUrl} target="_blank" rel="noreferrer">Shop</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined}>Company</a>
@@ -958,12 +961,23 @@ function App() {
     '/advertise/': 'advertise',
     '/privacy/': 'privacy',
     '/paint/': 'paint',
+    '/offroad-bike-magazine/': 'magazine',
   }[pathname]
   const page = routePage || new URLSearchParams(window.location.search).get('page')
   if (page === 'company') return <CompanyPage />
   if (page === 'goods') return <GoodsPage />
   if (page === 'advertise') return <AdvertisePage />
   if (page === 'privacy') return <PrivacyPage />
+  if (page === 'magazine') {
+    return (
+      <>
+        <a className="skip-link" href="#main">本文へ移動</a>
+        <Header currentPage="magazine" />
+        <OffroadMagazinePage assetPath={assetPath} />
+        <Footer currentPage="magazine" />
+      </>
+    )
+  }
   if (page === 'paint') {
     return (
       <>

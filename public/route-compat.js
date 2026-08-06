@@ -23,6 +23,7 @@
     '/advertise/',
     '/privacy/',
     '/paint/',
+    '/offroad-bike-magazine/',
     '/articles/hokkaido-1190/',
     '/articles/ktm-990-adv-s/',
     '/articles/world-trip/',
