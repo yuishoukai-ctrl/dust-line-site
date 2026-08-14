@@ -193,8 +193,9 @@ const server = createServer(async (request, response) => {
     response.writeHead(200, { 'content-type': mimeTypes[extname(filePath)] ?? 'application/octet-stream' })
     response.end(body)
   } catch (error) {
+    console.error('Prerender preview server error:', error)
     response.writeHead(500, { 'content-type': 'text/plain; charset=utf-8' })
-    response.end(error instanceof Error ? error.message : String(error))
+    response.end('Internal server error')
   }
 })
 
@@ -308,7 +309,7 @@ const launchBrowser = async (browser) => {
 
 const pause = (milliseconds) => new Promise((resolvePause) => setTimeout(resolvePause, milliseconds))
 
-const dumpDom = async (browserSession, url) => {
+const dumpDom = async (browserSession, url, route = null) => {
   const { client } = browserSession
   const { targetId } = await client.send('Target.createTarget', { url: 'about:blank' })
   const { sessionId } = await client.send('Target.attachToTarget', { targetId, flatten: true })
@@ -329,25 +330,105 @@ const dumpDom = async (browserSession, url) => {
 
     // Let React effects, route compatibility, and font/layout work settle.
     await pause(900)
-    const result = await client.send('Runtime.evaluate', {
-      expression: 'document.documentElement.outerHTML',
-      returnByValue: true,
-    }, sessionId)
-    const html = result.result?.value
-    if (typeof html !== 'string' || !html.includes('<div id="root">')) {
+    let result
+    if (route) {
+      const metadataPayload = JSON.stringify(metadataForRoute(route)).replaceAll('<', '\\u003c')
+      const metadataResult = await client.send('Runtime.evaluate', {
+        expression: `((metadata) => {
+          const head = document.head
+          if (!head) throw new Error('Document head unavailable')
+
+          document.title = metadata.title
+          Array.from(head.querySelectorAll('title')).slice(1).forEach((element) => element.remove())
+
+          const upsertMeta = (attribute, key, content) => {
+            const matches = Array.from(head.querySelectorAll('meta'))
+              .filter((element) => element.getAttribute(attribute) === key)
+            const element = matches.shift() ?? document.createElement('meta')
+            matches.forEach((duplicate) => duplicate.remove())
+            element.setAttribute(attribute, key)
+            element.removeAttribute(attribute === 'name' ? 'property' : 'name')
+            element.setAttribute('content', content)
+            if (!element.parentNode) head.append(element)
+          }
+
+          upsertMeta('name', 'description', metadata.description)
+          upsertMeta('name', 'robots', metadata.robots)
+          upsertMeta('property', 'og:locale', 'ja_JP')
+          upsertMeta('property', 'og:type', metadata.ogType)
+          upsertMeta('property', 'og:site_name', 'DUST LINE')
+          upsertMeta('property', 'og:title', metadata.title)
+          upsertMeta('property', 'og:description', metadata.description)
+          upsertMeta('property', 'og:url', metadata.canonical)
+          upsertMeta('property', 'og:image', metadata.image)
+          upsertMeta('property', 'og:image:alt', metadata.imageAlt)
+          upsertMeta('name', 'twitter:card', 'summary_large_image')
+          upsertMeta('name', 'twitter:site', '@DUSTLINE_ADV')
+          upsertMeta('name', 'twitter:title', metadata.title)
+          upsertMeta('name', 'twitter:description', metadata.description)
+          upsertMeta('name', 'twitter:image', metadata.image)
+          upsertMeta('name', 'twitter:image:alt', metadata.imageAlt)
+
+          const canonicalLinks = Array.from(head.querySelectorAll('link'))
+            .filter((element) => element.relList?.contains('canonical'))
+          const canonicalLink = canonicalLinks.shift() ?? document.createElement('link')
+          canonicalLinks.forEach((duplicate) => duplicate.remove())
+          canonicalLink.setAttribute('rel', 'canonical')
+          canonicalLink.setAttribute('href', metadata.canonical)
+          if (!canonicalLink.parentNode) head.append(canonicalLink)
+
+          head.querySelectorAll('script[type="application/ld+json"]').forEach((element) => element.remove())
+          const schema = document.createElement('script')
+          schema.type = 'application/ld+json'
+          schema.textContent = metadata.schemaJson
+          head.append(schema)
+
+          return {
+            html: document.documentElement.outerHTML,
+            text: document.body?.innerText ?? '',
+            headings: Array.from(document.querySelectorAll('h1'))
+              .map((element) => element.textContent ?? '')
+              .join(' | '),
+            title: document.title,
+            canonical: canonicalLink.href,
+            jsonLdCount: document.querySelectorAll('script[type="application/ld+json"]').length,
+          }
+        })(${metadataPayload})`,
+        returnByValue: true,
+      }, sessionId)
+      if (metadataResult.exceptionDetails) {
+        throw new Error(`Unable to apply metadata: ${url}`)
+      }
+      result = metadataResult
+    }
+
+    if (!result) {
+      result = await client.send('Runtime.evaluate', {
+        expression: `(() => {
+          const canonical = document.querySelector('link[rel="canonical"]')
+          return {
+            html: document.documentElement.outerHTML,
+            text: document.body?.innerText ?? '',
+            headings: Array.from(document.querySelectorAll('h1'))
+              .map((element) => element.textContent ?? '')
+              .join(' | '),
+            title: document.title,
+            canonical: canonical?.href ?? '',
+            jsonLdCount: document.querySelectorAll('script[type="application/ld+json"]').length,
+          }
+        })()`,
+        returnByValue: true,
+      }, sessionId)
+    }
+    const documentState = result.result?.value
+    if (typeof documentState?.html !== 'string' || !documentState.html.includes('<div id="root">')) {
       throw new Error(`Rendered page did not produce a valid document: ${url}`)
     }
-    return `<!doctype html>\n${html}`
+    return { ...documentState, html: `<!doctype html>\n${documentState.html}` }
   } finally {
     await client.send('Target.closeTarget', { targetId })
   }
 }
-
-const escapeAttribute = (value) => value
-  .replaceAll('&', '&amp;')
-  .replaceAll('"', '&quot;')
-  .replaceAll('<', '&lt;')
-  .replaceAll('>', '&gt;')
 
 const absoluteUrl = (pathname) => new URL(pathname, siteOrigin).href
 
@@ -416,70 +497,34 @@ const pageSchema = (route) => {
   return { '@context': 'https://schema.org', '@graph': graph }
 }
 
-const applyMetadata = (html, route) => {
+const metadataForRoute = (route) => ({
+  title: route.title,
+  description: route.description,
+  robots: route.robots ?? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
+  canonical: absoluteUrl(route.path),
+  ogType: route.schemaType === 'Article' ? 'article' : 'website',
+  image: absoluteUrl(route.image),
+  imageAlt: route.imageAlt,
+  schemaJson: JSON.stringify(pageSchema(route)).replaceAll('<', '\\u003c'),
+})
+
+const verifyOutput = (documentState, route) => {
   const canonical = absoluteUrl(route.path)
-  const image = absoluteUrl(route.image)
-  const title = escapeAttribute(route.title)
-  const description = escapeAttribute(route.description)
-  const imageAlt = escapeAttribute(route.imageAlt)
-  const ogType = route.schemaType === 'Article' ? 'article' : 'website'
-  const jsonLd = JSON.stringify(pageSchema(route)).replaceAll('<', '\\u003c')
-
-  let clean = html
-    .replace(/<title\b[^>]*>[\s\S]*?<\/title>\s*/gi, '')
-    .replace(/<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>\s*/gi, '')
-    .replace(/<meta\b(?=[^>]*\bname=["'](?:description|robots|twitter:[^"']+)["'])[^>]*>\s*/gi, '')
-    .replace(/<meta\b(?=[^>]*\bproperty=["']og:[^"']+["'])[^>]*>\s*/gi, '')
-    .replace(/<script\b(?=[^>]*\btype=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>\s*/gi, '')
-
-  const metadata = `
-    <title>${title}</title>
-    <meta name="description" content="${description}">
-    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-    <link rel="canonical" href="${canonical}">
-    <meta property="og:locale" content="ja_JP">
-    <meta property="og:type" content="${ogType}">
-    <meta property="og:site_name" content="DUST LINE">
-    <meta property="og:title" content="${title}">
-    <meta property="og:description" content="${description}">
-    <meta property="og:url" content="${canonical}">
-    <meta property="og:image" content="${image}">
-    <meta property="og:image:alt" content="${imageAlt}">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@DUSTLINE_ADV">
-    <meta name="twitter:title" content="${title}">
-    <meta name="twitter:description" content="${description}">
-    <meta name="twitter:image" content="${image}">
-    <meta name="twitter:image:alt" content="${imageAlt}">
-    <script type="application/ld+json">${jsonLd}</script>
-  `
-
-  clean = clean.replace('</head>', `${metadata}</head>`)
-  return clean.startsWith('<!DOCTYPE') ? clean : `<!doctype html>\n${clean}`
-}
-
-const htmlText = (html) => html
-  .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ')
-  .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
-  .replace(/<[^>]+>/g, ' ')
-  .replace(/\s+/g, ' ')
-  .trim()
-
-const headingText = (html) => [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)]
-  .map((match) => htmlText(match[1]))
-  .join(' | ')
-
-const verifyOutput = (html, route) => {
-  const canonical = absoluteUrl(route.path)
-  const checks = [
-    html.includes(`<title>${escapeAttribute(route.title)}</title>`),
-    html.includes(`<link rel="canonical" href="${canonical}">`),
-    html.includes('<script type="application/ld+json">'),
-    html.includes('<div id="root">'),
-    htmlText(html).includes(route.expectedText),
-  ]
-  if (checks.some((passed) => !passed)) {
-    throw new Error(`SEO verification failed for ${route.path}`)
+  const checks = {
+    title: documentState.title === route.title,
+    canonical: documentState.canonical === canonical,
+    jsonLd: documentState.jsonLdCount === 1,
+    root: documentState.html.includes('<div id="root">'),
+    expectedText: documentState.text.includes(route.expectedText),
+  }
+  const failedChecks = Object.entries(checks)
+    .filter(([, passed]) => !passed)
+    .map(([name]) => name)
+  if (failedChecks.length > 0) {
+    const details = failedChecks.includes('title')
+      ? `; title=${JSON.stringify(documentState.title)}, expected=${JSON.stringify(route.title)}`
+      : ''
+    throw new Error(`SEO verification failed for ${route.path}: ${failedChecks.join(', ')}${details}`)
   }
 }
 
@@ -501,22 +546,21 @@ const browserSession = await launchBrowser(browser)
 
 try {
   for (const route of routes) {
-    const rendered = await dumpDom(browserSession, new URL(route.source, localOrigin).href)
+    const rendered = await dumpDom(browserSession, new URL(route.source, localOrigin).href, route)
     const outputPath = route.path === '/'
       ? join(distDir, 'index.html')
       : join(distDir, route.path.replace(/^\//, ''), 'index.html')
     await mkdir(dirname(outputPath), { recursive: true })
-    const output = applyMetadata(rendered, route)
-    verifyOutput(output, route)
-    await writeFile(outputPath, output, 'utf8')
+    verifyOutput(rendered, route)
+    await writeFile(outputPath, rendered.html, 'utf8')
     console.log(`prerendered ${route.path}`)
   }
 
   // Test the public fixed URLs after every route file exists. The source pass
   // above also covers the legacy query URLs used by older links.
   for (const route of routes) {
-    const runtimeHtml = await dumpDom(browserSession, new URL(route.path, localOrigin).href)
-    if (!headingText(runtimeHtml).includes(route.expectedText)) {
+    const runtimeDocument = await dumpDom(browserSession, new URL(route.path, localOrigin).href)
+    if (!runtimeDocument.headings.includes(route.expectedText)) {
       throw new Error(`Fixed-route runtime verification failed for ${route.path}`)
     }
     console.log(`verified ${route.path}`)
