@@ -8,7 +8,12 @@ import WorldTripArticle from './WorldTripArticle'
 import CategoryPage from './CategoryPages'
 import OffroadMagazinePage from './OffroadMagazinePage'
 import MemberPage from './MemberPages'
+import AnalyticsConsent from './AnalyticsConsent'
+import { trackAnalyticsEvent } from './lib/analytics'
+import { prepareVerificationEmail } from './lib/verificationEmail'
 import './styles.css'
+
+prepareVerificationEmail()
 
 const assetPath = (filename) => `${import.meta.env.BASE_URL}images/${filename}`
 const homePath = import.meta.env.BASE_URL
@@ -180,7 +185,7 @@ function Hero() {
           車両製作、道具、そしてライダーの選択を記録する季刊誌です。
         </p>
         <div className="hero__actions">
-          <a className="button button--accent" href={signupPagePath}>創刊号を無料で読む <ArrowIcon /></a>
+          <a className="button button--accent" href={signupPagePath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>創刊号を無料で読む <ArrowIcon /></a>
           <a className="text-link" href="#issue">創刊号について見る <ArrowIcon /></a>
         </div>
       </div>
@@ -685,13 +690,13 @@ function MagazinePreview() {
           <p>WEBでは計画と車両選び、加工の要点をダイジェストで紹介。創刊号では全工程とDUST DATAを8ページで収録します。</p>
           <div className="sneak-peek__actions">
             <a className="button button--accent" href={webArticle}>WEBダイジェストを読む <ArrowIcon /></a>
-            <a className="sneak-peek__notify" href={signupPagePath}>創刊号を無料で読む <ArrowIcon /></a>
+            <a className="sneak-peek__notify" href={signupPagePath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>創刊号を無料で読む <ArrowIcon /></a>
             <a className="sneak-peek__notify" href={officialXUrl} target="_blank" rel="noreferrer">公式Xで発売情報を見る <ArrowIcon /></a>
           </div>
         </div>
       </div>
 
-      <a className="sneak-peek__primary reveal" href={signupPagePath} aria-label="創刊号を無料で読む">
+      <a className="sneak-peek__primary reveal" href={signupPagePath} aria-label="創刊号を無料で読む" onClick={() => trackAnalyticsEvent('signup_cta_click')}>
         <span className="sneak-peek__ribbon">SAMPLE / ISSUE 01</span>
         <div className="sneak-peek__spread">
           <figure><img src={page026} alt="世界一周に行こうとしたら。扉ページ 026" loading="lazy" decoding="async" /></figure>
@@ -780,6 +785,7 @@ function Newsletter() {
           <a
             className="button button--accent"
             href={signupPagePath}
+            onClick={() => trackAnalyticsEvent('signup_cta_click')}
           >
             無料会員登録へ <ArrowIcon />
           </a>
@@ -824,7 +830,8 @@ function PrivacyPage() {
               <div className="legal-block__heading"><span>01</span><h3>取得する情報</h3></div>
               <div className="legal-block__body">
                 <p>お問い合わせフォームをご利用の場合、氏名、メールアドレス、お問い合わせ内容など、送信者が入力した情報を受け取ることがあります。</p>
-                <p>会員登録では、メールアドレス、認証情報、登録日時、ログインに必要な技術情報を取り扱います。ニュースレターは現在準備中であり、広告・案内メールの受信は会員登録とは分離して扱います。また、当サイト独自のアクセス解析ツールは現在導入していません。</p>
+                <p>会員登録では、メールアドレス、認証情報、登録日時、ログインに必要な技術情報を取り扱います。ニュースレターは現在準備中であり、広告・案内メールの受信は会員登録とは分離して扱います。</p>
+                <p>利用者が「許可する」を選んだ場合に限り、Google Analytics 4を使用して、会員登録ページの表示、登録ボタンのクリック、登録手続きの進行状況などを計測します。当サイトが設定する計測イベントには、メールアドレス、パスワード、認証コード、ユーザーID、入力内容を含めません。許可しない場合、Google Analyticsのタグは読み込まれません。</p>
                 <p>ただし、サイトや外部フォームの提供事業者が、サービスの維持や安全確保のためにアクセス情報等を取り扱う場合があります。詳細は各事業者の方針をご確認ください。</p>
               </div>
             </section>
@@ -848,7 +855,8 @@ function PrivacyPage() {
             <section className="legal-block reveal">
               <div className="legal-block__heading"><span>04</span><h3>外部サービス</h3></div>
               <div className="legal-block__body">
-                <p>会員登録と認証にはSupabaseを利用します。また、当サイトにはSUZURI、X、Googleフォームなど外部サービスへのリンクがあります。各サービスで取り扱われる情報には、それぞれの利用規約・プライバシーポリシーが適用されます。</p>
+                <p>会員登録と認証にはSupabaseを、同意いただいた場合のアクセス解析にはGoogle Analytics 4を利用します。また、当サイトにはSUZURI、X、Googleフォームなど外部サービスへのリンクがあります。各サービスで取り扱われる情報には、それぞれの利用規約・プライバシーポリシーが適用されます。</p>
+                <p>アクセス解析への同意内容はブラウザに保存されます。変更を希望する場合は、ブラウザの当サイト用ストレージを削除すると再設定できます。Googleによる情報の取り扱いは、<a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Googleプライバシーポリシー</a>をご確認ください。</p>
                 <p>外部サイトの内容、商品の購入、決済、配送、アカウント管理等については、各サービス提供者へご確認ください。</p>
               </div>
             </section>
@@ -1041,5 +1049,8 @@ function App() {
 }
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode><App /></StrictMode>,
+  <StrictMode>
+    <App />
+    <AnalyticsConsent />
+  </StrictMode>,
 )

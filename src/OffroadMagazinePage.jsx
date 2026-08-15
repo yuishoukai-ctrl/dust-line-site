@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { trackAnalyticsEvent } from './lib/analytics'
 import './offroad-magazine.css'
 
 function Arrow() {
@@ -65,7 +66,7 @@ export default function OffroadMagazinePage({ assetPath, signupPath = '/account/
             カスタム、溶接、塗装を、実走と実作業から届ける季刊誌です。
           </p>
           <div className="magazine-hero__actions">
-            <a className="magazine-button magazine-button--accent" href={signupPath}>創刊号を無料で読む <Arrow /></a>
+            <a className="magazine-button magazine-button--accent" href={signupPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>創刊号を無料で読む <Arrow /></a>
             <a className="magazine-text-link" href={libraryPath}>会員ログイン <Arrow /></a>
           </div>
         </div>
@@ -144,7 +145,7 @@ export default function OffroadMagazinePage({ assetPath, signupPath = '/account/
             <li><span>02</span>完成形だけでなく、選択と工程を記録する</li>
             <li><span>03</span>オフロードからアドベンチャー、旅、用品まで横断する</li>
           </ul>
-          <a className="magazine-button magazine-button--dark" href={signupPath}>無料会員登録で創刊号を読む <Arrow /></a>
+          <a className="magazine-button magazine-button--dark" href={signupPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>無料会員登録で創刊号を読む <Arrow /></a>
         </div>
       </section>
     </main>
