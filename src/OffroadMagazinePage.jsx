@@ -92,14 +92,14 @@ export default function OffroadMagazinePage({ assetPath, signupPath = '/account/
             </p>
             <p>
               公式アプリとWebサイトから購読でき、店舗用の紙面はオフロードショップやディーラーなどへ配布予定です。
-              創刊号は2026年9月1日に無料公開。第2号からは1,480円で季刊発行します。
+              創刊号は2026年9月1日に無料公開。第2号からは各号1,480円（税込）の単品販売で季刊発行します。
             </p>
           </div>
         </div>
         <dl className="magazine-facts reveal">
           <div><dt>FIRST ISSUE</dt><dd><time dateTime="2026-09-01">2026年9月1日</time></dd><span>創刊号・無料公開</span></div>
           <div><dt>FREQUENCY</dt><dd>年4回</dd><span>季刊発行</span></div>
-          <div><dt>FROM ISSUE 02</dt><dd>1,480円</dd><span>公式アプリ・Webで購読</span></div>
+          <div><dt>FROM ISSUE 02</dt><dd>1,480円（税込）</dd><span>単品販売・自動更新なし</span></div>
           <div><dt>FIELD</dt><dd>OFF / ADV</dd><span>旅・車両・用品・ものづくり</span></div>
         </dl>
       </section>
