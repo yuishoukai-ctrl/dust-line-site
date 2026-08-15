@@ -269,7 +269,7 @@ export default function HokkaidoArticle({ assetPath }) {
               <a href="/travel/">北海道・ロングツーリングの記事を見る <ForwardArrow /></a>
               <a href="/articles/world-trip/">KLR650とIMS 37Lタンクの製作記を読む <ForwardArrow /></a>
               <a href="/articles/machine-file-001/">BMW R1200GS 60L大陸横断マシンを読む <ForwardArrow /></a>
-              <a href={`${root}downloads/dust-line-issue-01-sample.pdf`} target="_blank" rel="noreferrer">創刊号を2ページ試し読み <ForwardArrow /></a>
+              <a href={`${root}library/`}>創刊号を無料で読む <ForwardArrow /></a>
               <a href={`${root}#issue`}>創刊号について見る <ForwardArrow /></a>
               <a href="https://x.com/DUSTLINE_ADV" target="_blank" rel="noreferrer">公式Xを見る <ForwardArrow /></a>
               <a href={`${root}?page=goods`}>DUST LINE公式グッズを見る <ForwardArrow /></a>

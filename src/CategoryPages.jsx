@@ -237,7 +237,7 @@ export default function CategoryPage({ category = 'travel', assetPath }) {
         </div>
         <div className="dl-category-issue__actions">
           <a className="dl-category-button" href="/#issue">創刊号について見る<span aria-hidden="true">→</span></a>
-          <a className="dl-category-text-link" href="/downloads/dust-line-issue-01-sample.pdf" target="_blank" rel="noreferrer">2ページ試し読み<span aria-hidden="true">↗</span></a>
+          <a className="dl-category-text-link" href="/library/">創刊号を無料で読む<span aria-hidden="true">→</span></a>
         </div>
       </aside>
     </main>

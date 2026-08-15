@@ -12,7 +12,7 @@ function BackArrow() {
 export default function MachineFileArticle({ assetPath }) {
   const root = import.meta.env.BASE_URL
   const spread = assetPath('machine-file-001-spread.webp')
-  const samplePdf = `${root}downloads/dust-line-issue-01-sample.pdf`
+  const memberLibrary = `${root}library/`
 
   useEffect(() => {
     const previousTitle = document.title
@@ -63,7 +63,7 @@ export default function MachineFileArticle({ assetPath }) {
             <a href="/build/"><span>BUILD STORIES</span><strong>車両製作の記事を見る</strong><BackArrow /></a>
             <a href="/articles/world-trip/"><span>NEXT STORY</span><strong>KLR650とIMS 37Lタンクの製作記</strong><BackArrow /></a>
             <a href="/articles/hokkaido-1190/"><span>TRAVEL REPORT</span><strong>KTM 1190で行く北海道・離島の旅</strong><BackArrow /></a>
-            <a href={samplePdf} target="_blank" rel="noreferrer"><span>ISSUE 01</span><strong>創刊号を2ページ試し読み</strong><BackArrow /></a>
+            <a href={memberLibrary}><span>ISSUE 01</span><strong>創刊号を無料で読む</strong><BackArrow /></a>
             <a href="https://x.com/DUSTLINE_ADV" target="_blank" rel="noreferrer"><span>OFFICIAL X</span><strong>発売情報を見る</strong><BackArrow /></a>
             <a href={`${root}?page=goods`}><span>OFFICIAL GOODS</span><strong>グッズを見る</strong><BackArrow /></a>
           </nav>

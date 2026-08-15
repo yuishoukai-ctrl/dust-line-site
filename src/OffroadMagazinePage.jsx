@@ -42,7 +42,7 @@ const sections = [
   },
 ]
 
-export default function OffroadMagazinePage({ assetPath }) {
+export default function OffroadMagazinePage({ assetPath, signupPath = '/account/signup/', libraryPath = '/library/' }) {
   useEffect(() => {
     const previousTitle = document.title
     document.title = 'オフロードバイク雑誌 DUST LINEとは｜2026年9月1日創刊'
@@ -65,8 +65,8 @@ export default function OffroadMagazinePage({ assetPath }) {
             カスタム、溶接、塗装を、実走と実作業から届ける季刊誌です。
           </p>
           <div className="magazine-hero__actions">
-            <a className="magazine-button magazine-button--accent" href="/#issue">創刊号を見る <Arrow /></a>
-            <a className="magazine-text-link" href="/travel/">公開中の記事を読む <Arrow /></a>
+            <a className="magazine-button magazine-button--accent" href={signupPath}>創刊号を無料で読む <Arrow /></a>
+            <a className="magazine-text-link" href={libraryPath}>会員ログイン <Arrow /></a>
           </div>
         </div>
         <div className="magazine-hero__release" aria-label="創刊号の発売情報">
@@ -144,7 +144,7 @@ export default function OffroadMagazinePage({ assetPath }) {
             <li><span>02</span>完成形だけでなく、選択と工程を記録する</li>
             <li><span>03</span>オフロードからアドベンチャー、旅、用品まで横断する</li>
           </ul>
-          <a className="magazine-button magazine-button--dark" href="/#issue">2026年9月1日創刊号を見る <Arrow /></a>
+          <a className="magazine-button magazine-button--dark" href={signupPath}>無料会員登録で創刊号を読む <Arrow /></a>
         </div>
       </section>
     </main>
