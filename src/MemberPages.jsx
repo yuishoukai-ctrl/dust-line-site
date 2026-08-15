@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { isSupabaseConfigured, supabase } from './lib/supabaseClient'
+import { trackAnalyticsEvent } from './lib/analytics'
+import {
+  clearVerificationEmail,
+  getVerificationEmail,
+  storeVerificationEmail,
+} from './lib/verificationEmail'
 import { provisionalIssue } from './member-content'
 import './member-pages.css'
 
@@ -88,13 +94,17 @@ function LoadingPanel() {
 
 function AuthRequired({ returnPath }) {
   const loginHref = `/account/login/?returnTo=${encodeURIComponent(returnPath)}`
+  useEffect(() => {
+    trackAnalyticsEvent('library_guest_view')
+  }, [])
+
   return (
     <section className="member-panel member-panel--gate" aria-labelledby="member-gate-title">
       <p className="member-kicker">MEMBERS ONLY</p>
       <h2 id="member-gate-title">創刊号を無料で読む</h2>
       <p>創刊号は無料です。初めての方は会員登録後、確認メールに記載された6桁コードを入力してください。</p>
       <div className="member-actions">
-        <a className="member-button member-button--accent" href="/account/signup/">無料会員登録して読む <Arrow /></a>
+        <a className="member-button member-button--accent" href="/account/signup/" onClick={() => trackAnalyticsEvent('signup_cta_click')}>無料会員登録して読む <Arrow /></a>
         <a className="member-button member-button--outline" href={loginHref}>登録済みの方はログイン</a>
       </div>
     </section>
@@ -110,6 +120,10 @@ function SignupPage({ session }) {
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+
+  useEffect(() => {
+    if (!session) trackAnalyticsEvent('signup_view')
+  }, [session])
 
   if (session) {
     return (
@@ -139,6 +153,7 @@ function SignupPage({ session }) {
       return
     }
 
+    trackAnalyticsEvent('signup_submit')
     setSubmitting(true)
     const redirectTo = `${window.location.origin}/account/verify/`
     const { data, error } = await supabase.auth.signUp({
@@ -156,10 +171,13 @@ function SignupPage({ session }) {
     setPassword('')
     setPasswordConfirm('')
     if (data.session) {
+      trackAnalyticsEvent('signup_verify_success')
       window.location.assign('/library/')
       return
     }
-    window.location.assign(`/account/verify/?email=${encodeURIComponent(email.trim())}`)
+    trackAnalyticsEvent('signup_code_sent')
+    storeVerificationEmail(email)
+    window.location.assign('/account/verify/')
   }
 
   return (
@@ -266,14 +284,14 @@ function LoginPage({ session }) {
       </form>
       <div className="member-switch member-switch--stack">
         <a href="/account/reset-password/">パスワードを忘れた方</a>
-        <span>初めての方は <a href="/account/signup/">無料会員登録</a></span>
+        <span>初めての方は <a href="/account/signup/" onClick={() => trackAnalyticsEvent('signup_cta_click')}>無料会員登録</a></span>
       </div>
     </section>
   )
 }
 
 function VerifyPage({ session }) {
-  const [email, setEmail] = useState(() => new URLSearchParams(window.location.search).get('email') || '')
+  const [email, setEmail] = useState(getVerificationEmail)
   const [otp, setOtp] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -300,6 +318,8 @@ function VerifyPage({ session }) {
       return
     }
 
+    clearVerificationEmail()
+    trackAnalyticsEvent('signup_verify_success')
     window.location.assign('/library/')
   }
 
