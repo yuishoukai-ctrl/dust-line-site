@@ -38,19 +38,12 @@ const stories = [
     className: 'story--wide',
   },
   {
-    category: 'CAMP & RIDE',
-    title: '一日の終わりを運ぶ',
-    excerpt: '積みすぎないキャンプ道具と、夕暮れまで走るための小さな工夫。',
-    image: assetPath('camp-sunset.jpg'),
-    className: 'story--tall',
-  },
-  {
     category: 'MACHINE FILE 001',
     title: '大陸横断マシン',
     excerpt: '60Lタンク、トリプルヘッドライト、6mmアーマー。ガードファクトリーが仕立てた一台。',
     image: assetPath('bike-profile.jpg'),
     href: `${homePath}articles/machine-file-001/`,
-    className: 'story--compact',
+    className: 'story--tall',
   },
 ]
 
