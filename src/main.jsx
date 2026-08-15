@@ -778,21 +778,18 @@ function Newsletter() {
     <section className="newsletter section" id="newsletter">
       <div className="newsletter__image reveal"><img src={assetPath('mountain-stop.jpg')} alt="山を望む道路に停めたアドベンチャーバイク" loading="lazy" decoding="async" /></div>
       <div className="newsletter__copy reveal">
-        <div className="section-label"><span>05</span><span>FIELD LETTER</span></div>
-        <h2>次の旅を、<br />受信箱へ。</h2>
-        <p>新しい記事、創刊号の発売情報、誌面に入りきらなかったルートノートを届けます。</p>
-        <div className="newsletter__pending" role="status">
-          <span>NEWSLETTER / PREPARING</span>
-          <strong>登録準備中</strong>
-          <p>ニュースレターの配信準備を進めています。最新情報はDUST LINE公式Xでお知らせします。</p>
+        <div className="section-label"><span>05</span><span>MEMBER LIBRARY</span></div>
+        <h2>創刊号を、<br />無料で読む。</h2>
+        <p>無料会員登録で、DUST LINE創刊号をお読みいただけます。現在は校了前の仮公開版を会員ページで公開中です。</p>
+        <div className="newsletter__pending">
+          <span>FREE MEMBER / ISSUE 01</span>
+          <strong>無料会員登録</strong>
+          <p>メールアドレスを登録し、確認メールの6桁コードを入力すると、マイライブラリから創刊号をお読みいただけます。</p>
           <a
             className="button button--accent"
-            href={officialXUrl}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="DUST LINE公式Xを新しいタブで開く"
+            href={signupPagePath}
           >
-            公式Xを見る <ArrowIcon />
+            無料会員登録へ <ArrowIcon />
           </a>
         </div>
       </div>
