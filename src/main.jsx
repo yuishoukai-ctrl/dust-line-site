@@ -180,8 +180,8 @@ function Hero() {
           車両製作、道具、そしてライダーの選択を記録する季刊誌です。
         </p>
         <div className="hero__actions">
-          <a className="button button--accent" href="#issue">創刊号について見る <ArrowIcon /></a>
-          <a className="text-link" href={magazinePagePath}>DUST LINEとは <ArrowIcon /></a>
+          <a className="button button--accent" href={signupPagePath}>創刊号を無料で読む <ArrowIcon /></a>
+          <a className="text-link" href="#issue">創刊号について見る <ArrowIcon /></a>
         </div>
       </div>
       <div className="hero__index" aria-hidden="true">
@@ -670,7 +670,6 @@ function PaintServiceBanner() {
 
 function MagazinePreview() {
   const webArticle = `${homePath}articles/world-trip/`
-  const memberLibrary = `${import.meta.env.BASE_URL}library/`
   const page026 = assetPath('issue-01/world-trip-026.webp')
   const page027 = assetPath('issue-01/world-trip-027.webp')
   const page030 = assetPath('issue-01/world-trip-030.webp')
@@ -686,19 +685,19 @@ function MagazinePreview() {
           <p>WEBでは計画と車両選び、加工の要点をダイジェストで紹介。創刊号では全工程とDUST DATAを8ページで収録します。</p>
           <div className="sneak-peek__actions">
             <a className="button button--accent" href={webArticle}>WEBダイジェストを読む <ArrowIcon /></a>
-            <a className="sneak-peek__notify" href={memberLibrary}>創刊号を無料で読む <ArrowIcon /></a>
+            <a className="sneak-peek__notify" href={signupPagePath}>創刊号を無料で読む <ArrowIcon /></a>
             <a className="sneak-peek__notify" href={officialXUrl} target="_blank" rel="noreferrer">公式Xで発売情報を見る <ArrowIcon /></a>
           </div>
         </div>
       </div>
 
-      <a className="sneak-peek__primary reveal" href={memberLibrary} aria-label="創刊号の会員ライブラリを開く">
+      <a className="sneak-peek__primary reveal" href={signupPagePath} aria-label="創刊号を無料で読む">
         <span className="sneak-peek__ribbon">SAMPLE / ISSUE 01</span>
         <div className="sneak-peek__spread">
           <figure><img src={page026} alt="世界一周に行こうとしたら。扉ページ 026" loading="lazy" decoding="async" /></figure>
           <figure><img src={page027} alt="計画ルートを掲載した誌面 027" loading="lazy" decoding="async" /></figure>
         </div>
-        <span className="sneak-peek__open">OPEN MEMBER LIBRARY <ArrowIcon /></span>
+        <span className="sneak-peek__open">FREE MEMBER / READ ISSUE 01 <ArrowIcon /></span>
       </a>
 
       <div className="sneak-peek__tease reveal" aria-label="創刊号に収録する加工記事の誌面を一部公開">
