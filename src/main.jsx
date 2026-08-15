@@ -7,6 +7,7 @@ import PaintPricePage from './PaintPricePage'
 import WorldTripArticle from './WorldTripArticle'
 import CategoryPage from './CategoryPages'
 import OffroadMagazinePage from './OffroadMagazinePage'
+import MemberPage from './MemberPages'
 import './styles.css'
 
 const assetPath = (filename) => `${import.meta.env.BASE_URL}images/${filename}`
@@ -20,6 +21,8 @@ const buildPagePath = `${homePath}build/`
 const garagePagePath = `${homePath}garage/`
 const paintPagePath = `${homePath}paint/`
 const magazinePagePath = `${homePath}offroad-bike-magazine/`
+const signupPagePath = `${homePath}account/signup/`
+const libraryPagePath = `${homePath}library/`
 const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
 const paintFormUrl = 'https://forms.gle/GxxkzYxkqjCHdfm46'
 const suzuriShopUrl = 'https://suzuri.jp/dustline'
@@ -151,6 +154,7 @@ function Header({ currentPage = null }) {
         <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined} onClick={() => setOpen(false)}>Garage</a>
         <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined} onClick={() => setOpen(false)}>Paint</a>
         <a href={magazinePagePath} aria-current={currentPage === 'magazine' ? 'page' : undefined} onClick={() => setOpen(false)}>Magazine</a>
+        <a href={libraryPagePath} aria-current={currentPage === 'member' ? 'page' : undefined} onClick={() => setOpen(false)}>Library</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined} onClick={() => setOpen(false)}>Goods</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined} onClick={() => setOpen(false)}>Company</a>
         <a href={advertisePagePath} aria-current={currentPage === 'advertise' ? 'page' : undefined} onClick={() => setOpen(false)}>広告募集</a>
@@ -673,7 +677,7 @@ function PaintServiceBanner() {
 
 function MagazinePreview() {
   const webArticle = `${homePath}articles/world-trip/`
-  const samplePdf = `${import.meta.env.BASE_URL}downloads/dust-line-issue-01-sample.pdf`
+  const memberLibrary = `${import.meta.env.BASE_URL}library/`
   const page026 = assetPath('issue-01/world-trip-026.webp')
   const page027 = assetPath('issue-01/world-trip-027.webp')
   const page030 = assetPath('issue-01/world-trip-030.webp')
@@ -689,19 +693,19 @@ function MagazinePreview() {
           <p>WEBでは計画と車両選び、加工の要点をダイジェストで紹介。創刊号では全工程とDUST DATAを8ページで収録します。</p>
           <div className="sneak-peek__actions">
             <a className="button button--accent" href={webArticle}>WEBダイジェストを読む <ArrowIcon /></a>
-            <a className="sneak-peek__notify" href={samplePdf} target="_blank" rel="noreferrer">誌面を2ページ試し読み <ArrowIcon /></a>
+            <a className="sneak-peek__notify" href={memberLibrary}>創刊号を無料で読む <ArrowIcon /></a>
             <a className="sneak-peek__notify" href={officialXUrl} target="_blank" rel="noreferrer">公式Xで発売情報を見る <ArrowIcon /></a>
           </div>
         </div>
       </div>
 
-      <a className="sneak-peek__primary reveal" href={samplePdf} target="_blank" rel="noreferrer" aria-label="創刊号の2ページ試し読みPDFを開く">
+      <a className="sneak-peek__primary reveal" href={memberLibrary} aria-label="創刊号の会員ライブラリを開く">
         <span className="sneak-peek__ribbon">SAMPLE / ISSUE 01</span>
         <div className="sneak-peek__spread">
           <figure><img src={page026} alt="世界一周に行こうとしたら。扉ページ 026" loading="lazy" decoding="async" /></figure>
           <figure><img src={page027} alt="計画ルートを掲載した誌面 027" loading="lazy" decoding="async" /></figure>
         </div>
-        <span className="sneak-peek__open">OPEN 2-PAGE PDF <ArrowIcon /></span>
+        <span className="sneak-peek__open">OPEN MEMBER LIBRARY <ArrowIcon /></span>
       </a>
 
       <div className="sneak-peek__tease reveal" aria-label="創刊号に収録する加工記事の誌面を一部公開">
@@ -831,7 +835,7 @@ function PrivacyPage() {
               <div className="legal-block__heading"><span>01</span><h3>取得する情報</h3></div>
               <div className="legal-block__body">
                 <p>お問い合わせフォームをご利用の場合、氏名、メールアドレス、お問い合わせ内容など、送信者が入力した情報を受け取ることがあります。</p>
-                <p>ニュースレターは現在準備中であり、当サイト上ではメールアドレスの登録を受け付けていません。また、当サイト独自のアクセス解析ツールも現在導入していません。</p>
+                <p>会員登録では、メールアドレス、認証情報、登録日時、ログインに必要な技術情報を取り扱います。ニュースレターは現在準備中であり、広告・案内メールの受信は会員登録とは分離して扱います。また、当サイト独自のアクセス解析ツールは現在導入していません。</p>
                 <p>ただし、サイトや外部フォームの提供事業者が、サービスの維持や安全確保のためにアクセス情報等を取り扱う場合があります。詳細は各事業者の方針をご確認ください。</p>
               </div>
             </section>
@@ -839,7 +843,7 @@ function PrivacyPage() {
             <section className="legal-block reveal">
               <div className="legal-block__heading"><span>02</span><h3>利用目的</h3></div>
               <div className="legal-block__body">
-                <p>お預かりした情報は、お問い合わせへの回答、必要な連絡、サイト運営上の確認、不正利用や安全上の問題への対応のために利用します。</p>
+                <p>お預かりした情報は、会員認証、購入・閲覧権限の管理、お問い合わせへの回答、必要な連絡、サイト運営上の確認、不正利用や安全上の問題への対応のために利用します。</p>
                 <p>ご本人の同意がある場合、または法令に基づく場合などを除き、利用目的を超えて取り扱うことはありません。</p>
               </div>
             </section>
@@ -855,7 +859,7 @@ function PrivacyPage() {
             <section className="legal-block reveal">
               <div className="legal-block__heading"><span>04</span><h3>外部サービス</h3></div>
               <div className="legal-block__body">
-                <p>当サイトには、SUZURI、X、Googleフォームなど外部サービスへのリンクがあります。リンク先で提供されるサービスや情報の取り扱いには、それぞれの利用規約・プライバシーポリシーが適用されます。</p>
+                <p>会員登録と認証にはSupabaseを利用します。また、当サイトにはSUZURI、X、Googleフォームなど外部サービスへのリンクがあります。各サービスで取り扱われる情報には、それぞれの利用規約・プライバシーポリシーが適用されます。</p>
                 <p>外部サイトの内容、商品の購入、決済、配送、アカウント管理等については、各サービス提供者へご確認ください。</p>
               </div>
             </section>
@@ -912,6 +916,7 @@ function Footer({ currentPage = null }) {
         <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined}>Garage</a>
         <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined}>Paint</a>
         <a href={magazinePagePath} aria-current={currentPage === 'magazine' ? 'page' : undefined}>Magazine</a>
+        <a href={libraryPagePath} aria-current={currentPage === 'member' ? 'page' : undefined}>Library</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined}>Goods</a>
         <a href={suzuriShopUrl} target="_blank" rel="noreferrer">Shop</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined}>Company</a>
@@ -962,18 +967,38 @@ function App() {
     '/privacy/': 'privacy',
     '/paint/': 'paint',
     '/offroad-bike-magazine/': 'magazine',
+    '/account/signup/': 'member-signup',
+    '/account/login/': 'member-login',
+    '/account/verify/': 'member-verify',
+    '/account/reset-password/': 'member-reset',
+    '/library/': 'member-library',
+    '/issues/issue-01/': 'member-issue',
   }[pathname]
   const page = routePage || new URLSearchParams(window.location.search).get('page')
   if (page === 'company') return <CompanyPage />
   if (page === 'goods') return <GoodsPage />
   if (page === 'advertise') return <AdvertisePage />
   if (page === 'privacy') return <PrivacyPage />
+  if (page?.startsWith('member-')) {
+    const memberView = page.replace('member-', '')
+    return (
+      <>
+        <a className="skip-link" href="#main">本文へ移動</a>
+        <Header currentPage="member" />
+        <MemberPage
+          view={memberView}
+          assetPath={assetPath}
+        />
+        <Footer currentPage="member" />
+      </>
+    )
+  }
   if (page === 'magazine') {
     return (
       <>
         <a className="skip-link" href="#main">本文へ移動</a>
         <Header currentPage="magazine" />
-        <OffroadMagazinePage assetPath={assetPath} />
+        <OffroadMagazinePage assetPath={assetPath} signupPath={signupPagePath} libraryPath={libraryPagePath} />
         <Footer currentPage="magazine" />
       </>
     )

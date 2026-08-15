@@ -36,7 +36,7 @@ const chapters = [
 export default function WorldTripArticle({ assetPath }) {
   const root = import.meta.env.BASE_URL
   const image = (name) => assetPath(`world-trip/${name}`)
-  const samplePdf = `${root}downloads/dust-line-issue-01-sample.pdf`
+  const memberLibrary = `${root}library/`
   const hokkaidoArticle = '/articles/hokkaido-1190/'
 
   useEffect(() => {
@@ -174,7 +174,7 @@ export default function WorldTripArticle({ assetPath }) {
             </div>
             <div>
               <p>北米仕様のタンクを欧州仕様のKLR650へ合わせるまで。切断、溶接、燃料系統、パニア製作の細部を、創刊号では8ページで収録します。</p>
-              <a href={samplePdf} target="_blank" rel="noreferrer">創刊号を2ページ試し読み <ArticleArrow /></a>
+              <a href={memberLibrary}>創刊号を無料で読む <ArticleArrow /></a>
             </div>
           </aside>
 
@@ -243,7 +243,7 @@ export default function WorldTripArticle({ assetPath }) {
               <li>全17点の写真とDUST DATA</li>
             </ul>
             <div className="magazine-cta__actions">
-              <a className="magazine-cta__primary" href={samplePdf} target="_blank" rel="noreferrer">誌面を2ページ試し読み <ArticleArrow /></a>
+              <a className="magazine-cta__primary" href={memberLibrary}>創刊号を無料で読む <ArticleArrow /></a>
               <a href="/build/">車両製作の記事を見る <ArticleArrow /></a>
               <a href="/garage/">溶接・加工の記事を見る <ArticleArrow /></a>
               <a href={`${root}#issue`}>創刊号について見る <ArticleArrow /></a>
