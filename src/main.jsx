@@ -21,6 +21,9 @@ const companyPagePath = `${homePath}company/`
 const goodsPagePath = `${homePath}goods/`
 const advertisePagePath = `${homePath}advertise/`
 const privacyPagePath = `${homePath}privacy/`
+const commercialDisclosurePagePath = `${homePath}commercial-disclosure/`
+const refundPolicyPagePath = `${homePath}refund-policy/`
+const digitalDeliveryPagePath = `${homePath}digital-delivery/`
 const travelPagePath = `${homePath}travel/`
 const buildPagePath = `${homePath}build/`
 const garagePagePath = `${homePath}garage/`
@@ -32,6 +35,7 @@ const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
 const paintFormUrl = 'https://forms.gle/GxxkzYxkqjCHdfm46'
 const suzuriShopUrl = 'https://suzuri.jp/dustline'
 const officialXUrl = 'https://x.com/DUSTLINE_ADV'
+const supportEmail = 'dustlineadv@gmail.com'
 
 const stories = [
   {
@@ -367,6 +371,8 @@ function CompanyPage() {
               <div>
                 <dt>お問い合わせ</dt>
                 <dd>
+                  <a href={`mailto:${supportEmail}`}>{supportEmail}</a>
+                  <br />
                   <a
                     href={contactFormUrl}
                     target="_blank"
@@ -895,6 +901,278 @@ function PrivacyPage() {
   )
 }
 
+function CommerceLegalLayout({
+  currentPage,
+  documentTitle,
+  word,
+  indexLabel,
+  eyebrow,
+  title,
+  heroText,
+  introLabel,
+  introTitle,
+  introText,
+  children,
+}) {
+  useEffect(() => {
+    const previousTitle = document.title
+    document.title = documentTitle
+    window.scrollTo(0, 0)
+    return () => { document.title = previousTitle }
+  }, [documentTitle])
+
+  return (
+    <>
+      <a className="skip-link" href="#main">本文へ移動</a>
+      <Header currentPage={currentPage} />
+      <main className="company-page legal-page" id="main">
+        <section className="company-page__hero legal-page__hero">
+          <div className="company-page__word" aria-hidden="true">{word}</div>
+          <div className="company-page__hero-inner reveal">
+            <p className="eyebrow">{eyebrow}</p>
+            <h1>{title}</h1>
+            <p>{heroText}</p>
+          </div>
+          <div className="company-page__index" aria-hidden="true"><span>DL</span><span>{indexLabel}</span><span>JPN</span></div>
+        </section>
+
+        <section className="legal-page__content section" aria-labelledby={`${currentPage}-title`}>
+          <header className="legal-page__intro reveal">
+            <p>{introLabel}</p>
+            <h2 id={`${currentPage}-title`}>{introTitle}</h2>
+            <p>{introText}</p>
+          </header>
+          <div className="legal-page__sections">{children}</div>
+          <a className="company-page__back text-link" href={homePath}>DUST LINEトップへ <ArrowIcon /></a>
+        </section>
+      </main>
+      <Footer currentPage={currentPage} />
+    </>
+  )
+}
+
+function CommercialDisclosurePage() {
+  return (
+    <CommerceLegalLayout
+      currentPage="commercial-disclosure"
+      documentTitle="特定商取引法に基づく表記 | DUST LINE"
+      word="COMMERCE"
+      indexLabel="LEGAL"
+      eyebrow="DUST LINE / COMMERCE DISCLOSURE"
+      title={<>特定商取引法に<br />基づく表記</>}
+      heroText="DUST LINEが直接販売するデジタル雑誌について、販売条件とお問い合わせ先をご案内します。"
+      introLabel="COMMERCIAL DISCLOSURE"
+      introTitle="販売条件を、購入前に明確に。"
+      introText="本ページは、DUST LINE公式サイトで提供するデジタル雑誌の販売条件をまとめたものです。外部サービスで販売される商品には、各サービスの表示と規約が適用されます。"
+    >
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>01</span><h3>販売事業者</h3></div>
+        <div className="legal-block__body">
+          <dl className="legal-facts">
+            <div><dt>販売事業者</dt><dd>DUST LINE</dd></div>
+            <div><dt>運営責任者</dt><dd>小長谷一行</dd></div>
+            <div><dt>所在地</dt><dd><address>〒421-3115 静岡県静岡市清水区由比西倉澤838-2</address></dd></div>
+            <div><dt>電話番号</dt><dd><a href="tel:+815017850018">050-1785-0018</a></dd></div>
+            <div><dt>メール</dt><dd><a href={`mailto:${supportEmail}`}>{supportEmail}</a></dd></div>
+            <div><dt>Webサイト</dt><dd><a href="https://dustline.jp">https://dustline.jp</a></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>02</span><h3>商品と販売価格</h3></div>
+        <div className="legal-block__body">
+          <p>DUST LINEは、オフロード／アドベンチャーバイクを中心とする季刊デジタル雑誌です。創刊号は2026年9月1日に無料公開し、第2号以降は各号1,480円（税込・日本円）で販売します。</p>
+          <p>有料号は各号単品で販売し、自動更新による定期課金は行いません。購入した号は、原則として閲覧期限を設けず、無期限で閲覧できます。個別の商品名、収録内容その他の条件は、各号の商品ページおよび購入内容の最終確認画面に表示します。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>03</span><h3>商品代金以外の費用</h3></div>
+        <div className="legal-block__body">
+          <p>当サイトの閲覧、会員登録、購入手続き、デジタル雑誌の閲覧に必要なインターネット接続料金および通信料金は、利用者の負担となります。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>04</span><h3>支払方法と支払時期</h3></div>
+        <div className="legal-block__body">
+          <p>有料販売開始時はクレジットカード決済に対応し、利用できる決済方法を購入画面に表示します。支払時期は、注文内容を確認して購入を確定した時点です。</p>
+          <p className="legal-note">現在、DUST LINE公式サイトでの有料販売は開始前です。決済機能の開始前に、本ページと購入画面の表示内容を最終更新します。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>05</span><h3>提供時期と提供方法</h3></div>
+        <div className="legal-block__body">
+          <p>有料号は、決済完了後、購入に使用したDUST LINE会員アカウントのマイライブラリへ閲覧権限を付与します。利用には無料会員登録とメールアドレスの確認が必要です。</p>
+          <p>システム障害などにより反映が遅れた場合は、購入時のメールアドレスからお問い合わせください。詳しくは<a href={digitalDeliveryPagePath}>デジタル商品の提供条件</a>をご確認ください。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>06</span><h3>返品・キャンセル</h3></div>
+        <div className="legal-block__body">
+          <p>デジタル商品の性質上、閲覧権限の付与後は、利用者都合による返品・キャンセルを受け付けていません。ただし、重複決済、当サイトの責めに帰すべき事情により商品を閲覧できない場合などは、確認のうえ返金その他の対応を行います。</p>
+          <p>適用条件と手続きは<a href={refundPolicyPagePath}>返金・キャンセルポリシー</a>をご確認ください。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>07</span><h3>申込期限・販売数量</h3></div>
+        <div className="legal-block__body">
+          <p>販売期間、数量制限、割引その他の条件がある場合は、各商品ページおよび購入内容の最終確認画面に表示します。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>08</span><h3>お問い合わせ</h3></div>
+        <div className="legal-block__body">
+          <p>購入、閲覧、返金に関するお問い合わせは、<a href={`mailto:${supportEmail}`}>{supportEmail}</a>または<a href="tel:+815017850018">050-1785-0018</a>までご連絡ください。</p>
+          <p className="legal-block__date">制定日：2026年8月15日</p>
+        </div>
+      </section>
+    </CommerceLegalLayout>
+  )
+}
+
+function RefundPolicyPage() {
+  return (
+    <CommerceLegalLayout
+      currentPage="refund-policy"
+      documentTitle="返金・キャンセルポリシー | DUST LINE"
+      word="REFUND"
+      indexLabel="POLICY"
+      eyebrow="DUST LINE / REFUND POLICY"
+      title={<>返金・キャンセル<br />ポリシー</>}
+      heroText="デジタル雑誌の性質と購入者保護の両方を踏まえ、対応条件を明確にします。"
+      introLabel="REFUND & CANCELLATION"
+      introTitle="困ったときの判断を、曖昧にしない。"
+      introText="本ポリシーは、DUST LINE公式サイトで直接販売する有料デジタル雑誌に適用します。外部サービスで購入した商品は、購入先の規約と手続きが適用されます。"
+    >
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>01</span><h3>購入後のキャンセル</h3></div>
+        <div className="legal-block__body">
+          <p>デジタル商品の性質上、購入完了後に閲覧権限が付与された商品について、利用者都合による返品、交換、キャンセルは受け付けていません。購入確定前に、対象号、価格、会員アカウントをご確認ください。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>02</span><h3>返金を検討する場合</h3></div>
+        <div className="legal-block__body">
+          <p>次の場合は、決済記録と閲覧権限の状況を確認し、返金、重複分の取消し、閲覧権限の再付与その他の適切な対応を行います。</p>
+          <ul>
+            <li>同一の注文について重複して決済された場合</li>
+            <li>表示された金額と実際の請求額が異なる場合</li>
+            <li>当サイトのシステム上の問題により、購入した商品を閲覧できない状態が解消しない場合</li>
+            <li>法令上、返金その他の対応が必要となる場合</li>
+          </ul>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>03</span><h3>お問い合わせ方法</h3></div>
+        <div className="legal-block__body">
+          <p><a href={`mailto:${supportEmail}`}>{supportEmail}</a>へ、購入に使用したメールアドレス、対象号、購入日、発生している問題をご連絡ください。パスワード、認証コード、カード番号全桁、セキュリティコードは送信しないでください。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>04</span><h3>返金方法と時期</h3></div>
+        <div className="legal-block__body">
+          <p>返金が適当と判断した場合は、原則として購入時の決済方法を通じて処理します。返金がカード明細などへ反映される時期は、決済事業者やカード発行会社により異なります。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>05</span><h3>イベント参加費</h3></div>
+        <div className="legal-block__body">
+          <p>現在、DUST LINE公式サイトでは有料イベントの申込みを受け付けていません。将来、有料イベントを実施する場合は、開催中止、参加者都合のキャンセル、返金期限などを各イベントページと申込最終確認画面に表示します。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>06</span><h3>お問い合わせ</h3></div>
+        <div className="legal-block__body">
+          <p>メール：<a href={`mailto:${supportEmail}`}>{supportEmail}</a><br />電話：<a href="tel:+815017850018">050-1785-0018</a></p>
+          <p className="legal-block__date">制定日：2026年8月15日</p>
+        </div>
+      </section>
+    </CommerceLegalLayout>
+  )
+}
+
+function DigitalDeliveryPage() {
+  return (
+    <CommerceLegalLayout
+      currentPage="digital-delivery"
+      documentTitle="デジタル商品の提供条件 | DUST LINE"
+      word="DELIVERY"
+      indexLabel="DIGITAL"
+      eyebrow="DUST LINE / DIGITAL DELIVERY"
+      title={<>デジタル商品の<br />提供条件</>}
+      heroText="購入から閲覧までの流れと、必要な環境を事前にご案内します。"
+      introLabel="DIGITAL FULFILLMENT"
+      introTitle="買ったあと、迷わず読めるように。"
+      introText="本ページは、DUST LINE公式サイトで直接提供するデジタル雑誌の閲覧条件をまとめたものです。"
+    >
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>01</span><h3>提供する商品</h3></div>
+        <div className="legal-block__body">
+          <p>DUST LINEは、Webブラウザから閲覧する季刊デジタル雑誌です。有料号は各号1,480円（税込）の単品販売で、自動更新による定期課金は行いません。各号の収録内容と公開日は、商品ページと購入内容の最終確認画面に表示します。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>02</span><h3>会員アカウント</h3></div>
+        <div className="legal-block__body">
+          <p>閲覧にはDUST LINEの無料会員登録とメールアドレスの確認が必要です。購入時と同じ会員アカウントでログインし、マイライブラリから対象号を開いてください。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>03</span><h3>提供時期</h3></div>
+        <div className="legal-block__body">
+          <p>販売中の号は、決済完了後に閲覧権限を付与します。予約商品または公開日前の商品は、商品ページに表示した公開日時以降に閲覧できます。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>04</span><h3>必要な利用環境</h3></div>
+        <div className="legal-block__body">
+          <p>インターネットへ接続できる端末と、セキュリティ更新が提供されている一般的なWebブラウザが必要です。通信料金は利用者の負担となります。</p>
+          <p>端末、ブラウザ、通信環境によっては表示に時間がかかる場合があります。購入前に、無料公開中の創刊号が利用予定の環境で閲覧できることをご確認ください。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>05</span><h3>閲覧と保存</h3></div>
+        <div className="legal-block__body">
+          <p>購入した号は、原則として閲覧期限を設けず、無期限で閲覧できます。ただし、法令、権利処理、サービス終了その他やむを得ない事情により提供条件を変更する場合は、当サイトまたは登録メールアドレスへの連絡により事前にご案内します。</p>
+          <p>ダウンロードやオフライン閲覧は、各号の商品ページに提供の記載がある場合に限ります。表示がない機能は提供を保証していません。</p>
+          <p>会員アカウント、閲覧URL、誌面データを第三者と共有したり、誌面を無断で転載・再配布したりすることはできません。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>06</span><h3>閲覧できない場合</h3></div>
+        <div className="legal-block__body">
+          <p>ログイン状態、購入に使用したメールアドレス、対象号、通信環境をご確認ください。解決しない場合は、パスワードや認証コードを記載せず、<a href={`mailto:${supportEmail}`}>{supportEmail}</a>へご連絡ください。</p>
+          <p>当サイト側の問題により閲覧できない状態が解消しない場合は、<a href={refundPolicyPagePath}>返金・キャンセルポリシー</a>に基づき対応します。</p>
+        </div>
+      </section>
+
+      <section className="legal-block reveal">
+        <div className="legal-block__heading"><span>07</span><h3>お問い合わせ</h3></div>
+        <div className="legal-block__body">
+          <p>メール：<a href={`mailto:${supportEmail}`}>{supportEmail}</a><br />電話：<a href="tel:+815017850018">050-1785-0018</a></p>
+          <p className="legal-block__date">制定日：2026年8月15日</p>
+        </div>
+      </section>
+    </CommerceLegalLayout>
+  )
+}
+
 function Footer({ currentPage = null }) {
   const subpage = Boolean(currentPage)
   const sectionHref = (id) => subpage ? `${homePath}#${id}` : `#${id}`
@@ -921,6 +1199,9 @@ function Footer({ currentPage = null }) {
         <a href={contactFormUrl} target="_blank" rel="noreferrer">Contact</a>
         <a href={officialXUrl} target="_blank" rel="noreferrer" aria-label="DUST LINE公式X">Official X</a>
         <a href={privacyPagePath} aria-current={currentPage === 'privacy' ? 'page' : undefined}>プライバシー・免責事項</a>
+        <a href={commercialDisclosurePagePath} aria-current={currentPage === 'commercial-disclosure' ? 'page' : undefined}>特定商取引法に基づく表記</a>
+        <a href={refundPolicyPagePath} aria-current={currentPage === 'refund-policy' ? 'page' : undefined}>返金・キャンセル</a>
+        <a href={digitalDeliveryPagePath} aria-current={currentPage === 'digital-delivery' ? 'page' : undefined}>デジタル提供条件</a>
       </div>
       <p>© 2026 DUST LINE. ALL RIGHTS RESERVED.</p>
     </footer>
@@ -962,6 +1243,9 @@ function App() {
     '/goods/': 'goods',
     '/advertise/': 'advertise',
     '/privacy/': 'privacy',
+    '/commercial-disclosure/': 'commercial-disclosure',
+    '/refund-policy/': 'refund-policy',
+    '/digital-delivery/': 'digital-delivery',
     '/paint/': 'paint',
     '/offroad-bike-magazine/': 'magazine',
     '/account/signup/': 'member-signup',
@@ -976,6 +1260,9 @@ function App() {
   if (page === 'goods') return <GoodsPage />
   if (page === 'advertise') return <AdvertisePage />
   if (page === 'privacy') return <PrivacyPage />
+  if (page === 'commercial-disclosure') return <CommercialDisclosurePage />
+  if (page === 'refund-policy') return <RefundPolicyPage />
+  if (page === 'digital-delivery') return <DigitalDeliveryPage />
   if (page?.startsWith('member-')) {
     const memberView = page.replace('member-', '')
     return (
