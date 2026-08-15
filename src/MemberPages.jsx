@@ -91,11 +91,11 @@ function AuthRequired({ returnPath }) {
   return (
     <section className="member-panel member-panel--gate" aria-labelledby="member-gate-title">
       <p className="member-kicker">MEMBERS ONLY</p>
-      <h2 id="member-gate-title">続きを読むには、ログインが必要です。</h2>
+      <h2 id="member-gate-title">創刊号を無料で読む</h2>
       <p>創刊号は無料です。初めての方は会員登録後、確認メールに記載された6桁コードを入力してください。</p>
       <div className="member-actions">
-        <a className="member-button member-button--accent" href={loginHref}>会員ログイン <Arrow /></a>
-        <a className="member-button member-button--outline" href="/account/signup/">無料会員登録</a>
+        <a className="member-button member-button--accent" href="/account/signup/">無料会員登録して読む <Arrow /></a>
+        <a className="member-button member-button--outline" href={loginHref}>登録済みの方はログイン</a>
       </div>
     </section>
   )
@@ -106,6 +106,8 @@ function SignupPage({ session }) {
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [privacyAccepted, setPrivacyAccepted] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -165,20 +167,35 @@ function SignupPage({ session }) {
       <p className="member-kicker">CREATE YOUR ACCOUNT</p>
       <h2 id="signup-title">無料会員登録</h2>
       <p>創刊号は無料でお読みいただけます。現在は校了前のため、2ページの仮公開版を掲載しています。</p>
+      <p className="member-reassurance">登録無料 / カード情報不要 / メール確認後すぐ読める</p>
+      <ol className="member-steps" aria-label="会員登録の手順">
+        <li className="is-current"><span>1/2</span> 会員情報</li>
+        <li><span>2/2</span> メール確認</li>
+      </ol>
 
       <form className="member-form" onSubmit={handleSubmit} noValidate>
         <label>
           <span>メールアドレス</span>
           <input type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
         </label>
-        <label>
-          <span>パスワード <small>12文字以上</small></span>
-          <input type="password" autoComplete="new-password" minLength="12" value={password} onChange={(event) => setPassword(event.target.value)} required />
-        </label>
-        <label>
-          <span>パスワード確認</span>
-          <input type="password" autoComplete="new-password" minLength="12" value={passwordConfirm} onChange={(event) => setPasswordConfirm(event.target.value)} required />
-        </label>
+        <div className="member-field">
+          <label htmlFor="signup-password">パスワード <small>12文字以上</small></label>
+          <div className="member-password-input">
+            <input id="signup-password" type={showPassword ? 'text' : 'password'} autoComplete="new-password" minLength="12" value={password} onChange={(event) => setPassword(event.target.value)} required />
+            <button type="button" className="member-password-toggle" aria-controls="signup-password" aria-pressed={showPassword} onClick={() => setShowPassword((visible) => !visible)}>
+              {showPassword ? 'パスワードを隠す' : 'パスワードを表示'}
+            </button>
+          </div>
+        </div>
+        <div className="member-field">
+          <label htmlFor="signup-password-confirm">パスワード確認</label>
+          <div className="member-password-input">
+            <input id="signup-password-confirm" type={showPasswordConfirm ? 'text' : 'password'} autoComplete="new-password" minLength="12" value={passwordConfirm} onChange={(event) => setPasswordConfirm(event.target.value)} required />
+            <button type="button" className="member-password-toggle" aria-controls="signup-password-confirm" aria-pressed={showPasswordConfirm} onClick={() => setShowPasswordConfirm((visible) => !visible)}>
+              {showPasswordConfirm ? '確認用パスワードを隠す' : '確認用パスワードを表示'}
+            </button>
+          </div>
+        </div>
         <label className="member-check">
           <input type="checkbox" checked={privacyAccepted} onChange={(event) => setPrivacyAccepted(event.target.checked)} />
           <span><a href="/privacy/" target="_blank" rel="noreferrer">プライバシーポリシー</a>を確認しました</span>
@@ -554,9 +571,11 @@ export default function MemberPage({ view, assetPath }) {
   else if (view === 'library') content = <LibraryPage session={session} assetPath={assetPath} />
   else content = <IssueReaderPage session={session} assetPath={assetPath} />
 
+  const compactHero = ['signup', 'login', 'verify', 'reset', 'library'].includes(view)
+
   return (
     <main className="member-page" id="main">
-      <header className="member-hero">
+      <header className={`member-hero${compactHero ? ' member-hero--compact' : ''}`}>
         <div className="member-hero__texture" aria-hidden="true" />
         <div className="member-hero__copy">
           <p>DUST LINE / DIGITAL READER</p>
