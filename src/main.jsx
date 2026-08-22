@@ -4,6 +4,7 @@ import HokkaidoArticle from './HokkaidoArticle'
 import Ktm990Article from './Ktm990Article'
 import MachineFileArticle from './MachineFileArticle'
 import PaintPricePage from './PaintPricePage'
+import LineCommunity from './LineCommunity'
 import WorldTripArticle from './WorldTripArticle'
 import CategoryPage from './CategoryPages'
 import OffroadMagazinePage from './OffroadMagazinePage'
@@ -1329,6 +1330,7 @@ function App() {
         <Issue />
         <RouteStrip />
         <Newsletter />
+        <LineCommunity assetPath={assetPath} />
       </main>
       <Footer />
     </>
