@@ -4,12 +4,14 @@ import HokkaidoArticle from './HokkaidoArticle'
 import Ktm990Article from './Ktm990Article'
 import MachineFileArticle from './MachineFileArticle'
 import PaintPricePage from './PaintPricePage'
-import LineCommunity from './LineCommunity'
+import PartsPage from './PartsPage'
 import WorldTripArticle from './WorldTripArticle'
 import CategoryPage from './CategoryPages'
 import OffroadMagazinePage from './OffroadMagazinePage'
+import Issue02ProductPage from './Issue02ProductPage'
 import MemberPage from './MemberPages'
 import AnalyticsConsent from './AnalyticsConsent'
+import LineCommunity from './LineCommunity'
 import { trackAnalyticsEvent } from './lib/analytics'
 import { prepareVerificationEmail } from './lib/verificationEmail'
 import './styles.css'
@@ -28,8 +30,10 @@ const digitalDeliveryPagePath = `${homePath}digital-delivery/`
 const travelPagePath = `${homePath}travel/`
 const buildPagePath = `${homePath}build/`
 const garagePagePath = `${homePath}garage/`
+const partsPagePath = `${homePath}parts/`
 const paintPagePath = `${homePath}paint/`
 const magazinePagePath = `${homePath}offroad-bike-magazine/`
+const issue02ProductPagePath = `${homePath}magazine/issue-02/`
 const signupPagePath = `${homePath}account/signup/`
 const libraryPagePath = `${homePath}library/`
 const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
@@ -155,6 +159,7 @@ function Header({ currentPage = null }) {
         <a href={travelPagePath} aria-current={currentPage === 'travel' ? 'page' : undefined} onClick={() => setOpen(false)}>Travel</a>
         <a href={buildPagePath} aria-current={currentPage === 'build' ? 'page' : undefined} onClick={() => setOpen(false)}>Build</a>
         <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined} onClick={() => setOpen(false)}>Garage</a>
+        <a href={partsPagePath} aria-current={currentPage === 'parts' ? 'page' : undefined} onClick={() => setOpen(false)}>Parts</a>
         <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined} onClick={() => setOpen(false)}>Paint</a>
         <a href={magazinePagePath} aria-current={currentPage === 'magazine' ? 'page' : undefined} onClick={() => setOpen(false)}>Magazine</a>
         <a href={libraryPagePath} aria-current={currentPage === 'member' ? 'page' : undefined} onClick={() => setOpen(false)}>Library</a>
@@ -198,6 +203,33 @@ function Hero() {
         <span>DL</span><span>001</span><span>JPN</span>
       </div>
       <div className="scroll-cue" aria-hidden="true"><span />SCROLL</div>
+    </section>
+  )
+}
+
+function IssueReleaseNotice() {
+  return (
+    <section className="issue-release-notice" aria-labelledby="issue-release-title">
+      <div className="issue-release-notice__inner">
+        <div className="issue-release-notice__meta reveal">
+          <p>SCHEDULE UPDATE</p>
+          <strong>09</strong>
+          <span>2026 / MID-SEPTEMBER</span>
+        </div>
+        <div className="issue-release-notice__copy reveal">
+          <p className="issue-release-notice__eyebrow">DUST LINE / ISSUE 01</p>
+          <h2 id="issue-release-title">
+            <span className="issue-release-notice__model"><span>DUST LINE</span><span>創刊号</span></span>
+            <span className="issue-release-notice__schedule"><span>発売は</span><span>9月中旬へ。</span></span>
+          </h2>
+          <p className="issue-release-notice__body">
+            2026年9月1日を予定していた創刊号の発売・無料公開を、2026年9月中旬へ変更しました。
+            創刊号は予定どおり無料でお読みいただけます。確定日は公式サイトと公式Xでお知らせします。
+          </p>
+          <a className="text-link" href={magazinePagePath}>創刊号について見る <ArrowIcon /></a>
+        </div>
+      </div>
+      <span className="issue-release-notice__index" aria-hidden="true">01</span>
     </section>
   )
 }
@@ -744,7 +776,7 @@ function Issue() {
       </div>
       <div className="issue__copy reveal">
         <div className="section-label section-label--light"><span>04</span><span>FIRST ISSUE</span></div>
-        <p className="issue__status">ISSUE 01 / 2026.09.01 / FREE</p>
+        <p className="issue__status">ISSUE 01 / MID-SEPTEMBER 2026 / FREE</p>
         <h2>BEYOND<br />THE PAVEMENT</h2>
         <p>
           創刊号は、舗装路の向こう側へ踏み出すための一冊。
@@ -753,7 +785,7 @@ function Issue() {
         <dl className="issue__details">
           <div><dt>FORMAT</dt><dd>Digital Edition</dd></div>
           <div><dt>PRICE</dt><dd>Free</dd></div>
-          <div><dt>RELEASE</dt><dd><time dateTime="2026-09-01">2026.09.01</time></dd></div>
+          <div><dt>RELEASE</dt><dd><time dateTime="2026-09">2026年9月中旬</time></dd></div>
         </dl>
         <a className="button button--outline" href={officialXUrl} target="_blank" rel="noreferrer">公式Xで発売情報を見る <ArrowIcon /></a>
       </div>
@@ -983,7 +1015,7 @@ function CommercialDisclosurePage() {
       <section className="legal-block reveal">
         <div className="legal-block__heading"><span>02</span><h3>商品と販売価格</h3></div>
         <div className="legal-block__body">
-          <p>DUST LINEは、オフロード／アドベンチャーバイクを中心とする季刊デジタル雑誌です。創刊号は2026年9月1日に無料公開し、第2号以降は各号1,480円（税込・日本円）で販売します。</p>
+          <p>DUST LINEは、オフロード／アドベンチャーバイクを中心とする季刊デジタル雑誌です。創刊号は2026年9月中旬に無料公開予定で、第2号以降は各号1,480円（税込・日本円）で販売します。</p>
           <p>有料号は各号単品で販売し、自動更新による定期課金は行いません。購入した号は、原則として閲覧期限を設けず、無期限で閲覧できます。個別の商品名、収録内容その他の条件は、各号の商品ページおよび購入内容の最終確認画面に表示します。</p>
         </div>
       </section>
@@ -1190,8 +1222,10 @@ function Footer({ currentPage = null }) {
         <a href={travelPagePath} aria-current={currentPage === 'travel' ? 'page' : undefined}>Travel</a>
         <a href={buildPagePath} aria-current={currentPage === 'build' ? 'page' : undefined}>Build</a>
         <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined}>Garage</a>
+        <a href={partsPagePath} aria-current={currentPage === 'parts' ? 'page' : undefined}>Parts</a>
         <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined}>Paint</a>
         <a href={magazinePagePath} aria-current={currentPage === 'magazine' ? 'page' : undefined}>Magazine</a>
+        <a href={issue02ProductPagePath} aria-current={currentPage === 'issue-02-product' ? 'page' : undefined}>第2号 商品情報</a>
         <a href={libraryPagePath} aria-current={currentPage === 'member' ? 'page' : undefined}>Library</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined}>Goods</a>
         <a href={suzuriShopUrl} target="_blank" rel="noreferrer">Shop</a>
@@ -1247,6 +1281,8 @@ function App() {
     '/commercial-disclosure/': 'commercial-disclosure',
     '/refund-policy/': 'refund-policy',
     '/digital-delivery/': 'digital-delivery',
+    '/magazine/issue-02/': 'issue-02-product',
+    '/parts/': 'parts',
     '/paint/': 'paint',
     '/offroad-bike-magazine/': 'magazine',
     '/account/signup/': 'member-signup',
@@ -1264,6 +1300,34 @@ function App() {
   if (page === 'commercial-disclosure') return <CommercialDisclosurePage />
   if (page === 'refund-policy') return <RefundPolicyPage />
   if (page === 'digital-delivery') return <DigitalDeliveryPage />
+  if (page === 'parts') {
+    return (
+      <>
+        <a className="skip-link" href="#main">本文へ移動</a>
+        <Header currentPage="parts" />
+        <PartsPage assetPath={assetPath} contactUrl={contactFormUrl} officialXUrl={officialXUrl} />
+        <Footer currentPage="parts" />
+      </>
+    )
+  }
+  if (page === 'issue-02-product') {
+    return (
+      <>
+        <a className="skip-link" href="#main">本文へ移動</a>
+        <Header currentPage="magazine" />
+        <Issue02ProductPage
+          assetPath={assetPath}
+          signupPath={signupPagePath}
+          magazinePath={magazinePagePath}
+          commercialDisclosurePath={commercialDisclosurePagePath}
+          refundPolicyPath={refundPolicyPagePath}
+          digitalDeliveryPath={digitalDeliveryPagePath}
+          supportEmail={supportEmail}
+        />
+        <Footer currentPage="issue-02-product" />
+      </>
+    )
+  }
   if (page?.startsWith('member-')) {
     const memberView = page.replace('member-', '')
     return (
@@ -1283,7 +1347,12 @@ function App() {
       <>
         <a className="skip-link" href="#main">本文へ移動</a>
         <Header currentPage="magazine" />
-        <OffroadMagazinePage assetPath={assetPath} signupPath={signupPagePath} libraryPath={libraryPagePath} />
+        <OffroadMagazinePage
+          assetPath={assetPath}
+          signupPath={signupPagePath}
+          libraryPath={libraryPagePath}
+          issue02Path={issue02ProductPagePath}
+        />
         <Footer currentPage="magazine" />
       </>
     )
@@ -1322,6 +1391,7 @@ function App() {
       <Header />
       <main id="main">
         <Hero />
+        <IssueReleaseNotice />
         <Manifesto />
         <FeaturedStory />
         <StoryGrid />
