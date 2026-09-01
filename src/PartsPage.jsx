@@ -53,7 +53,7 @@ export default function PartsPage({ assetPath, contactUrl, officialXUrl }) {
         <div className="parts-hero__grid" aria-hidden="true" />
         <div className="parts-hero__copy reveal">
           <p className="parts-eyebrow">DUST LINE GARAGE / ORIGINAL PARTS</p>
-          <p className="parts-status">BMW F 450 GS / SALES FROM MID-SEPTEMBER</p>
+          <p className="parts-status">BMW F 450 GS / IN DEVELOPMENT</p>
           <h1 id="parts-title">走るための<br />部品を、<br className="parts-mobile-break" />つくる。</h1>
           <p className="parts-hero__lead">
             旅と整備の現場で感じた「ここに必要」を、形にする。DUST LINE GARAGEでは、
