@@ -1,0 +1,165 @@
+.release-delay-page {
+  --notice-ink: #17191b;
+  --notice-paper: #f0ecdf;
+  background: var(--notice-ink);
+  color: var(--notice-paper);
+}
+
+.release-delay-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, .62fr);
+  gap: clamp(44px, 8vw, 130px);
+  align-items: center;
+  min-height: min(850px, calc(100vh - 84px));
+  padding: clamp(88px, 10vw, 150px) clamp(20px, 6vw, 96px);
+  overflow: hidden;
+}
+
+.release-delay-hero__grid {
+  position: absolute;
+  inset: 0;
+  opacity: .15;
+  background-image: linear-gradient(rgba(240,236,223,.24) 1px, transparent 1px), linear-gradient(90deg, rgba(240,236,223,.24) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, #000, transparent 86%);
+}
+
+.release-delay-hero__copy,
+.release-delay-cover {
+  position: relative;
+  z-index: 1;
+}
+
+.release-delay-eyebrow {
+  margin: 0 0 28px;
+  font: 800 .67rem/1 var(--display);
+  letter-spacing: .25em;
+  color: var(--accent);
+}
+
+.release-delay-hero h1 {
+  max-width: 13ch;
+  margin: 0;
+  font: 900 clamp(3.2rem, 7vw, 7.2rem)/.94 var(--display);
+  letter-spacing: -.065em;
+}
+
+.release-delay-hero h1 span { display: block; }
+
+.release-delay-lead {
+  max-width: 44ch;
+  margin: 38px 0 0;
+  padding-top: 25px;
+  border-top: 1px solid rgba(240,236,223,.24);
+  font-size: clamp(.94rem, 1.25vw, 1.08rem);
+  line-height: 2;
+  color: rgba(240,236,223,.7);
+}
+
+.release-delay-lead strong { color: var(--notice-paper); }
+
+.release-delay-cover {
+  justify-self: end;
+  width: min(100%, 390px);
+  margin: 0;
+  padding: 16px;
+  border: 1px solid rgba(240,236,223,.24);
+  background: rgba(240,236,223,.04);
+  transform: rotate(1.4deg);
+  box-shadow: 26px 32px 70px rgba(0,0,0,.36);
+}
+
+.release-delay-cover span {
+  display: block;
+  margin: 0 0 12px;
+  font: 800 .58rem/1 var(--display);
+  letter-spacing: .22em;
+  color: rgba(240,236,223,.5);
+}
+
+.release-delay-cover img { display: block; width: 100%; height: auto; }
+
+.release-delay-number {
+  position: absolute;
+  right: -1vw;
+  bottom: -2.5vw;
+  margin: 0;
+  font: 900 clamp(11rem, 25vw, 25rem)/.7 var(--display);
+  letter-spacing: -.1em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(240,236,223,.06);
+}
+
+.release-delay-letter {
+  display: grid;
+  grid-template-columns: minmax(150px, .3fr) minmax(0, 1fr);
+  gap: clamp(42px, 8vw, 130px);
+  padding: clamp(86px, 11vw, 150px) clamp(20px, 10vw, 170px);
+  background: var(--notice-paper);
+  color: var(--notice-ink);
+}
+
+.release-delay-letter__header {
+  padding-top: 8px;
+  border-top: 3px solid var(--accent);
+}
+
+.release-delay-letter__header p {
+  margin: 18px 0 14px;
+  font: 900 .62rem/1 var(--display);
+  letter-spacing: .23em;
+}
+
+.release-delay-letter__header time {
+  font-size: .78rem;
+  color: rgba(23,25,27,.58);
+}
+
+.release-delay-letter__body {
+  max-width: 760px;
+  font-size: clamp(1rem, 1.3vw, 1.12rem);
+  line-height: 2.25;
+}
+
+.release-delay-letter__body > p { margin: 0 0 2em; }
+.release-delay-letter__body strong { color: #b8471c; }
+
+.release-delay-signature {
+  margin-top: 62px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(23,25,27,.22);
+  font-weight: 700;
+}
+
+.release-delay-signature p { margin: 0 0 8px; }
+
+.release-delay-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 36px;
+  align-items: center;
+  padding: 58px clamp(20px, 10vw, 170px) 76px;
+  border-top: 1px solid rgba(240,236,223,.14);
+}
+
+@media (max-width: 760px) {
+  .release-delay-hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding-top: 74px;
+  }
+
+  .release-delay-hero h1 { font-size: clamp(2.7rem, 13vw, 4.2rem); }
+  .release-delay-cover { justify-self: start; width: min(84vw, 330px); }
+
+  .release-delay-letter {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-top: 74px;
+  }
+
+  .release-delay-letter__header { max-width: 190px; }
+  .release-delay-letter__body { font-size: 1rem; line-height: 2.1; }
+  .release-delay-links { align-items: flex-start; }
+}

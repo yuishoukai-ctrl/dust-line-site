@@ -9,6 +9,7 @@ import WorldTripArticle from './WorldTripArticle'
 import CategoryPage from './CategoryPages'
 import OffroadMagazinePage from './OffroadMagazinePage'
 import Issue02ProductPage from './Issue02ProductPage'
+import ReleaseDelayNoticePage from './ReleaseDelayNoticePage'
 import MemberPage from './MemberPages'
 import AnalyticsConsent from './AnalyticsConsent'
 import LineCommunity from './LineCommunity'
@@ -34,6 +35,7 @@ const partsPagePath = `${homePath}parts/`
 const paintPagePath = `${homePath}paint/`
 const magazinePagePath = `${homePath}offroad-bike-magazine/`
 const issue02ProductPagePath = `${homePath}magazine/issue-02/`
+const issue01DelayNoticePath = `${homePath}news/issue-01-release-delay/`
 const signupPagePath = `${homePath}account/signup/`
 const libraryPagePath = `${homePath}library/`
 const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
@@ -226,7 +228,10 @@ function IssueReleaseNotice() {
             2026年9月1日を予定していた創刊号の発売・無料公開を、2026年9月中旬へ変更しました。
             創刊号は予定どおり無料でお読みいただけます。確定日は公式サイトと公式Xでお知らせします。
           </p>
-          <a className="text-link" href={magazinePagePath}>創刊号について見る <ArrowIcon /></a>
+          <div className="issue-release-notice__links">
+            <a className="text-link" href={issue01DelayNoticePath}>延期のお知らせを読む <ArrowIcon /></a>
+            <a className="text-link" href={magazinePagePath}>創刊号について見る <ArrowIcon /></a>
+          </div>
         </div>
       </div>
       <span className="issue-release-notice__index" aria-hidden="true">01</span>
@@ -1226,6 +1231,7 @@ function Footer({ currentPage = null }) {
         <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined}>Paint</a>
         <a href={magazinePagePath} aria-current={currentPage === 'magazine' ? 'page' : undefined}>Magazine</a>
         <a href={issue02ProductPagePath} aria-current={currentPage === 'issue-02-product' ? 'page' : undefined}>第2号 商品情報</a>
+        <a href={issue01DelayNoticePath} aria-current={currentPage === 'issue-01-delay' ? 'page' : undefined}>News</a>
         <a href={libraryPagePath} aria-current={currentPage === 'member' ? 'page' : undefined}>Library</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined}>Goods</a>
         <a href={suzuriShopUrl} target="_blank" rel="noreferrer">Shop</a>
@@ -1282,6 +1288,7 @@ function App() {
     '/refund-policy/': 'refund-policy',
     '/digital-delivery/': 'digital-delivery',
     '/magazine/issue-02/': 'issue-02-product',
+    '/news/issue-01-release-delay/': 'issue-01-delay',
     '/parts/': 'parts',
     '/paint/': 'paint',
     '/offroad-bike-magazine/': 'magazine',
@@ -1300,6 +1307,20 @@ function App() {
   if (page === 'commercial-disclosure') return <CommercialDisclosurePage />
   if (page === 'refund-policy') return <RefundPolicyPage />
   if (page === 'digital-delivery') return <DigitalDeliveryPage />
+  if (page === 'issue-01-delay') {
+    return (
+      <>
+        <a className="skip-link" href="#main">本文へ移動</a>
+        <Header currentPage="issue-01-delay" />
+        <ReleaseDelayNoticePage
+          coverSrc={assetPath('cover-issue-01-r1200gs.webp')}
+          magazinePath={magazinePagePath}
+          officialXUrl={officialXUrl}
+        />
+        <Footer currentPage="issue-01-delay" />
+      </>
+    )
+  }
   if (page === 'parts') {
     return (
       <>

@@ -104,6 +104,8 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .issue-release-notice__model span, .issue-release-notice__schedule span { display: inline; }
 .issue-release-notice__body { max-width: 68ch; margin: 27px 0 0; font-size: .9rem; line-height: 2; color: rgba(240,236,223,.66); }
 .issue-release-notice__copy .text-link { margin-top: 23px; }
+.issue-release-notice__links { display: flex; flex-wrap: wrap; gap: 4px 32px; align-items: center; margin-top: 23px; }
+.issue-release-notice__links .text-link { margin-top: 0; }
 .issue-release-notice__index { position: absolute; z-index: 0; top: 50%; right: 2.5%; transform: translateY(-52%); font: 900 clamp(9rem, 19vw, 18rem)/.7 var(--display); letter-spacing: -.1em; color: transparent; -webkit-text-stroke: 1px rgba(240,236,223,.055); user-select: none; }
 
 .section { padding: clamp(84px, 12vw, 180px) clamp(20px, 5vw, 80px); }
