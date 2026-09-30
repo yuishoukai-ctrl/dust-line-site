@@ -51,7 +51,7 @@ export default function OffroadMagazinePage({
 }) {
   useEffect(() => {
     const previousTitle = document.title
-    document.title = 'オフロードバイク雑誌 DUST LINEとは｜2026年9月中旬創刊'
+    document.title = 'オフロードバイク雑誌 DUST LINEとは｜2026年10月1日正午 電子版公開予定'
     window.scrollTo(0, 0)
     return () => { document.title = previousTitle }
   }, [])
@@ -77,8 +77,8 @@ export default function OffroadMagazinePage({
         </div>
         <div className="magazine-hero__release" aria-label="創刊号の発売情報">
           <small>ISSUE 01 / FREE</small>
-          <strong>2026.09 / MID</strong>
-          <span>9月中旬・無料公開予定</span>
+          <strong>2026.10.01 / 12:00 JST</strong>
+          <span>10月1日正午（日本時間）・無料公開予定</span>
         </div>
         <p className="magazine-hero__word" aria-hidden="true">MAGAZINE</p>
       </header>
@@ -97,12 +97,12 @@ export default function OffroadMagazinePage({
             </p>
             <p>
               公式アプリとWebサイトから購読でき、店舗用の紙面はオフロードショップやディーラーなどへ配布予定です。
-              創刊号は2026年9月中旬に無料公開予定。第2号からは各号1,480円（税込）の単品販売で季刊発行します。
+              創刊号は2026年10月1日12:00（日本時間）に無料公開予定。第2号からは各号1,480円（税込）の単品販売で季刊発行します。
             </p>
           </div>
         </div>
         <dl className="magazine-facts reveal">
-          <div><dt>FIRST ISSUE</dt><dd><time dateTime="2026-09">2026年9月中旬</time></dd><span>創刊号・無料公開予定</span></div>
+          <div><dt>FIRST ISSUE</dt><dd><time dateTime="2026-10-01T12:00:00+09:00">2026年10月1日12:00（日本時間）</time></dd><span>創刊号・無料公開予定</span></div>
           <div><dt>FREQUENCY</dt><dd>年4回</dd><span>季刊発行</span></div>
           <div><dt>FROM ISSUE 02</dt><dd>1,480円（税込）</dd><span>単品販売・自動更新なし</span></div>
           <div><dt>FIELD</dt><dd>OFF / ADV</dd><span>旅・車両・用品・ものづくり</span></div>

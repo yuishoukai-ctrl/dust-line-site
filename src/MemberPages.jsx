@@ -130,7 +130,7 @@ function SignupPage({ session }) {
       <section className="member-panel">
         <p className="member-kicker">ACCOUNT READY</p>
         <h2>すでにログインしています。</h2>
-        <p>マイライブラリから仮公開中の創刊号を開けます。</p>
+        <p>創刊号の電子版は2026年10月1日12:00（日本時間）に無料公開予定です。公開まではマイライブラリから試し読み版をご覧いただけます。</p>
         <a className="member-button member-button--accent" href="/library/">マイライブラリへ <Arrow /></a>
       </section>
     )
@@ -184,8 +184,8 @@ function SignupPage({ session }) {
     <section className="member-panel" aria-labelledby="signup-title">
       <p className="member-kicker">CREATE YOUR ACCOUNT</p>
       <h2 id="signup-title">無料会員登録</h2>
-      <p>創刊号は無料でお読みいただけます。現在は校了前のため、2ページの仮公開版を掲載しています。</p>
-      <p className="member-reassurance">登録無料 / カード情報不要 / メール確認後すぐ読める</p>
+      <p>創刊号の電子版は2026年10月1日12:00（日本時間）に無料公開予定です。公開までは、会員登録後に2ページの試し読み版をご覧いただけます。</p>
+      <p className="member-reassurance">登録無料 / カード情報不要 / メール確認後に試し読み</p>
       <ol className="member-steps" aria-label="会員登録の手順">
         <li className="is-current"><span>1/2</span> 会員情報</li>
         <li><span>2/2</span> メール確認</li>

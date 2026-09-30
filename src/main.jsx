@@ -215,21 +215,21 @@ function IssueReleaseNotice() {
       <div className="issue-release-notice__inner">
         <div className="issue-release-notice__meta reveal">
           <p>SCHEDULE UPDATE</p>
-          <strong>09</strong>
-          <span>2026 / MID-SEPTEMBER</span>
+          <strong>10.01</strong>
+          <span>2026 / 12:00 JST</span>
         </div>
         <div className="issue-release-notice__copy reveal">
           <p className="issue-release-notice__eyebrow">DUST LINE / ISSUE 01</p>
           <h2 id="issue-release-title">
             <span className="issue-release-notice__model"><span>DUST LINE</span><span>創刊号</span></span>
-            <span className="issue-release-notice__schedule"><span>発売は</span><span>9月中旬へ。</span></span>
+            <span className="issue-release-notice__schedule"><span>10月1日</span><span>正午、電子版公開予定。</span></span>
           </h2>
           <p className="issue-release-notice__body">
-            2026年9月1日を予定していた創刊号の発売・無料公開を、2026年9月中旬へ変更しました。
-            創刊号は予定どおり無料でお読みいただけます。確定日は公式サイトと公式Xでお知らせします。
+            DUST LINE創刊号の電子版は、2026年10月1日12:00（日本時間）に無料公開予定です。
+            無料会員登録後、公開までは会員ページの試し読み版をご覧いただけます。
           </p>
           <div className="issue-release-notice__links">
-            <a className="text-link" href={issue01DelayNoticePath}>延期のお知らせを読む <ArrowIcon /></a>
+            <a className="text-link" href={issue01DelayNoticePath}>公開予定とこれまでのお知らせ <ArrowIcon /></a>
             <a className="text-link" href={magazinePagePath}>創刊号について見る <ArrowIcon /></a>
           </div>
         </div>
@@ -781,7 +781,7 @@ function Issue() {
       </div>
       <div className="issue__copy reveal">
         <div className="section-label section-label--light"><span>04</span><span>FIRST ISSUE</span></div>
-        <p className="issue__status">ISSUE 01 / MID-SEPTEMBER 2026 / FREE</p>
+        <p className="issue__status">ISSUE 01 / OCTOBER 1, 2026 / 12:00 JST / FREE</p>
         <h2>BEYOND<br />THE PAVEMENT</h2>
         <p>
           創刊号は、舗装路の向こう側へ踏み出すための一冊。
@@ -790,7 +790,7 @@ function Issue() {
         <dl className="issue__details">
           <div><dt>FORMAT</dt><dd>Digital Edition</dd></div>
           <div><dt>PRICE</dt><dd>Free</dd></div>
-          <div><dt>RELEASE</dt><dd><time dateTime="2026-09">2026年9月中旬</time></dd></div>
+          <div><dt>RELEASE</dt><dd><time dateTime="2026-10-01T12:00:00+09:00">2026年10月1日12:00（日本時間）</time></dd></div>
         </dl>
         <a className="button button--outline" href={officialXUrl} target="_blank" rel="noreferrer">公式Xで発売情報を見る <ArrowIcon /></a>
       </div>
@@ -821,11 +821,11 @@ function Newsletter() {
       <div className="newsletter__copy reveal">
         <div className="section-label"><span>05</span><span>MEMBER LIBRARY</span></div>
         <h2>創刊号を、<br />無料で読む。</h2>
-        <p>無料会員登録で、DUST LINE創刊号をお読みいただけます。現在は校了前の仮公開版を会員ページで公開中です。</p>
+        <p>DUST LINE創刊号の電子版は、2026年10月1日12:00（日本時間）に無料公開予定です。公開までは、無料会員登録で試し読み版をご覧いただけます。</p>
         <div className="newsletter__pending">
           <span>FREE MEMBER / ISSUE 01</span>
           <strong>無料会員登録</strong>
-          <p>メールアドレスを登録し、確認メールの6桁コードを入力すると、マイライブラリから創刊号をお読みいただけます。</p>
+          <p>メールアドレスを登録し、確認メールの6桁コードを入力すると、マイライブラリをご利用いただけます。</p>
           <a
             className="button button--accent"
             href={signupPagePath}
@@ -1020,7 +1020,7 @@ function CommercialDisclosurePage() {
       <section className="legal-block reveal">
         <div className="legal-block__heading"><span>02</span><h3>商品と販売価格</h3></div>
         <div className="legal-block__body">
-          <p>DUST LINEは、オフロード／アドベンチャーバイクを中心とする季刊デジタル雑誌です。創刊号は2026年9月中旬に無料公開予定で、第2号以降は各号1,480円（税込・日本円）で販売します。</p>
+          <p>DUST LINEは、オフロード／アドベンチャーバイクを中心とする季刊デジタル雑誌です。創刊号は2026年10月1日12:00（日本時間）に無料公開予定で、第2号以降は各号1,480円（税込・日本円）で販売します。</p>
           <p>有料号は各号単品で販売し、自動更新による定期課金は行いません。購入した号は、原則として閲覧期限を設けず、無期限で閲覧できます。個別の商品名、収録内容その他の条件は、各号の商品ページおよび購入内容の最終確認画面に表示します。</p>
         </div>
       </section>

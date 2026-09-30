@@ -6,10 +6,10 @@ export default function ReleaseDelayNoticePage({ coverSrc, magazinePath, officia
       <section className="release-delay-hero" aria-labelledby="release-delay-title">
         <div className="release-delay-hero__grid" aria-hidden="true" />
         <div className="release-delay-hero__copy">
-          <p className="release-delay-eyebrow">OFFICIAL NOTICE / 2026.09.01</p>
+          <p className="release-delay-eyebrow">SCHEDULE UPDATE / 2026.10.01</p>
           <h1 id="release-delay-title"><span>DUST LINE</span><span>創刊号</span><span>発売延期の</span><span>お知らせ</span></h1>
           <p className="release-delay-lead">
-            9月1日に予定していた発売・無料公開を、<strong>2026年9月中旬</strong>へ変更します。
+            【2026年10月1日更新】創刊号の電子版は、<strong><time dateTime="2026-10-01T12:00:00+09:00">2026年10月1日12:00（日本時間）</time></strong>に無料公開予定です。以下は9月1日付の延期のお知らせです。
           </p>
         </div>
         <figure className="release-delay-cover">
@@ -21,7 +21,7 @@ export default function ReleaseDelayNoticePage({ coverSrc, magazinePath, officia
 
       <article className="release-delay-letter" aria-label="発売延期についてのご案内">
         <header className="release-delay-letter__header">
-          <p>TO OUR READERS</p>
+          <p>ARCHIVE / 2026.09.01</p>
           <time dateTime="2026-09-01">2026年9月1日</time>
         </header>
 
