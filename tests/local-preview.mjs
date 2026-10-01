@@ -1,5 +1,6 @@
 // Local-only browser fixture. Production Vite config does not import this file.
 // node tests/local-preview.mjs "C:/path/to/review.pdf"
+// Append --slow-render to inspect redraws with a local-only 2s delay.
 import { createServer } from 'vite'
 import react from '@vitejs/plugin-react'
 import { createReadStream, statSync } from 'node:fs'
@@ -11,6 +12,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const pdfPath = process.argv[2] && resolve(process.argv[2])
 if (!pdfPath || !statSync(pdfPath).isFile()) throw new Error('Pass a local review PDF path.')
 const mock = resolve(root, 'tests/fixtures/local-supabase.js')
+const slowRender = process.argv.includes('--slow-render')
 const server = await createServer({
   configFile: false,
   root,
@@ -21,6 +23,11 @@ const server = await createServer({
     {
       name: 'local-issn-qa', enforce: 'pre',
       resolveId(source) { if (/\/lib\/supabaseClient(?:\.js)?$/.test(source)) return mock },
+      transform(code, id) {
+        if (slowRender && id.replaceAll('\\', '/').endsWith('/src/lib/pdf-canvas-buffer.js')) {
+          return code.replace('await task.promise', 'await task.promise; await new Promise(resolve => setTimeout(resolve, 2000))')
+        }
+      },
       transformIndexHtml(html) {
         return html.replace('<body>', '<body><div style="position:fixed;z-index:99999;bottom:0;left:0;background:#fff3c4;color:#191919;padding:4px 12px;font:12px sans-serif">LOCAL QA・テスト会員／ローカルPDF</div>')
       },

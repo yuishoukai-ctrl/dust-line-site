@@ -469,6 +469,7 @@
 .pdf-reader__links { position: absolute; inset: 0; pointer-events: none; }
 .pdf-reader__links a, .pdf-reader__links button { position: absolute; pointer-events: auto; min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
 .pdf-reader__links a:hover, .pdf-reader__links button:hover { background: #e7a66033; }
+.pdf-reader__viewport[aria-busy="true"] .pdf-reader__links { visibility: hidden; }
 
 .member-reader__fallback { color: #555b57; line-height: 1.7; }
 .member-reader__help { line-height: 1.7; }

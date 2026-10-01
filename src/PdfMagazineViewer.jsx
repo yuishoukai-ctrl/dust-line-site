@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import workerUrl from 'pdfjs-dist/legacy/build/pdf.worker.min.mjs?url'
-import { canvasPixelRatio, requestedPage, safePdfLink } from './lib/pdf-viewer.js'
+import { requestedPage, safePdfLink } from './lib/pdf-viewer.js'
 import { attachPdfPinch } from './lib/pdf-gestures.js'
+import { renderBufferedPage } from './lib/pdf-canvas-buffer.js'
 
 const pdfAssetRoot = '/pdfjs/6.3.289/'
 
@@ -15,10 +16,11 @@ export default function PdfMagazineViewer({ url, title }) {
   const pinchRef = useRef(null)
   const pendingFocusRef = useRef(null)
   const gestureStateRef = useRef({ zoom: 1, ready: false })
-  const renderTaskRef = useRef(null)
+  const renderCycleRef = useRef(null)
   const [pdf, setPdf] = useState(null)
   const [count, setCount] = useState(0)
   const [pageNumber, setPageNumber] = useState(1)
+  const [displayedPageNumber, setDisplayedPageNumber] = useState(0)
   const [pageInput, setPageInput] = useState('1')
   const [zoom, setZoom] = useState(1)
   const [width, setWidth] = useState(0)
@@ -29,7 +31,7 @@ export default function PdfMagazineViewer({ url, title }) {
   const [pageError, setPageError] = useState('')
   const [links, setLinks] = useState([])
   const [attempt, setAttempt] = useState(0)
-  gestureStateRef.current = { zoom, ready: Boolean(pdf && !loading && !rendering && !error && !pageError) }
+  gestureStateRef.current = { zoom, ready: Boolean(pdf && displayedPageNumber && !loading && !rendering && !error && !pageError) }
 
   useEffect(() => {
     const pinch = attachPdfPinch({
@@ -54,6 +56,7 @@ export default function PdfMagazineViewer({ url, title }) {
     pendingFocusRef.current = null
     setLoading(true)
     setPdf(null)
+    setDisplayedPageNumber(0)
     setCount(0)
     setProgress(0)
     setError('')
@@ -146,27 +149,21 @@ export default function PdfMagazineViewer({ url, title }) {
         page = await pdf.getPage(pageNumber)
         if (!active) { page.cleanup(); return }
         // Resize/zoom/page changes can arrive before a cancelled render settles.
-        // Never let two PDF.js tasks paint the same canvas concurrently.
-        await renderTaskRef.current?.promise.catch(() => {})
+        // Keep at most one temporary render buffer alive at a time.
+        await renderCycleRef.current?.catch(() => {})
         if (!active) { page.cleanup(); return }
         const original = page.getViewport({ scale: 1 })
         const viewport = page.getViewport({ scale: width / original.width * zoom })
-        const canvas = canvasRef.current
-        pinchRef.current?.cancel()
-        const ratio = canvasPixelRatio(viewport.width, viewport.height, window.devicePixelRatio)
-        canvas.width = Math.floor(viewport.width * ratio)
-        canvas.height = Math.floor(viewport.height * ratio)
-        canvas.style.width = `${viewport.width}px`
-        canvas.style.height = `${viewport.height}px`
-        task = page.render({
-          canvasContext: canvas.getContext('2d'),
-          viewport,
-          transform: [ratio, 0, 0, ratio, 0, 0],
+        const bufferedRender = renderBufferedPage({
+          page, viewport, visibleCanvas: canvasRef.current,
+          deviceRatio: window.devicePixelRatio,
+          isActive: () => active,
+          onTask: (current) => { task = current },
+          beforeCommit: () => pinchRef.current?.cancel(),
         })
-        renderTaskRef.current = task
-        await task.promise
-        const annotations = await page.getAnnotations()
-        if (!active) return
+        renderCycleRef.current = bufferedRender
+        const annotations = await bufferedRender
+        if (!active || annotations === null) return
         setLinks(annotations.filter((item) => item.subtype === 'Link' && (safePdfLink(item.url) || item.dest))
           .map((item) => {
             const [x1, y1] = viewport.convertToViewportPoint(item.rect[0], item.rect[1])
@@ -185,10 +182,13 @@ export default function PdfMagazineViewer({ url, title }) {
           pinchRef.current?.focus(pendingFocusRef.current, viewport.width, viewport.height)
           pendingFocusRef.current = null
         }
+        setDisplayedPageNumber(pageNumber)
         setRendering(false)
       } catch (failure) {
         if (!active || failure?.name === 'RenderingCancelledException') return
         if (import.meta.env.DEV) console.warn('PDF page rendering failed:', failure?.name, String(failure?.message).replace(/https?:\/\/\S+/g, '[URL]'))
+        pinchRef.current?.cancel()
+        pendingFocusRef.current = null
         setRendering(false)
         setPageError('このページを表示できませんでした。もう一度表示するか、PDFを直接開いてください。')
       }
@@ -253,10 +253,10 @@ export default function PdfMagazineViewer({ url, title }) {
       <div ref={hostRef} className="pdf-reader__viewport" aria-busy={loading || rendering}>
         {loading && <p className="pdf-reader__status" role="status">誌面を読み込んでいます{progress ? `… ${progress}%` : '…'}<small>初回はデータの読み込みに時間がかかる場合があります。</small></p>}
         {error && <p className="pdf-reader__status member-message--error" role="alert">{error}</p>}
-        {rendering && !loading && <p className="pdf-reader__render-status" role="status">{pageNumber}ページを表示しています…</p>}
+        {rendering && !loading && (!displayedPageNumber || displayedPageNumber !== pageNumber) && <p className="pdf-reader__render-status" role="status">{pageNumber}ページを表示しています…</p>}
         <div ref={surfaceRef} className="pdf-reader__surface">
-        <div ref={pageRef} className="pdf-reader__page" hidden={loading || Boolean(error) || Boolean(pageError)} style={{ visibility: rendering ? 'hidden' : 'visible' }}>
-          <canvas ref={canvasRef} role="img" aria-label={`${title} ${pageNumber}ページ`} />
+        <div ref={pageRef} className="pdf-reader__page" hidden={loading || !displayedPageNumber || Boolean(error) || Boolean(pageError)}>
+          <canvas ref={canvasRef} role="img" aria-label={`${title} ${displayedPageNumber || pageNumber}ページ`} />
           <div className="pdf-reader__links">
             {links.map((link) => link.href
               ? <a key={link.id} style={link.style} href={link.href} target="_blank" rel="noopener noreferrer" aria-label={`誌面内のリンク：${link.href}`} />
