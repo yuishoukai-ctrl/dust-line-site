@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import workerUrl from 'pdfjs-dist/legacy/build/pdf.worker.min.mjs?url'
 import { canvasPixelRatio, requestedPage, safePdfLink } from './lib/pdf-viewer.js'
+import { attachPdfPinch } from './lib/pdf-gestures.js'
 
 const pdfAssetRoot = '/pdfjs/6.3.289/'
 
@@ -9,6 +10,11 @@ const pdfAssetRoot = '/pdfjs/6.3.289/'
 export default function PdfMagazineViewer({ url, title }) {
   const hostRef = useRef(null)
   const canvasRef = useRef(null)
+  const surfaceRef = useRef(null)
+  const pageRef = useRef(null)
+  const pinchRef = useRef(null)
+  const pendingFocusRef = useRef(null)
+  const gestureStateRef = useRef({ zoom: 1, ready: false })
   const renderTaskRef = useRef(null)
   const [pdf, setPdf] = useState(null)
   const [count, setCount] = useState(0)
@@ -23,11 +29,29 @@ export default function PdfMagazineViewer({ url, title }) {
   const [pageError, setPageError] = useState('')
   const [links, setLinks] = useState([])
   const [attempt, setAttempt] = useState(0)
+  gestureStateRef.current = { zoom, ready: Boolean(pdf && !loading && !rendering && !error && !pageError) }
+
+  useEffect(() => {
+    const pinch = attachPdfPinch({
+      host: hostRef.current, surface: surfaceRef.current, page: pageRef.current,
+      ready: () => gestureStateRef.current.ready,
+      getZoom: () => gestureStateRef.current.zoom,
+      commit: (value, anchor) => {
+        pendingFocusRef.current = anchor
+        setWidth(Math.max(1, hostRef.current.clientWidth - 24))
+        setZoom(value)
+      },
+    })
+    pinchRef.current = pinch
+    return () => { pinch.destroy(); pinchRef.current = null }
+  }, [])
 
   useEffect(() => {
     let active = true
     let task
     let timeout
+    pinchRef.current?.cancel()
+    pendingFocusRef.current = null
     setLoading(true)
     setPdf(null)
     setCount(0)
@@ -91,7 +115,10 @@ export default function PdfMagazineViewer({ url, title }) {
   useEffect(() => {
     const host = hostRef.current
     if (!host) return undefined
-    const measure = () => setWidth(Math.max(1, host.clientWidth - 24))
+    const measure = () => {
+      // A scrollbar appearing during the live preview must not cancel a pinch.
+      if (!pinchRef.current?.isActive()) setWidth(Math.max(1, host.clientWidth - 24))
+    }
     measure()
     const observer = new ResizeObserver(measure)
     observer.observe(host)
@@ -99,6 +126,10 @@ export default function PdfMagazineViewer({ url, title }) {
   }, [])
 
   useEffect(() => {
+    pinchRef.current?.cancel()
+    pendingFocusRef.current = null
+    hostRef.current.scrollLeft = 0
+    hostRef.current.scrollTop = 0
     setPageInput(String(pageNumber))
   }, [pageNumber])
 
@@ -121,6 +152,7 @@ export default function PdfMagazineViewer({ url, title }) {
         const original = page.getViewport({ scale: 1 })
         const viewport = page.getViewport({ scale: width / original.width * zoom })
         const canvas = canvasRef.current
+        pinchRef.current?.cancel()
         const ratio = canvasPixelRatio(viewport.width, viewport.height, window.devicePixelRatio)
         canvas.width = Math.floor(viewport.width * ratio)
         canvas.height = Math.floor(viewport.height * ratio)
@@ -149,6 +181,10 @@ export default function PdfMagazineViewer({ url, title }) {
               },
             }
           }))
+        if (pendingFocusRef.current) {
+          pinchRef.current?.focus(pendingFocusRef.current, viewport.width, viewport.height)
+          pendingFocusRef.current = null
+        }
         setRendering(false)
       } catch (failure) {
         if (!active || failure?.name === 'RenderingCancelledException') return
@@ -166,6 +202,15 @@ export default function PdfMagazineViewer({ url, title }) {
       else page?.cleanup()
     }
   }, [pdf, pageNumber, width, zoom, attempt])
+
+  const changeZoom = (event) => {
+    pendingFocusRef.current = null
+    pinchRef.current?.cancel()
+    hostRef.current.scrollLeft = 0
+    hostRef.current.scrollTop = 0
+    setZoom(Number(event.target.value))
+  }
+  const zoomPresets = [1, 1.5, 2, 3]
 
   const goToPage = (event) => {
     event.preventDefault()
@@ -196,23 +241,28 @@ export default function PdfMagazineViewer({ url, title }) {
           <label>ページ <input aria-label="移動先のページ" inputMode="numeric" type="number" min="1" max={count || 1} value={pageInput} onChange={(event) => setPageInput(event.target.value)} disabled={!pdf} /></label>
           <button type="submit" disabled={!pdf}>移動</button>
         </form>
-        <label>表示倍率 <select value={zoom} onChange={(event) => setZoom(Number(event.target.value))} disabled={!pdf}>
+        <label>表示倍率 <select value={zoom} onChange={changeZoom} disabled={!pdf}>
           <option value="1">幅に合わせる</option>
           <option value="1.5">150%</option>
           <option value="2">200%</option>
+          <option value="3">300%</option>
+          {!zoomPresets.includes(zoom) && <option value={zoom}>{Math.round(zoom * 100)}%</option>}
         </select></label>
       </div>
+      <p className="pdf-reader__gesture-help">2本指で拡大・縮小できます。拡大した誌面は指で動かせます。「幅に合わせる」で元に戻ります。</p>
       <div ref={hostRef} className="pdf-reader__viewport" aria-busy={loading || rendering}>
         {loading && <p className="pdf-reader__status" role="status">誌面を読み込んでいます{progress ? `… ${progress}%` : '…'}<small>初回はデータの読み込みに時間がかかる場合があります。</small></p>}
         {error && <p className="pdf-reader__status member-message--error" role="alert">{error}</p>}
         {rendering && !loading && <p className="pdf-reader__render-status" role="status">{pageNumber}ページを表示しています…</p>}
-        <div className="pdf-reader__page" hidden={loading || Boolean(error) || Boolean(pageError)} style={{ visibility: rendering ? 'hidden' : 'visible' }}>
+        <div ref={surfaceRef} className="pdf-reader__surface">
+        <div ref={pageRef} className="pdf-reader__page" hidden={loading || Boolean(error) || Boolean(pageError)} style={{ visibility: rendering ? 'hidden' : 'visible' }}>
           <canvas ref={canvasRef} role="img" aria-label={`${title} ${pageNumber}ページ`} />
           <div className="pdf-reader__links">
             {links.map((link) => link.href
               ? <a key={link.id} style={link.style} href={link.href} target="_blank" rel="noopener noreferrer" aria-label={`誌面内のリンク：${link.href}`} />
               : <button type="button" key={link.id} style={link.style} aria-label="誌面内の参照ページへ" onClick={() => followDestination(link.dest)} />)}
           </div>
+        </div>
         </div>
         {pageError && <div className="pdf-reader__status" role="alert"><p>{pageError}</p><button type="button" onClick={() => setAttempt((value) => value + 1)}>このページをもう一度表示</button></div>}
       </div>
