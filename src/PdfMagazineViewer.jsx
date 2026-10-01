@@ -1,0 +1,222 @@
+import { useEffect, useRef, useState } from 'react'
+import workerUrl from 'pdfjs-dist/legacy/build/pdf.worker.min.mjs?url'
+import { canvasPixelRatio, requestedPage, safePdfLink } from './lib/pdf-viewer.js'
+
+const pdfAssetRoot = '/pdfjs/6.3.289/'
+
+// The PDF stays between this browser and the original private Storage URL.
+// No external viewer/proxy receives the signed URL or the magazine.
+export default function PdfMagazineViewer({ url, title }) {
+  const hostRef = useRef(null)
+  const canvasRef = useRef(null)
+  const renderTaskRef = useRef(null)
+  const [pdf, setPdf] = useState(null)
+  const [count, setCount] = useState(0)
+  const [pageNumber, setPageNumber] = useState(1)
+  const [pageInput, setPageInput] = useState('1')
+  const [zoom, setZoom] = useState(1)
+  const [width, setWidth] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [rendering, setRendering] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [error, setError] = useState('')
+  const [pageError, setPageError] = useState('')
+  const [links, setLinks] = useState([])
+  const [attempt, setAttempt] = useState(0)
+
+  useEffect(() => {
+    let active = true
+    let task
+    let timeout
+    setLoading(true)
+    setPdf(null)
+    setCount(0)
+    setProgress(0)
+    setError('')
+    // A stalled request must not leave a permanently blank reading area.
+    const watchForStall = () => {
+      clearTimeout(timeout)
+      timeout = setTimeout(() => {
+        if (!active) return
+        active = false
+        task?.destroy().catch(() => {})
+        setLoading(false)
+        setError('誌面の読み込みに時間がかかっています。通信を確認し、「誌面を再読み込み」を押してください。')
+      }, 90_000)
+    }
+    watchForStall()
+    async function load() {
+      try {
+        const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs')
+        if (!active) return
+        pdfjs.GlobalWorkerOptions.workerSrc = workerUrl
+        task = pdfjs.getDocument({
+          url,
+          // Once loaded, later page turns never request an expired signed URL.
+          // Keep only one rendered page in memory, not 130 canvases.
+          disableRange: true,
+          isEvalSupported: false,
+          cMapUrl: new URL(`${pdfAssetRoot}cmaps/`, window.location.origin).href,
+          cMapPacked: true,
+          standardFontDataUrl: new URL(`${pdfAssetRoot}standard_fonts/`, window.location.origin).href,
+          wasmUrl: new URL(`${pdfAssetRoot}wasm/`, window.location.origin).href,
+        })
+        task.onProgress = ({ loaded, total }) => {
+          if (!active) return
+          watchForStall()
+          if (total > 0) setProgress(Math.min(100, Math.round(100 * loaded / total)))
+        }
+        const document = await task.promise
+        if (!active) return
+        setPdf(document)
+        setCount(document.numPages)
+        setPageNumber((page) => Math.min(page, document.numPages))
+        setLoading(false)
+        clearTimeout(timeout)
+      } catch {
+        if (!active) return
+        clearTimeout(timeout)
+        setLoading(false)
+        setError('このブラウザーで誌面を読み込めませんでした。「誌面を再読み込み」をお試しください。XやLINEから開いた場合は、メニューからSafariまたはChromeで開く方法もあります。')
+      }
+    }
+    load()
+    return () => {
+      active = false
+      clearTimeout(timeout)
+      task?.destroy().catch(() => {})
+    }
+  }, [url])
+
+  useEffect(() => {
+    const host = hostRef.current
+    if (!host) return undefined
+    const measure = () => setWidth(Math.max(1, host.clientWidth - 24))
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(host)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    setPageInput(String(pageNumber))
+  }, [pageNumber])
+
+  useEffect(() => {
+    if (!pdf || !width) return undefined
+    let active = true
+    let page
+    let task
+    setRendering(true)
+    setPageError('')
+    setLinks([])
+    async function render() {
+      try {
+        page = await pdf.getPage(pageNumber)
+        if (!active) { page.cleanup(); return }
+        // Resize/zoom/page changes can arrive before a cancelled render settles.
+        // Never let two PDF.js tasks paint the same canvas concurrently.
+        await renderTaskRef.current?.promise.catch(() => {})
+        if (!active) { page.cleanup(); return }
+        const original = page.getViewport({ scale: 1 })
+        const viewport = page.getViewport({ scale: width / original.width * zoom })
+        const canvas = canvasRef.current
+        const ratio = canvasPixelRatio(viewport.width, viewport.height, window.devicePixelRatio)
+        canvas.width = Math.floor(viewport.width * ratio)
+        canvas.height = Math.floor(viewport.height * ratio)
+        canvas.style.width = `${viewport.width}px`
+        canvas.style.height = `${viewport.height}px`
+        task = page.render({
+          canvasContext: canvas.getContext('2d'),
+          viewport,
+          transform: [ratio, 0, 0, ratio, 0, 0],
+        })
+        renderTaskRef.current = task
+        await task.promise
+        const annotations = await page.getAnnotations()
+        if (!active) return
+        setLinks(annotations.filter((item) => item.subtype === 'Link' && (safePdfLink(item.url) || item.dest))
+          .map((item) => {
+            const [x1, y1] = viewport.convertToViewportPoint(item.rect[0], item.rect[1])
+            const [x2, y2] = viewport.convertToViewportPoint(item.rect[2], item.rect[3])
+            return {
+              id: item.id, href: safePdfLink(item.url), dest: item.dest,
+              style: {
+                left: `${Math.min(x1, x2) / viewport.width * 100}%`,
+                top: `${Math.min(y1, y2) / viewport.height * 100}%`,
+                width: `${Math.abs(x2 - x1) / viewport.width * 100}%`,
+                height: `${Math.abs(y2 - y1) / viewport.height * 100}%`,
+              },
+            }
+          }))
+        setRendering(false)
+      } catch (failure) {
+        if (!active || failure?.name === 'RenderingCancelledException') return
+        if (import.meta.env.DEV) console.warn('PDF page rendering failed:', failure?.name, String(failure?.message).replace(/https?:\/\/\S+/g, '[URL]'))
+        setRendering(false)
+        setPageError('このページを表示できませんでした。もう一度表示するか、PDFを直接開いてください。')
+      }
+    }
+    render()
+    return () => {
+      active = false
+      task?.cancel()
+      // Wait for rendering to stop before releasing the page's image/font data.
+      if (task) task.promise.catch(() => {}).finally(() => page?.cleanup())
+      else page?.cleanup()
+    }
+  }, [pdf, pageNumber, width, zoom, attempt])
+
+  const goToPage = (event) => {
+    event.preventDefault()
+    const target = requestedPage(pageInput, count)
+    if (target === null) { setPageInput(String(pageNumber)); return }
+    setPageNumber(target)
+  }
+  const followDestination = async (destination) => {
+    try {
+      const dest = typeof destination === 'string' ? await pdf.getDestination(destination) : destination
+      if (!dest?.length) return
+      const index = Number.isInteger(dest[0]) ? dest[0] : await pdf.getPageIndex(dest[0])
+      if (index >= 0 && index < count) setPageNumber(index + 1)
+    } catch { setPageError('リンク先のページを開けませんでした。ページ番号から移動してください。') }
+  }
+  const pageControls = (position) => (
+    <div className="pdf-reader__toolbar" aria-label={`${position}ページ操作`}>
+      <button type="button" disabled={!pdf || pageNumber <= 1 || loading} onClick={() => setPageNumber((value) => value - 1)}>前のページ</button>
+      <span aria-live="polite">{pageNumber} / {count || '—'}</span>
+      <button type="button" disabled={!pdf || pageNumber >= count || loading} onClick={() => setPageNumber((value) => value + 1)}>次のページ</button>
+    </div>
+  )
+  return (
+    <div className="pdf-reader">
+      {pageControls('上部')}
+      <div className="pdf-reader__settings">
+        <form onSubmit={goToPage}>
+          <label>ページ <input aria-label="移動先のページ" inputMode="numeric" type="number" min="1" max={count || 1} value={pageInput} onChange={(event) => setPageInput(event.target.value)} disabled={!pdf} /></label>
+          <button type="submit" disabled={!pdf}>移動</button>
+        </form>
+        <label>表示倍率 <select value={zoom} onChange={(event) => setZoom(Number(event.target.value))} disabled={!pdf}>
+          <option value="1">幅に合わせる</option>
+          <option value="1.5">150%</option>
+          <option value="2">200%</option>
+        </select></label>
+      </div>
+      <div ref={hostRef} className="pdf-reader__viewport" aria-busy={loading || rendering}>
+        {loading && <p className="pdf-reader__status" role="status">誌面を読み込んでいます{progress ? `… ${progress}%` : '…'}<small>初回はデータの読み込みに時間がかかる場合があります。</small></p>}
+        {error && <p className="pdf-reader__status member-message--error" role="alert">{error}</p>}
+        {rendering && !loading && <p className="pdf-reader__render-status" role="status">{pageNumber}ページを表示しています…</p>}
+        <div className="pdf-reader__page" hidden={loading || Boolean(error) || Boolean(pageError)} style={{ visibility: rendering ? 'hidden' : 'visible' }}>
+          <canvas ref={canvasRef} role="img" aria-label={`${title} ${pageNumber}ページ`} />
+          <div className="pdf-reader__links">
+            {links.map((link) => link.href
+              ? <a key={link.id} style={link.style} href={link.href} target="_blank" rel="noopener noreferrer" aria-label={`誌面内のリンク：${link.href}`} />
+              : <button type="button" key={link.id} style={link.style} aria-label="誌面内の参照ページへ" onClick={() => followDestination(link.dest)} />)}
+          </div>
+        </div>
+        {pageError && <div className="pdf-reader__status" role="alert"><p>{pageError}</p><button type="button" onClick={() => setAttempt((value) => value + 1)}>このページをもう一度表示</button></div>}
+      </div>
+      {pageControls('下部')}
+    </div>
+  )
+}

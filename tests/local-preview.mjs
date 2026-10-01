@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 import { createReadStream, statSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import pdfAssetsPlugin from '../scripts/pdf-assets-plugin.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const pdfPath = process.argv[2] && resolve(process.argv[2])
@@ -34,6 +35,7 @@ const server = await createServer({
       },
     },
     react(),
+    pdfAssetsPlugin(),
   ],
 })
 await server.listen()

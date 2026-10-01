@@ -32,6 +32,7 @@ export const supabase = {
     async createSignedUrl() {
       if (user()?.email.startsWith('denied@')) return { data: null, error: new Error('Local simulated storage denial') }
       signedCount++
+      if (user()?.email.startsWith('broken@')) return { data: { signedUrl: `${location.origin}/_qa/missing.pdf?attempt=${signedCount}` } }
       return { data: { signedUrl: `${location.origin}/_qa/magazine.pdf?attempt=${signedCount}` } }
     },
   } } },

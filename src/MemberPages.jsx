@@ -12,6 +12,7 @@ import {
 } from './member-content'
 import { safeLocalReturnPath, authPath } from './lib/member-navigation'
 import { loadIssuePdf } from './lib/issue-reader'
+import PdfMagazineViewer from './PdfMagazineViewer'
 import './member-pages.css'
 
 const pageTitles = {
@@ -516,6 +517,7 @@ function IssueReaderPage({ session, issue }) {
   const [readerLoading, setReaderLoading] = useState(true)
   const [readerError, setReaderError] = useState('')
   const [attempt, setAttempt] = useState(0)
+  const [openingPdf, setOpeningPdf] = useState(false)
 
   useEffect(() => {
     if (!session?.user?.id || !canReadIssue(issue)) return undefined
@@ -545,6 +547,19 @@ function IssueReaderPage({ session, issue }) {
     await supabase.auth.signOut({ scope: 'local' })
     window.location.assign(authPath('/account/login/', issue.readerPath))
   }
+  const openPdf = async () => {
+    setOpeningPdf(true)
+    setReaderError('')
+    try {
+      // Generate a fresh URL on every click. Same-tab navigation is not a popup.
+      const url = await loadIssuePdf(supabase, issue)
+      window.location.assign(url)
+    } catch (error) {
+      setReaderError(Object.hasOwn(readerMessages, error?.code) ? error.code : 'UNAVAILABLE')
+    } finally {
+      setOpeningPdf(false)
+    }
+  }
   return (
     <section className="member-reader" aria-labelledby="reader-title">
       <header className="member-reader__header">
@@ -572,12 +587,11 @@ function IssueReaderPage({ session, issue }) {
       )}
       {readerUrl && !readerLoading && (
         <>
-          <div className="member-reader__frame">
-            <iframe key={readerUrl} src={`${readerUrl}#view=FitH&toolbar=1&navpanes=0`} title={`${issue.title} ${editionLabel}`} />
+          <PdfMagazineViewer url={readerUrl} title={`${issue.title} ${editionLabel}`} />
+          <div className="member-reader__fallback">
+            <button className="member-button member-button--outline" type="button" disabled={openingPdf} onClick={openPdf}>{openingPdf ? 'PDFを準備しています…' : 'PDFを直接開く'}</button>
+            <p>X・LINE内でうまく読めない場合は、アプリのメニューからSafariまたはChromeでこのページを開いてください。</p>
           </div>
-          <p className="member-reader__fallback">
-            誌面が表示されない場合は、<a href={readerUrl} target="_blank" rel="noreferrer">PDFを新しいタブで開く</a>ことができます。
-          </p>
         </>
       )}
       {!readerLoading && (
