@@ -587,11 +587,14 @@ function IssueReaderPage({ session, issue }) {
       )}
       {readerUrl && !readerLoading && (
         <>
+          <p className="member-reader__help">この画面でそのまま読めます。「次のページ」でページを送り、「表示倍率」で拡大できます。</p>
           <PdfMagazineViewer url={readerUrl} title={`${issue.title} ${editionLabel}`} />
-          <div className="member-reader__fallback">
-            <button className="member-button member-button--outline" type="button" disabled={openingPdf} onClick={openPdf}>{openingPdf ? 'PDFを準備しています…' : 'PDFを直接開く'}</button>
-            <p>X・LINE内でうまく読めない場合は、アプリのメニューからSafariまたはChromeでこのページを開いてください。</p>
-          </div>
+          <details className="member-reader__fallback">
+            <summary>PDFファイルで読む場合</summary>
+            <p>Xなどのアプリ内ブラウザーでは、PDFのサイズ制限によりプレビューできない場合があります。上の誌面では、このままページ送り・拡大ができます。</p>
+            <p>PDFファイルで読みたい場合は、アプリのメニューからSafariまたはChromeでこのページを開いてください。</p>
+            <button className="member-button member-button--outline" type="button" disabled={openingPdf} onClick={openPdf}>{openingPdf ? 'PDFを準備しています…' : 'PDFファイルを開く'}</button>
+          </details>
         </>
       )}
       {!readerLoading && (

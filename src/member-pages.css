@@ -469,6 +469,9 @@
 .pdf-reader__links a:hover, .pdf-reader__links button:hover { background: #e7a66033; }
 
 .member-reader__fallback { color: #555b57; line-height: 1.7; }
+.member-reader__help { line-height: 1.7; }
+.member-reader__fallback summary { cursor: pointer; padding: 1rem 0; color: #171d19; }
+.member-reader__fallback summary:focus-visible { outline: 3px solid #e7a660; outline-offset: 2px; }
 
 .member-issue-card + .member-issue-card { margin-top: 2rem; }
 .member-reader__reload { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
