@@ -5,6 +5,7 @@ import { constants, existsSync } from 'node:fs'
 import { dirname, extname, join, resolve } from 'node:path'
 import { tmpdir } from 'node:os'
 import { fileURLToPath } from 'node:url'
+import { firstIssue, issues, journal } from '../src/member-content.js'
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = join(projectRoot, 'dist')
@@ -17,7 +18,7 @@ const routes = [
     path: '/',
     source: '/',
     title: 'オフロードバイク雑誌 DUST LINE｜アドベンチャー・カスタム・旅',
-    description: 'DUST LINEは、オフロードバイクとアドベンチャーバイクの旅、実車製作、カスタム、溶接・塗装を届ける季刊誌。創刊号は2026年9月中旬に無料公開予定。',
+    description: `DUST LINEは、オフロードバイクとアドベンチャーバイクの旅、実車製作、カスタム、溶接・塗装を届ける季刊誌。創刊号は${firstIssue.releaseDateLabel}公開。創刊号無料公開中。`,
     image: '/og.png',
     imageAlt: 'DUST LINE ISSUE 01とアドベンチャーバイクの公式ビジュアル',
     schemaType: 'WebPage',
@@ -117,14 +118,14 @@ const routes = [
   {
     path: '/news/issue-01-release-delay/',
     source: '/?page=issue-01-delay',
-    title: 'DUST LINE創刊号 発売延期のお知らせ｜2026年9月中旬へ変更',
-    description: '2026年9月1日に予定していたDUST LINE創刊号の発売・無料公開を、2026年9月中旬へ延期します。創刊号は予定どおり無料で公開します。',
+    title: 'DUST LINE創刊号のお知らせ｜2026年10月1日無料公開',
+    description: `2026年9月1日の発売延期のお知らせに、2026年10月1日の無料公開を追記しました。DUST LINE創刊号は${firstIssue.releaseDateLabel}に無料公開しました。`,
     image: '/images/cover-issue-01-r1200gs.webp',
     imageAlt: 'DUST LINE創刊号の表紙',
     schemaType: 'Article',
     section: 'お知らせ',
     publishedDate: '2026-09-01',
-    modifiedDate: '2026-09-02',
+    modifiedDate: '2026-09-18',
     expectedText: '発売延期の',
   },
   {
@@ -206,12 +207,13 @@ const routes = [
   {
     path: '/offroad-bike-magazine/',
     source: '/offroad-bike-magazine/',
-    title: 'オフロードバイク雑誌 DUST LINEとは｜2026年9月中旬創刊',
-    description: 'オフロードバイクとアドベンチャーバイクの旅、車両製作、カスタム、溶接・塗装を届ける季刊誌DUST LINE。創刊号は2026年9月中旬に無料公開予定。',
+    title: `${journal.title}｜巻号一覧・オフロードバイク季刊誌`,
+    description: `オフロードバイクとアドベンチャーバイクの旅、車両製作、カスタムを届けるDUST LINE。${journal.issnLabel}。創刊号は${firstIssue.releaseDateLabel}公開。創刊号無料公開中。巻号一覧と会員向け閲覧ページをご案内します。`,
     image: '/images/hero-rider.jpg',
     imageAlt: 'ダートを走るアドベンチャーバイク',
-    schemaType: 'AboutPage',
-    expectedText: 'オフロードバイク雑誌を',
+    schemaType: 'CollectionPage',
+    modifiedDate: '2026-09-18',
+    expectedText: 'DUST LINE',
   },
   {
     path: '/account/signup/',
@@ -268,17 +270,17 @@ const routes = [
     robots: 'noindex,nofollow',
     expectedText: 'READ BEYOND',
   },
-  {
-    path: '/issues/issue-01/',
-    source: '/issues/issue-01/',
-    title: 'DUST LINE 創刊号｜会員閲覧',
-    description: 'DUST LINE創刊号の会員向け閲覧ページです。',
-    image: '/images/cover-issue-01-r1200gs.webp',
-    imageAlt: 'DUST LINE創刊号の表紙',
+  ...issues.map((issue) => ({
+    path: issue.readerPath,
+    source: issue.readerPath,
+    title: `${issue.title}｜会員閲覧`,
+    description: `${issue.title}の会員向け閲覧ページです。`,
+    image: `/images/${issue.coverImage}`,
+    imageAlt: `${issue.title}の表紙`,
     schemaType: 'WebPage',
     robots: 'noindex,nofollow',
     expectedText: 'READ BEYOND',
-  },
+  })),
   {
     path: '/paint/',
     source: '/?page=paint',

@@ -11,6 +11,7 @@ import OffroadMagazinePage from './OffroadMagazinePage'
 import Issue02ProductPage from './Issue02ProductPage'
 import ReleaseDelayNoticePage from './ReleaseDelayNoticePage'
 import MemberPage from './MemberPages'
+import { firstIssue, getIssueSlug, getIssueDescription } from './member-content'
 import AnalyticsConsent from './AnalyticsConsent'
 import LineCommunity from './LineCommunity'
 import { trackAnalyticsEvent } from './lib/analytics'
@@ -191,13 +192,14 @@ function Hero() {
       <div className="hero__veil" />
       <div className="hero__content reveal">
         <p className="eyebrow">ADVENTURE MOTORCYCLE JOURNAL</p>
+        <p className="hero__release-badge">創刊号 無料公開中<span>2026.10.01 / ISSUE 01</span></p>
         <h1><span>道の先ではなく、</span><span>道の外へ。</span></h1>
         <p className="hero__lead">
           地図に残らない時間を走る。DUST LINEは、オフロードバイクとアドベンチャーバイクの旅、
           車両製作、道具、そしてライダーの選択を記録する季刊誌です。
         </p>
         <div className="hero__actions">
-          <a className="button button--accent" href={signupPagePath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>創刊号を無料で読む <ArrowIcon /></a>
+          <a className="button button--accent" href={firstIssue.readerPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>創刊号を無料で読む <ArrowIcon /></a>
           <a className="text-link" href="#issue">創刊号について見る <ArrowIcon /></a>
         </div>
       </div>
@@ -214,22 +216,23 @@ function IssueReleaseNotice() {
     <section className="issue-release-notice" aria-labelledby="issue-release-title">
       <div className="issue-release-notice__inner">
         <div className="issue-release-notice__meta reveal">
-          <p>SCHEDULE UPDATE</p>
-          <strong>09</strong>
-          <span>2026 / MID-SEPTEMBER</span>
+          <p>FIRST ISSUE / NOW AVAILABLE</p>
+          <strong>10.01</strong>
+          <span>2026 / FREE DIGITAL EDITION</span>
         </div>
         <div className="issue-release-notice__copy reveal">
           <p className="issue-release-notice__eyebrow">DUST LINE / ISSUE 01</p>
           <h2 id="issue-release-title">
             <span className="issue-release-notice__model"><span>DUST LINE</span><span>創刊号</span></span>
-            <span className="issue-release-notice__schedule"><span>発売は</span><span>9月中旬へ。</span></span>
+            <span className="issue-release-notice__schedule"><span>無料公開中。</span></span>
           </h2>
           <p className="issue-release-notice__body">
-            2026年9月1日を予定していた創刊号の発売・無料公開を、2026年9月中旬へ変更しました。
-            創刊号は予定どおり無料でお読みいただけます。確定日は公式サイトと公式Xでお知らせします。
+            {firstIssue.releaseDateLabel}、DUST LINE創刊号を公開しました。
+            旅・カスタム・ものづくりから、ショップとイベントの紹介まで全130ページ。
+            無料会員登録で、本誌をお読みいただけます。
           </p>
           <div className="issue-release-notice__links">
-            <a className="text-link" href={issue01DelayNoticePath}>延期のお知らせを読む <ArrowIcon /></a>
+            <a className="button button--accent" href={firstIssue.readerPath}>創刊号を無料で読む <ArrowIcon /></a>
             <a className="text-link" href={magazinePagePath}>創刊号について見る <ArrowIcon /></a>
           </div>
         </div>
@@ -781,18 +784,18 @@ function Issue() {
       </div>
       <div className="issue__copy reveal">
         <div className="section-label section-label--light"><span>04</span><span>FIRST ISSUE</span></div>
-        <p className="issue__status">ISSUE 01 / MID-SEPTEMBER 2026 / FREE</p>
+        <p className="issue__status">{firstIssue.issueNumber} / {firstIssue.releaseDate} / FREE</p>
         <h2>BEYOND<br />THE PAVEMENT</h2>
         <p>
           創刊号は、舗装路の向こう側へ踏み出すための一冊。
-          ロングライド、積載、装備、そして旅の途中で出会った風景を収録します。
+          ロングライド、積載、装備、ものづくり、そして旅の途中で出会った風景を全130ページに収録しました。
         </p>
         <dl className="issue__details">
           <div><dt>FORMAT</dt><dd>Digital Edition</dd></div>
           <div><dt>PRICE</dt><dd>Free</dd></div>
-          <div><dt>RELEASE</dt><dd><time dateTime="2026-09">2026年9月中旬</time></dd></div>
+          <div><dt>RELEASE</dt><dd><time dateTime={firstIssue.releaseDate}>{firstIssue.releaseDateLabel} 公開</time></dd></div>
         </dl>
-        <a className="button button--outline" href={officialXUrl} target="_blank" rel="noreferrer">公式Xで発売情報を見る <ArrowIcon /></a>
+        <a className="button button--outline" href={firstIssue.readerPath}>創刊号を無料で読む <ArrowIcon /></a>
       </div>
     </section>
   )
@@ -821,7 +824,7 @@ function Newsletter() {
       <div className="newsletter__copy reveal">
         <div className="section-label"><span>05</span><span>MEMBER LIBRARY</span></div>
         <h2>創刊号を、<br />無料で読む。</h2>
-        <p>無料会員登録で、DUST LINE創刊号をお読みいただけます。現在は校了前の仮公開版を会員ページで公開中です。</p>
+        <p>{getIssueDescription(firstIssue)} 無料会員登録でお読みいただけます。</p>
         <div className="newsletter__pending">
           <span>FREE MEMBER / ISSUE 01</span>
           <strong>無料会員登録</strong>
@@ -1020,7 +1023,7 @@ function CommercialDisclosurePage() {
       <section className="legal-block reveal">
         <div className="legal-block__heading"><span>02</span><h3>商品と販売価格</h3></div>
         <div className="legal-block__body">
-          <p>DUST LINEは、オフロード／アドベンチャーバイクを中心とする季刊デジタル雑誌です。創刊号は2026年9月中旬に無料公開予定で、第2号以降は各号1,480円（税込・日本円）で販売します。</p>
+          <p>DUST LINEは、オフロード／アドベンチャーバイクを中心とする季刊デジタル雑誌です。創刊号は{firstIssue.releaseDateLabel}に公開し、無料会員登録でお読みいただけます。第2号以降は各号1,480円（税込・日本円）で販売します。</p>
           <p>有料号は各号単品で販売し、自動更新による定期課金は行いません。購入した号は、原則として閲覧期限を設けず、無期限で閲覧できます。個別の商品名、収録内容その他の条件は、各号の商品ページおよび購入内容の最終確認画面に表示します。</p>
         </div>
       </section>
@@ -1297,9 +1300,9 @@ function App() {
     '/account/verify/': 'member-verify',
     '/account/reset-password/': 'member-reset',
     '/library/': 'member-library',
-    '/issues/issue-01/': 'member-issue',
   }[pathname]
-  const page = routePage || new URLSearchParams(window.location.search).get('page')
+  const isIssueRoute = pathname.startsWith('/issues/')
+  const page = isIssueRoute ? 'member-issue' : (routePage || new URLSearchParams(window.location.search).get('page'))
   if (page === 'company') return <CompanyPage />
   if (page === 'goods') return <GoodsPage />
   if (page === 'advertise') return <AdvertisePage />
@@ -1358,6 +1361,7 @@ function App() {
         <MemberPage
           view={memberView}
           assetPath={assetPath}
+          issueSlug={isIssueRoute ? getIssueSlug(pathname) : firstIssue.slug}
         />
         <Footer currentPage="member" />
       </>

@@ -457,6 +457,12 @@
 
 .member-reader__fallback { color: #555b57; line-height: 1.7; }
 
+.member-issue-card + .member-issue-card { margin-top: 2rem; }
+.member-reader__reload { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.member-reader__reload p { color: #555b57; font-size: .82rem; line-height: 1.7; }
+.member-reader__header h2 { overflow-wrap: anywhere; }
+.member-message p { margin-top: 0; }
+
 @media (max-width: 760px) {
   .member-hero { min-height: 300px; padding-top: 8rem; }
   .member-hero--compact { min-height: 180px; padding-top: 5.25rem; padding-bottom: 1.25rem; }
