@@ -1,7 +1,7 @@
 import './ReleaseDelayNoticePage.css'
 import { firstIssue } from './member-content'
 
-export default function ReleaseDelayNoticePage({ coverSrc, magazinePath, officialXUrl }) {
+export default function ReleaseDelayNoticePage({ coverSrc, magazinePath, officialXUrl, releaseNewsPath }) {
   return (
     <main id="main" className="release-delay-page">
       <section className="release-delay-hero" aria-labelledby="release-delay-title">
@@ -29,7 +29,7 @@ export default function ReleaseDelayNoticePage({ coverSrc, magazinePath, officia
         <div className="release-delay-letter__body">
           <aside aria-label="最新の公開情報">
             <h2>創刊号を無料公開しました</h2>
-            <p><time dateTime={firstIssue.releaseDate}>{firstIssue.releaseDateLabel}追記</time>：創刊号は<strong>無料公開中</strong>です。無料会員登録で、全128ページをお読みいただけます。<a href={firstIssue.readerPath}>創刊号を読む</a>、または<a href={magazinePath}>巻号一覧</a>をご覧ください。</p>
+            <p><time dateTime={firstIssue.releaseDate}>{firstIssue.releaseDateLabel}追記</time>：創刊号は<strong>無料公開中</strong>です。無料会員登録で、全{firstIssue.pageCount}ページをお読みいただけます。<a href={releaseNewsPath}>創刊号の公開告知</a>、<a href={firstIssue.readerPath}>創刊号を読む</a>、または<a href={magazinePath}>巻号一覧</a>をご覧ください。</p>
             <p>以下は2026年9月1日掲載のお知らせです。</p>
           </aside>
           <p>平素よりDUST LINEを応援いただき、誠にありがとうございます。</p>

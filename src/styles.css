@@ -39,7 +39,8 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   inset: 0 0 auto;
   z-index: 10;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 28px;
   align-items: center;
   height: 76px;
   padding: 0 clamp(20px, 4vw, 64px);
@@ -48,11 +49,11 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   backdrop-filter: blur(18px);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
 }
-.brand { display: flex; align-items: baseline; gap: 14px; width: max-content; }
+.brand { display: flex; align-items: baseline; gap: 14px; width: max-content; white-space: nowrap; }
 .brand span { font: 900 1.35rem/.85 var(--display); letter-spacing: -.045em; }
 .brand small { font: 700 .56rem/1 var(--display); letter-spacing: .22em; color: var(--dust); }
-.nav { display: flex; align-items: center; gap: clamp(18px, 2.2vw, 36px); font: 700 .76rem/1 var(--display); letter-spacing: .15em; text-transform: uppercase; }
-.nav a { position: relative; padding: 12px 0; color: rgba(240,236,223,.76); transition: color .3s cubic-bezier(.16,1,.3,1); }
+.nav { display: flex; align-items: center; justify-self: end; gap: clamp(18px, 2.2vw, 36px); font: 700 .76rem/1 var(--display); letter-spacing: .15em; text-transform: uppercase; }
+.nav a { position: relative; flex-shrink: 0; white-space: nowrap; padding: 12px 0; color: rgba(240,236,223,.76); transition: color .3s cubic-bezier(.16,1,.3,1); }
 .nav a::after { content: ""; position: absolute; right: 0; bottom: 5px; left: 0; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: right; transition: transform .3s cubic-bezier(.16,1,.3,1); }
 .nav a:hover { color: var(--paper); }
 .nav a:hover::after { transform: scaleX(1); transform-origin: left; }
@@ -84,6 +85,9 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .button:active { transform: translateY(1px) scale(.98); }
 .button--accent { background: var(--accent); color: #fff8ed; }
 .button--accent:hover { background: #bd5428; }
+.issue-read-note { margin: 14px 0 0; font-size: .75rem; line-height: 1.8; color: rgba(240,236,223,.72); }
+.issue-read-note a { display: inline-block; margin-inline-start: .55em; font-weight: 700; text-decoration: underline; text-underline-offset: .2em; }
+.sneak-peek .issue-read-note { color: rgba(21,23,25,.72); }
 .text-link { display: inline-flex; align-items: center; gap: 12px; padding: 12px 0; font: 700 .7rem/1 var(--display); letter-spacing: .12em; border-bottom: 1px solid rgba(240,236,223,.35); }
 .text-link:hover svg { transform: translateX(5px); }
 .text-link svg { transition: transform .3s cubic-bezier(.16,1,.3,1); }
@@ -450,12 +454,18 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 @keyframes route { to { stroke-dashoffset: -180; } }
 @keyframes loading { 0%,100% { transform: scaleX(.25); transform-origin: left; } 50% { transform: scaleX(1); transform-origin: left; } }
 
+@media (min-width: 1081px) and (max-width: 1399px) {
+  .brand small { display: none; }
+  .nav { gap: 16px; font-size: .72rem; letter-spacing: .12em; }
+}
+
 @media (max-width: 1080px) {
   .site-header { height: 66px; }
   .brand small { display: none; }
   .menu-button { display: flex; }
   .nav { position: absolute; top: 66px; right: 0; left: 0; display: grid; gap: 0; max-height: calc(100dvh - 66px); overflow-y: auto; padding: 16px 20px 28px; background: rgba(21,23,25,.97); border-bottom: 1px solid rgba(255,255,255,.12); transform: translateY(-130%); opacity: 0; pointer-events: none; transition: transform .45s cubic-bezier(.16,1,.3,1), opacity .3s; }
-  .nav--open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+  .nav { visibility: hidden; justify-self: stretch; }
+  .nav--open { transform: translateY(0); opacity: 1; visibility: visible; pointer-events: auto; }
   .nav a { padding: 17px 4px; border-bottom: 1px solid rgba(255,255,255,.09); }
   .nav .nav__cta { margin-top: 14px; text-align: center; }
   .nav .nav__mobile-x { display: block; color: var(--accent); }

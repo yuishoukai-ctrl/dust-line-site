@@ -1,4 +1,4 @@
-import { StrictMode, useEffect, useState } from 'react'
+import { StrictMode, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import HokkaidoArticle from './HokkaidoArticle'
 import Ktm990Article from './Ktm990Article'
@@ -12,6 +12,8 @@ import CategoryPage from './CategoryPages'
 import OffroadMagazinePage from './OffroadMagazinePage'
 import Issue02ProductPage from './Issue02ProductPage'
 import ReleaseDelayNoticePage from './ReleaseDelayNoticePage'
+import IssueReleaseNewsPage from './IssueReleaseNewsPage'
+import IssueReadNote from './IssueReadNote'
 import MemberPage from './MemberPages'
 import { firstIssue, getIssueSlug, getIssueDescription } from './member-content'
 import AnalyticsConsent from './AnalyticsConsent'
@@ -39,6 +41,7 @@ const paintPagePath = `${homePath}paint/`
 const magazinePagePath = `${homePath}offroad-bike-magazine/`
 const issue02ProductPagePath = `${homePath}magazine/issue-02/`
 const issue01DelayNoticePath = `${homePath}news/issue-01-release-delay/`
+const issue01ReleaseNewsPath = `${homePath}news/issue-01-release/`
 const signupPagePath = `${homePath}account/signup/`
 const libraryPagePath = `${homePath}library/`
 const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
@@ -145,14 +148,25 @@ function MenuIcon({ open }) {
 
 function Header({ currentPage = null }) {
   const [open, setOpen] = useState(false)
+  const menuButtonRef = useRef(null)
   const subpage = Boolean(currentPage)
   const sectionHref = (id) => subpage ? `${homePath}#${id}` : `#${id}`
 
   useEffect(() => {
     const close = () => setOpen(false)
+    const escape = (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false)
+        if (open) menuButtonRef.current?.focus()
+      }
+    }
     window.addEventListener('resize', close)
-    return () => window.removeEventListener('resize', close)
-  }, [])
+    window.addEventListener('keydown', escape)
+    return () => {
+      window.removeEventListener('resize', close)
+      window.removeEventListener('keydown', escape)
+    }
+  }, [open])
 
   return (
     <header className="site-header">
@@ -160,7 +174,7 @@ function Header({ currentPage = null }) {
         <span>DUST LINE</span>
         <small>ADVENTURE JOURNAL</small>
       </a>
-      <nav className={open ? 'nav nav--open' : 'nav'} aria-label="メインナビゲーション">
+      <nav id="main-navigation" className={open ? 'nav nav--open' : 'nav'} aria-label="メインナビゲーション">
         <a href={travelPagePath} aria-current={currentPage === 'travel' ? 'page' : undefined} onClick={() => setOpen(false)}>Travel</a>
         <a href={buildPagePath} aria-current={currentPage === 'build' ? 'page' : undefined} onClick={() => setOpen(false)}>Build</a>
         <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined} onClick={() => setOpen(false)}>Garage</a>
@@ -179,6 +193,8 @@ function Header({ currentPage = null }) {
         type="button"
         aria-label={open ? 'メニューを閉じる' : 'メニューを開く'}
         aria-expanded={open}
+        aria-controls="main-navigation"
+        ref={menuButtonRef}
         onClick={() => setOpen((value) => !value)}
       >
         <MenuIcon open={open} />
@@ -204,6 +220,7 @@ function Hero() {
           <a className="button button--accent" href={firstIssue.readerPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>創刊号を無料で読む <ArrowIcon /></a>
           <a className="text-link" href="#issue">創刊号について見る <ArrowIcon /></a>
         </div>
+        <IssueReadNote />
       </div>
       <div className="hero__index" aria-hidden="true">
         <span>DL</span><span>001</span><span>JPN</span>
@@ -230,13 +247,14 @@ function IssueReleaseNotice() {
           </h2>
           <p className="issue-release-notice__body">
             {firstIssue.releaseDateLabel}、DUST LINE創刊号を公開しました。
-            旅・カスタム・ものづくりから、ショップとイベントの紹介まで全130ページ。
+            旅・カスタム・ものづくりから、ショップとイベントの紹介まで全{firstIssue.pageCount}ページ。
             無料会員登録で、本誌をお読みいただけます。
           </p>
           <div className="issue-release-notice__links">
             <a className="button button--accent" href={firstIssue.readerPath}>創刊号を無料で読む <ArrowIcon /></a>
             <a className="text-link" href={magazinePagePath}>創刊号について見る <ArrowIcon /></a>
           </div>
+          <IssueReadNote />
         </div>
       </div>
       <span className="issue-release-notice__index" aria-hidden="true">01</span>
@@ -739,13 +757,14 @@ function MagazinePreview() {
           <p>WEBでは計画と車両選び、加工の要点をダイジェストで紹介。創刊号では全工程とDUST DATAを8ページで収録します。</p>
           <div className="sneak-peek__actions">
             <a className="button button--accent" href={webArticle}>WEBダイジェストを読む <ArrowIcon /></a>
-            <a className="sneak-peek__notify" href={signupPagePath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>創刊号を無料で読む <ArrowIcon /></a>
+            <a className="sneak-peek__notify" href={firstIssue.readerPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>創刊号を無料で読む <ArrowIcon /></a>
             <a className="sneak-peek__notify" href={officialXUrl} target="_blank" rel="noreferrer">公式Xで発売情報を見る <ArrowIcon /></a>
           </div>
+          <IssueReadNote />
         </div>
       </div>
 
-      <a className="sneak-peek__primary reveal" href={signupPagePath} aria-label="創刊号を無料で読む" onClick={() => trackAnalyticsEvent('signup_cta_click')}>
+      <a className="sneak-peek__primary reveal" href={firstIssue.readerPath} aria-label="創刊号を無料で読む" onClick={() => trackAnalyticsEvent('signup_cta_click')}>
         <span className="sneak-peek__ribbon">SAMPLE / ISSUE 01</span>
         <div className="sneak-peek__spread">
           <figure><img src={page026} alt="世界一周に行こうとしたら。扉ページ 026" loading="lazy" decoding="async" /></figure>
@@ -790,7 +809,7 @@ function Issue() {
         <h2>BEYOND<br />THE PAVEMENT</h2>
         <p>
           創刊号は、舗装路の向こう側へ踏み出すための一冊。
-          ロングライド、積載、装備、ものづくり、そして旅の途中で出会った風景を全130ページに収録しました。
+          ロングライド、積載、装備、ものづくり、そして旅の途中で出会った風景を全{firstIssue.pageCount}ページに収録しました。
         </p>
         <dl className="issue__details">
           <div><dt>FORMAT</dt><dd>Digital Edition</dd></div>
@@ -798,6 +817,7 @@ function Issue() {
           <div><dt>RELEASE</dt><dd><time dateTime={firstIssue.releaseDate}>{firstIssue.releaseDateLabel} 公開</time></dd></div>
         </dl>
         <a className="button button--outline" href={firstIssue.readerPath}>創刊号を無料で読む <ArrowIcon /></a>
+        <IssueReadNote />
       </div>
     </section>
   )
@@ -1236,7 +1256,7 @@ function Footer({ currentPage = null }) {
         <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined}>Paint</a>
         <a href={magazinePagePath} aria-current={currentPage === 'magazine' ? 'page' : undefined}>Magazine</a>
         <a href={issue02ProductPagePath} aria-current={currentPage === 'issue-02-product' ? 'page' : undefined}>第2号 商品情報</a>
-        <a href={issue01DelayNoticePath} aria-current={currentPage === 'issue-01-delay' ? 'page' : undefined}>News</a>
+        <a href={issue01ReleaseNewsPath} aria-current={currentPage === 'issue-01-release' ? 'page' : undefined}>News</a>
         <a href={libraryPagePath} aria-current={currentPage === 'member' ? 'page' : undefined}>Library</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined}>Goods</a>
         <a href={suzuriShopUrl} target="_blank" rel="noreferrer">Shop</a>
@@ -1309,6 +1329,7 @@ function App() {
     '/digital-delivery/': 'digital-delivery',
     '/magazine/issue-02/': 'issue-02-product',
     '/news/issue-01-release-delay/': 'issue-01-delay',
+    '/news/issue-01-release/': 'issue-01-release',
     '/parts/': 'parts',
     '/paint/': 'paint',
     '/offroad-bike-magazine/': 'magazine',
@@ -1327,6 +1348,16 @@ function App() {
   if (page === 'commercial-disclosure') return <CommercialDisclosurePage />
   if (page === 'refund-policy') return <RefundPolicyPage />
   if (page === 'digital-delivery') return <DigitalDeliveryPage />
+  if (page === 'issue-01-release') {
+    return (
+      <>
+        <a className="skip-link" href="#main">本文へ移動</a>
+        <Header currentPage="issue-01-release" />
+        <IssueReleaseNewsPage coverSrc={assetPath(firstIssue.coverImage)} magazinePath={magazinePagePath} historyPath={issue01DelayNoticePath} />
+        <Footer currentPage="issue-01-release" />
+      </>
+    )
+  }
   if (page === 'issue-01-delay') {
     return (
       <>
@@ -1336,6 +1367,7 @@ function App() {
           coverSrc={assetPath('cover-issue-01-r1200gs.webp')}
           magazinePath={magazinePagePath}
           officialXUrl={officialXUrl}
+          releaseNewsPath={issue01ReleaseNewsPath}
         />
         <Footer currentPage="issue-01-delay" />
       </>

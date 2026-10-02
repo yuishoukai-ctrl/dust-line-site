@@ -7,10 +7,14 @@ export const journal = Object.freeze({
   publisherPath: '/company/',
 })
 
+// Digital edition total, including covers; confirmed against the published v23 PDF.
+const firstIssuePageCount = 130
+
 export const issues = Object.freeze([
   Object.freeze({
     slug: 'issue-01',
     issueNumber: 'ISSUE 01',
+    pageCount: firstIssuePageCount,
     title: 'DUST LINE 創刊号',
     subtitle: 'BEYOND THE PAVEMENT',
     releaseDate: '2026-10-01',
@@ -21,7 +25,7 @@ export const issues = Object.freeze([
     priceLabel: '無料',
     accessLabel: '無料会員登録で閲覧',
     statusLabel: '創刊号・無料公開中',
-    description: '創刊号を無料公開中。旅、車両製作、カスタム、整備からショップ・イベント紹介まで、全130ページをお届けします。',
+    description: `創刊号を無料公開中。旅、車両製作、カスタム、整備からショップ・イベント紹介まで、全${firstIssuePageCount}ページをお届けします。`,
     previewLabel: '試し読み（仮公開）',
     previewDescription: '本誌は2026年10月1日公開予定です。現在は会員向けの試し読み版を掲載しています。',
     coverImage: 'cover-issue-01-r1200gs.webp',
