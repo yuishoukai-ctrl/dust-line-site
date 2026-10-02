@@ -19,6 +19,46 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dustline.jp/parts/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dustline.jp/parts/guard-factory/djebel250-frame-guard/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dustline.jp/parts/guard-factory/djebel250-rear-master-cylinder-guard/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dustline.jp/parts/guard-factory/djebel250-under-guard/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dustline.jp/parts/guard-factory/f450gs-indicator-guard/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dustline.jp/parts/guard-factory/f450gs-rear-master-cylinder-guard/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dustline.jp/parts/guard-factory/f450gs-brake-hose-guard/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dustline.jp/parts/guard-factory/f450gs-radiator-guard/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dustline.jp/advertise/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>

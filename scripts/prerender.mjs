@@ -6,6 +6,7 @@ import { dirname, extname, join, resolve } from 'node:path'
 import { tmpdir } from 'node:os'
 import { fileURLToPath } from 'node:url'
 import { firstIssue, issues, journal } from '../src/member-content.js'
+import { guardFactoryProducts, guardFactoryProductPath, guardFactoryPhotoPath } from '../src/guard-factory-products.js'
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = join(projectRoot, 'dist')
@@ -47,13 +48,23 @@ const routes = [
   {
     path: '/parts/',
     source: '/?page=parts',
-    title: 'BMW F 450 GS向けオリジナル部品｜DUST LINE GARAGE',
-    description: 'BMW F 450 GS向けのアンダーガード、ナビゲーションタワー、エンジンガード、ブレーキマスターガードを開発中。試作と実車確認後に販売情報を公開します。',
-    image: '/images/parts/side-stand-extension-welding.jpeg',
-    imageAlt: 'DUST LINE GARAGEの溶接・部品製作記録',
+    title: 'Guard Factory・オリジナル部品｜DUST LINE Parts',
+    description: 'Guard Factoryのジェベル250用ガード3商品と、BMW F 450 GS向けウインカー・リアマスターシリンダー・ブレーキホース・ラジエーターガード4商品のCAD開発画像を紹介。販売準備中。',
+    image: '/images/parts/guard-factory/djebel250-frame-installed-1280.webp',
+    imageAlt: 'Guard Factoryのジェベル250用ガードの装着例',
     schemaType: 'CollectionPage',
     expectedText: '走るための',
   },
+  ...guardFactoryProducts.map((product) => ({
+    path: guardFactoryProductPath(product.slug),
+    source: `/?page=${product.slug}`,
+    title: `${product.name}｜Guard Factory｜DUST LINE Parts`,
+    description: `${product.summary}${product.development ? 'CAD開発画像を掲載。価格未定・実車適合は未確認。' : '仕様と取付条件をご案内します。'}販売準備中。`,
+    image: product.photos.length ? `/images/${guardFactoryPhotoPath(product.photos[0].name, product.photos[0].width || 1280)}` : '/images/parts/guard-factory/guard-factory-logo.webp',
+    imageAlt: product.photos[0]?.alt || 'Guard Factoryのブランドロゴ',
+    schemaType: 'WebPage',
+    expectedText: product.shortName,
+  })),
   {
     path: '/advertise/',
     source: '/?page=advertise',
@@ -621,7 +632,12 @@ const pageSchema = (route) => {
       '@id': `${canonical}#breadcrumb`,
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'DUST LINE', item: `${siteOrigin}/` },
-        { '@type': 'ListItem', position: 2, name: route.title.split('｜')[0], item: canonical },
+        ...(route.path.startsWith('/parts/guard-factory/')
+          ? [
+            { '@type': 'ListItem', position: 2, name: 'Parts', item: `${siteOrigin}/parts/` },
+            { '@type': 'ListItem', position: 3, name: route.title.split('｜')[0], item: canonical },
+          ]
+          : [{ '@type': 'ListItem', position: 2, name: route.title.split('｜')[0], item: canonical }]),
       ],
     })
   }

@@ -1,32 +1,6 @@
 import { useEffect } from 'react'
+import { GuardFactoryLineup } from './GuardFactoryProducts'
 import './parts-page.css'
-
-const plannedParts = [
-  {
-    number: '01',
-    category: 'UNDERBODY PROTECTION',
-    name: 'アンダーガード',
-    description: 'エンジン下部を守るための構成を、車体とのクリアランスや整備性を確認しながら検討します。',
-  },
-  {
-    number: '02',
-    category: 'RALLY COCKPIT',
-    name: 'ナビゲーションタワー',
-    description: 'ナビゲーション機器を見やすくまとめるためのタワー。装着機器と配線の取り回しを含めて設計します。',
-  },
-  {
-    number: '03',
-    category: 'SIDE PROTECTION',
-    name: 'エンジンガード',
-    description: '車体側面とエンジン周辺の保護を目的に、取付位置と他部品との干渉を実車で確かめます。',
-  },
-  {
-    number: '04',
-    category: 'CONTROL PROTECTION',
-    name: 'ブレーキマスターガード',
-    description: 'ブレーキマスター周辺を保護するための小型ガード。操作や点検を妨げない形状を検討します。',
-  },
-]
 
 const developmentSteps = [
   ['01', '採寸・設計', '実車を基準に取付位置、可動部、整備時のアクセスを確認します。'],
@@ -39,10 +13,10 @@ function PartsArrow() {
   return <span className="parts-arrow" aria-hidden="true">→</span>
 }
 
-export default function PartsPage({ assetPath, contactUrl, officialXUrl }) {
+export default function PartsPage({ assetPath, basePath, contactUrl, officialXUrl }) {
   useEffect(() => {
     const previousTitle = document.title
-    document.title = 'BMW F 450 GS向けオリジナル部品｜DUST LINE GARAGE'
+    document.title = 'Guard Factory・オリジナル部品｜DUST LINE Parts'
     window.scrollTo(0, 0)
     return () => { document.title = previousTitle }
   }, [])
@@ -52,57 +26,36 @@ export default function PartsPage({ assetPath, contactUrl, officialXUrl }) {
       <section className="parts-hero" aria-labelledby="parts-title">
         <div className="parts-hero__grid" aria-hidden="true" />
         <div className="parts-hero__copy reveal">
-          <p className="parts-eyebrow">DUST LINE GARAGE / ORIGINAL PARTS</p>
-          <p className="parts-status">BMW F 450 GS / IN DEVELOPMENT</p>
+          <p className="parts-eyebrow">DUST LINE / PARTS & FABRICATION</p>
+          <p className="parts-status">GUARD FACTORY / DJEBEL 250 & F 450 GS</p>
           <h1 id="parts-title">走るための<br />部品を、<br className="parts-mobile-break" />つくる。</h1>
           <p className="parts-hero__lead">
-            旅と整備の現場で感じた「ここに必要」を、形にする。DUST LINE GARAGEでは、
-            BMW F 450 GS向けのオリジナル部品を開発中。<br />販売時期は準備が整い次第お知らせします。
+            旅と整備の現場で感じた「ここに必要」を、形にする。Guard Factoryのジェベル250用ガード3点と、
+            BMW F 450 GS向けガード4点のCAD開発画像を紹介します。
           </p>
-          <a className="parts-button parts-button--accent" href="#lineup">製品ラインアップを見る <PartsArrow /></a>
+          <a className="parts-button parts-button--accent" href="#guard-factory">Guard Factoryの製品を見る <PartsArrow /></a>
+          <a className="parts-text-link parts-hero__development-link" href="#lineup">BMW F 450 GSの4商品を見る <PartsArrow /></a>
         </div>
 
         <figure className="parts-hero__media reveal">
           <img
-            src={assetPath('parts/side-stand-extension-welding.jpeg')}
-            alt="DUST LINE GARAGEでサイドスタンド拡張部を溶接した過去の製作記録"
+            src={assetPath('parts/guard-factory/djebel250-frame-installed-1280.webp')}
+            srcSet={`${assetPath('parts/guard-factory/djebel250-frame-installed-640.webp')} 640w, ${assetPath('parts/guard-factory/djebel250-frame-installed-1280.webp')} 1280w`}
+            sizes="(max-width: 900px) calc(100vw - 40px), 46vw"
+            width="1280" height="960"
+            alt="Guard Factoryの右フレームガードとリアマスターシリンダーガードをジェベル250に装着した例"
+            fetchPriority="high"
             decoding="async"
           />
-          <figcaption><span>FABRICATION ARCHIVE</span>過去の製作記録／サイドスタンド拡張</figcaption>
+          <figcaption><span>GUARD FACTORY / DJEBEL 250</span>右フレームガード・リアマスターシリンダーガードの装着例</figcaption>
         </figure>
 
         <p className="parts-hero__word" aria-hidden="true">PARTS</p>
       </section>
 
-      <section className="parts-lineup" id="lineup" aria-labelledby="parts-lineup-title">
-        <header className="parts-section-head reveal">
-          <div className="parts-section-index"><span>01</span><span>PLANNED LINEUP</span></div>
-          <div>
-            <p>BMW F 450 GS / ORIGINAL PARTS</p>
-            <h2 id="parts-lineup-title">最初の4点を、<br />実車から始める。</h2>
-            <p>
-              販売開始時期と価格、材質、適合年式などの詳細は、試作と実車確認を終えた製品から順に公開します。
-            </p>
-          </div>
-        </header>
+      <GuardFactoryLineup assetPath={assetPath} basePath={basePath} />
 
-        <div className="parts-product-list">
-          {plannedParts.map((part, index) => (
-            <article className="parts-product reveal" key={part.number} style={{ '--delay': `${index * 70}ms` }}>
-              <div className="parts-product__number" aria-hidden="true">{part.number}</div>
-              <div className="parts-product__copy">
-                <p>{part.category}</p>
-                <h3>{part.name}</h3>
-                <p>{part.description}</p>
-              </div>
-              <div className="parts-product__state">
-                <span>STATUS</span>
-                <strong>開発中</strong>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+      <GuardFactoryLineup assetPath={assetPath} basePath={basePath} collection="f450gs" />
 
       <section className="parts-development" aria-labelledby="parts-development-title">
         <header className="parts-development__head reveal">

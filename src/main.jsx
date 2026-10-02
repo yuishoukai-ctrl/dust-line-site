@@ -5,6 +5,8 @@ import Ktm990Article from './Ktm990Article'
 import MachineFileArticle from './MachineFileArticle'
 import PaintPricePage from './PaintPricePage'
 import PartsPage from './PartsPage'
+import GuardFactoryProductPage from './GuardFactoryProducts'
+import { guardFactoryProducts, guardFactoryProductPath } from './guard-factory-products'
 import WorldTripArticle from './WorldTripArticle'
 import CategoryPage from './CategoryPages'
 import OffroadMagazinePage from './OffroadMagazinePage'
@@ -1282,6 +1284,21 @@ function App() {
   if (article === 'world-trip') return <WorldTripArticle assetPath={assetPath} />
   if (article === 'machine-file-001') return <MachineFileArticle assetPath={assetPath} />
 
+  const productSlug = guardFactoryProducts.find((product) => (
+    pathname === guardFactoryProductPath(product.slug, homePath)
+    || (pathname === '/' && new URLSearchParams(window.location.search).get('page') === product.slug)
+  ))?.slug
+  if (productSlug) {
+    return (
+      <>
+        <a className="skip-link" href="#main">本文へ移動</a>
+        <Header currentPage="parts" />
+        <GuardFactoryProductPage slug={productSlug} assetPath={assetPath} basePath={homePath} contactUrl={contactFormUrl} />
+        <Footer currentPage="parts" />
+      </>
+    )
+  }
+
   const routePage = {
     '/company/': 'company',
     '/goods/': 'goods',
@@ -1329,7 +1346,7 @@ function App() {
       <>
         <a className="skip-link" href="#main">本文へ移動</a>
         <Header currentPage="parts" />
-        <PartsPage assetPath={assetPath} contactUrl={contactFormUrl} officialXUrl={officialXUrl} />
+        <PartsPage assetPath={assetPath} basePath={homePath} contactUrl={contactFormUrl} officialXUrl={officialXUrl} />
         <Footer currentPage="parts" />
       </>
     )
