@@ -31,30 +31,39 @@ const writeConsent = (value) => {
   } catch {
     // Storage may be unavailable in private browsing. Keep analytics disabled.
   }
-  window.dispatchEvent(new CustomEvent(ANALYTICS_CONSENT_EVENT, { detail: value }))
+  try {
+    window.dispatchEvent(new CustomEvent(ANALYTICS_CONSENT_EVENT, { detail: value }))
+  } catch {
+    // Analytics consent notifications must not interrupt the page.
+  }
 }
 
 const loadAnalytics = () => {
-  if (!hasValidMeasurementId || readConsent() !== 'granted' || analyticsLoaded || typeof document === 'undefined') return false
+  try {
+    if (!hasValidMeasurementId || readConsent() !== 'granted' || analyticsLoaded || typeof document === 'undefined') return false
 
-  window.dataLayer = window.dataLayer || []
-  window.gtag = window.gtag || function gtag() {
-    window.dataLayer.push(arguments)
+    window.dataLayer = window.dataLayer || []
+    window.gtag = window.gtag || function gtag() {
+      window.dataLayer.push(arguments)
+    }
+    window.gtag('js', new Date())
+    window.gtag('config', measurementId, {
+      send_page_view: false,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+    })
+
+    const script = document.createElement('script')
+    script.async = true
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`
+    script.dataset.dustlineAnalytics = 'true'
+    document.head.appendChild(script)
+    analyticsLoaded = true
+    return true
+  } catch {
+    // Tracking is optional and must not interrupt authentication or navigation.
+    return false
   }
-  window.gtag('js', new Date())
-  window.gtag('config', measurementId, {
-    send_page_view: false,
-    allow_google_signals: false,
-    allow_ad_personalization_signals: false,
-  })
-
-  const script = document.createElement('script')
-  script.async = true
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`
-  script.dataset.dustlineAnalytics = 'true'
-  document.head.appendChild(script)
-  analyticsLoaded = true
-  return true
 }
 
 export const analyticsIsConfigured = hasValidMeasurementId
@@ -70,9 +79,14 @@ export const setAnalyticsConsent = (value) => {
 export const initializeAnalytics = () => loadAnalytics()
 
 export const trackAnalyticsEvent = (eventName) => {
-  if (!allowedEvents.has(eventName) || readConsent() !== 'granted') return false
-  loadAnalytics()
-  if (typeof window.gtag !== 'function') return false
-  window.gtag('event', eventName)
-  return true
+  try {
+    if (!allowedEvents.has(eventName) || readConsent() !== 'granted') return false
+    if (!analyticsLoaded && !loadAnalytics()) return false
+    if (typeof window.gtag !== 'function') return false
+    window.gtag('event', eventName)
+    return true
+  } catch {
+    // Tracking is optional and must not interrupt authentication or navigation.
+    return false
+  }
 }
