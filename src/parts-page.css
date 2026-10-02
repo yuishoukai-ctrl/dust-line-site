@@ -13,6 +13,26 @@
 
 .parts-page img { display: block; width: 100%; }
 .parts-page a { color: inherit; text-decoration: none; }
+.parts-models, .parts-products { scroll-margin-top: 90px; }
+.parts-models:focus-visible, .parts-products:focus-visible { outline: 2px solid var(--parts-accent); outline-offset: -3px; }
+.parts-models { max-width: 1480px; margin: 0 auto; padding: clamp(64px, 7vw, 110px) clamp(22px, 5vw, 80px); }
+.parts-models__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 36px; }
+.parts-models__head p { margin: 0 0 18px; font: 800 .65rem/1.5 var(--parts-display); letter-spacing: .2em; color: #9b421b; }
+.parts-models h2 { margin: 0; font: 900 clamp(2.2rem, 4vw, 4rem)/1.2 var(--parts-display); letter-spacing: -.055em; }
+.parts-models__all { display: inline-flex; align-items: center; gap: 14px; min-height: 44px; border-bottom: 1px solid rgba(21,23,25,.3); font-size: .85rem; font-weight: 800; }
+.parts-models__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin: 0; padding: 0; list-style: none; }
+.parts-model-card { display: grid; gap: 18px; height: 100%; padding: clamp(24px, 3vw, 42px); border: 1px solid rgba(21,23,25,.3); background: rgba(21,23,25,.025); transition: background .2s, border-color .2s; }
+.parts-model-card:hover { border-color: var(--parts-accent); background: rgba(21,23,25,.06); }
+.parts-model-card:active { background: rgba(21,23,25,.1); }
+.parts-model-card__label { font: 800 .62rem/1.4 var(--parts-display); letter-spacing: .18em; color: #9b421b; }
+.parts-model-card strong { font-size: clamp(1.45rem, 2.4vw, 2.5rem); line-height: 1.4; letter-spacing: -.035em; }
+.parts-model-card__state { font-size: .8rem; line-height: 1.8; color: rgba(21,23,25,.65); }
+.parts-model-card__action { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 8px; padding-top: 20px; border-top: 1px solid rgba(21,23,25,.18); font-size: .85rem; font-weight: 800; }
+.parts-models__note { margin: 24px 0 0; font-size: .82rem; line-height: 1.9; color: rgba(21,23,25,.7); }
+@media (max-width: 700px) {
+  .parts-models { padding: 64px 20px; }
+  .parts-models__list { grid-template-columns: 1fr; gap: 18px; }
+}
 
 .parts-hero {
   position: relative;
@@ -130,7 +150,6 @@
 
 .parts-hero__media img { height: 100%; object-fit: contain; }
 .parts-hero__development-link { display: flex; width: fit-content; gap: 16px; min-height: 44px; margin-top: 14px; font-size: .8rem; }
-#lineup { scroll-margin-top: 76px; }
 .parts-hero__media figcaption,
 .parts-craft__media figcaption {
   position: absolute;

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { GuardFactoryLineup } from './GuardFactoryProducts'
+import { guardFactoryProducts } from './guard-factory-products'
 import './parts-page.css'
 
 const developmentSteps = [
@@ -13,11 +14,42 @@ function PartsArrow() {
   return <span className="parts-arrow" aria-hidden="true">→</span>
 }
 
+function PartsModelChooser() {
+  const models = [
+    { collection: 'djebel250', label: 'ジェベル250', english: 'DJEBEL 250', href: '#guard-factory', state: '販売準備中' },
+    { collection: 'f450gs', label: 'BMW F 450 GS', english: 'BMW F 450 GS', href: '#lineup', state: 'CAD開発画像・販売準備中' },
+  ]
+  return (
+    <section className="parts-models" id="parts-models" aria-labelledby="parts-models-title" tabIndex={-1}>
+      <header className="parts-models__head reveal">
+        <div><p>CHOOSE YOUR MOTORCYCLE</p><h2 id="parts-models-title">車種から選ぶ。</h2></div>
+        <a className="parts-models__all" href="#parts-products">全{guardFactoryProducts.length}商品を見る <PartsArrow /></a>
+      </header>
+      <nav aria-label="車種別の商品一覧へ移動">
+        <ul className="parts-models__list">
+          {models.map((model) => {
+            const count = guardFactoryProducts.filter((product) => product.collection === model.collection).length
+            return <li key={model.collection} className="reveal">
+              <a className="parts-model-card" href={model.href} aria-label={`${model.label}の${count}商品を見る`}>
+                <span className="parts-model-card__label">{model.english}</span>
+                <strong>{model.label}</strong>
+                <span className="parts-model-card__state">{count}商品 / {model.state}</span>
+                <span className="parts-model-card__action">この車種の商品を見る <PartsArrow /></span>
+              </a>
+            </li>
+          })}
+        </ul>
+      </nav>
+      <p className="parts-models__note">車種名は掲載商品の分類です。対応する型式・年式・取付条件は、各商品ページでご確認ください。</p>
+    </section>
+  )
+}
+
 export default function PartsPage({ assetPath, basePath, contactUrl, officialXUrl }) {
   useEffect(() => {
     const previousTitle = document.title
     document.title = 'Guard Factory・オリジナル部品｜DUST LINE Parts'
-    window.scrollTo(0, 0)
+    if (!window.location.hash) window.scrollTo(0, 0)
     return () => { document.title = previousTitle }
   }, [])
 
@@ -33,7 +65,7 @@ export default function PartsPage({ assetPath, basePath, contactUrl, officialXUr
             旅と整備の現場で感じた「ここに必要」を、形にする。Guard Factoryのジェベル250用ガード3点と、
             BMW F 450 GS向けガード4点のCAD開発画像を紹介します。
           </p>
-          <a className="parts-button parts-button--accent" href="#guard-factory">Guard Factoryの製品を見る <PartsArrow /></a>
+          <a className="parts-button parts-button--accent" href="#parts-models">車種から選ぶ <PartsArrow /></a>
           <a className="parts-text-link parts-hero__development-link" href="#lineup">BMW F 450 GSの4商品を見る <PartsArrow /></a>
         </div>
 
@@ -53,9 +85,12 @@ export default function PartsPage({ assetPath, basePath, contactUrl, officialXUr
         <p className="parts-hero__word" aria-hidden="true">PARTS</p>
       </section>
 
-      <GuardFactoryLineup assetPath={assetPath} basePath={basePath} />
+      <PartsModelChooser />
 
-      <GuardFactoryLineup assetPath={assetPath} basePath={basePath} collection="f450gs" />
+      <section className="parts-products" id="parts-products" aria-label="Guard Factoryの全商品" tabIndex={-1}>
+        <GuardFactoryLineup assetPath={assetPath} basePath={basePath} />
+        <GuardFactoryLineup assetPath={assetPath} basePath={basePath} collection="f450gs" />
+      </section>
 
       <section className="parts-development" aria-labelledby="parts-development-title">
         <header className="parts-development__head reveal">
