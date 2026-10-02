@@ -30,6 +30,22 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
         <div><p className="gf-eyebrow">GUARD FACTORY / {isCad ? 'BMW F 450 GS' : 'DJEBEL 250'}</p><h2 id={`${sectionId}-title`}>{isCad ? <>F 450 GSに、<br />4つのガード。</> : <>ジェベル250に、<br />{products.length}つのガード。</>}</h2></div>
         <div className="gf-lineup__brand"><GuardFactoryLogo assetPath={assetPath} /><p>{isCad ? <>販売準備中の4商品を、実CADの画像で紹介。<br />価格・販売仕様・実車適合は確定後にご案内します。</> : <>ガードファクトリーの製品情報と実画像。<br />仕様・適合条件を、商品ごとにご案内します。</>}</p></div>
       </header>
+      {isCad && <figure className="gf-vehicle reveal">
+        <img
+          src={assetPath('parts/guard-factory/f450gs-vehicle-1280.webp')}
+          srcSet={`${assetPath('parts/guard-factory/f450gs-vehicle-640.webp')} 640w, ${assetPath('parts/guard-factory/f450gs-vehicle-1280.webp')} 1280w`}
+          sizes="(max-width: 760px) calc(100vw - 40px), 58vw"
+          width="1280" height="853"
+          alt="店内に展示された青・白・赤のBMW F 450 GSの車体全体を右前方から見た写真"
+          loading="lazy" decoding="async"
+        />
+        <figcaption>
+          <p className="gf-eyebrow">VEHICLE / BMW F 450 GS</p>
+          <p className="gf-vehicle__title">BMW F 450 GS</p>
+          <p>F 450 GSの展示車両。下の4製品はCAD開発画像で紹介しています。</p>
+          <p>写真はGuard Factory製品の装着状態を示すものではありません。</p>
+        </figcaption>
+      </figure>}
       <div className="gf-lineup__products">
         {products.map((product, index) => (
           <article className="gf-card reveal" key={product.slug}>

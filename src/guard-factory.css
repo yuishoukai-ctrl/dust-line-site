@@ -75,12 +75,20 @@
 .gf-related h2 { margin: 14px 0; font-size: 1.8rem; }
 .gf-related ul { padding: 0; margin: 0; list-style: none; }
 .gf-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.gf-vehicle { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr); align-items: center; margin: 0 0 40px; border: 1px solid var(--line); background: var(--ink); }
+.gf-vehicle img { display: block; width: 100%; height: auto; object-fit: contain; }
+.gf-vehicle figcaption { padding: clamp(24px, 3vw, 48px); }
+.gf-vehicle figcaption > p { font-size: .84rem; line-height: 1.85; color: var(--gf-muted); margin: 14px 0 0; }
+.gf-vehicle figcaption > .gf-eyebrow { margin: 0; font-size: .61rem; color: var(--dust); }
+.gf-vehicle figcaption > .gf-vehicle__title { margin: 14px 0 24px; font-size: clamp(1.5rem, 2.5vw, 2.5rem); font-weight: 800; color: var(--paper); line-height: 1.3; }
 @media (max-width: 900px) {
   .gf-product-hero, .gf-specifications { grid-template-columns: 1fr; }
   .gf-product-copy .gf-logo { margin-top: -30px; }
   .gf-product-copy { max-width: 650px; }
 }
 @media (max-width: 760px) {
+  .gf-vehicle { grid-template-columns: 1fr; }
+  .gf-vehicle figcaption { padding: 24px; }
   .gf-lineup__head, .gf-lineup__products { grid-template-columns: 1fr; gap: 36px; }
   .gf-lineup__head { margin-bottom: 36px; }
   .gf-lineup__brand { justify-self: start; }
