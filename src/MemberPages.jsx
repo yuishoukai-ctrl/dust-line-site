@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { isSupabaseConfigured, supabase } from './lib/supabaseClient'
 import { trackAnalyticsEvent } from './lib/analytics'
+import { runAuthAction } from './lib/authAction'
 import {
   clearVerificationEmail,
   getVerificationEmail,
@@ -158,31 +159,30 @@ function SignupPage({ session }) {
     }
 
     trackAnalyticsEvent('signup_submit')
-    setSubmitting(true)
     const verifyPath = authPath('/account/verify/', returnTo)
     const redirectTo = `${window.location.origin}${verifyPath}`
-    const { data, error } = await supabase.auth.signUp({
-      email: email.trim(),
-      password,
-      options: { emailRedirectTo: redirectTo },
+    await runAuthAction({
+      action: 'signup',
+      setSubmitting,
+      setErrorMessage,
+      request: () => supabase.auth.signUp({
+        email: email.trim(),
+        password,
+        options: { emailRedirectTo: redirectTo },
+      }),
+      onSuccess: ({ data }) => {
+        setPassword('')
+        setPasswordConfirm('')
+        if (data.session) {
+          trackAnalyticsEvent('signup_verify_success')
+          window.location.assign(returnTo)
+          return
+        }
+        trackAnalyticsEvent('signup_code_sent')
+        storeVerificationEmail(email)
+        window.location.assign(verifyPath)
+      },
     })
-    setSubmitting(false)
-
-    if (error) {
-      setErrorMessage('登録を完了できませんでした。入力内容を確認し、時間を置いて再度お試しください。')
-      return
-    }
-
-    setPassword('')
-    setPasswordConfirm('')
-    if (data.session) {
-      trackAnalyticsEvent('signup_verify_success')
-      window.location.assign(returnTo)
-      return
-    }
-    trackAnalyticsEvent('signup_code_sent')
-    storeVerificationEmail(email)
-    window.location.assign(verifyPath)
   }
 
   return (
@@ -229,6 +229,7 @@ function SignupPage({ session }) {
         </button>
       </form>
 
+      <p className="member-switch"><a href={authPath('/account/verify/', returnTo)} onClick={() => storeVerificationEmail(email)}>確認メールが届いている方：6桁コードを入力</a></p>
       <p className="member-switch">登録済みの方は <a href={authPath('/account/login/', returnTo)}>会員ログイン</a></p>
     </section>
   )
@@ -285,6 +286,7 @@ function LoginPage({ session }) {
         </button>
       </form>
       <div className="member-switch member-switch--stack">
+        <a href={authPath('/account/verify/', returnTo)} onClick={() => storeVerificationEmail(email)}>確認メールが届いている方：6桁コードを入力</a>
         <a href="/account/reset-password/">パスワードを忘れた方</a>
         <span>初めての方は <a href={authPath('/account/signup/', returnTo)} onClick={() => trackAnalyticsEvent('signup_cta_click')}>無料会員登録</a></span>
       </div>
@@ -308,22 +310,21 @@ function VerifyPage({ session }) {
       return
     }
 
-    setSubmitting(true)
-    const { error } = await supabase.auth.verifyOtp({
-      email: email.trim(),
-      token: otp.trim(),
-      type: 'signup',
+    await runAuthAction({
+      action: 'verify',
+      setSubmitting,
+      setErrorMessage,
+      request: () => supabase.auth.verifyOtp({
+        email: email.trim(),
+        token: otp.trim(),
+        type: 'signup',
+      }),
+      onSuccess: () => {
+        clearVerificationEmail()
+        trackAnalyticsEvent('signup_verify_success')
+        window.location.assign(returnTo)
+      },
     })
-    setSubmitting(false)
-
-    if (error) {
-      setErrorMessage('認証コードを確認できませんでした。最新のメールに記載されたコードを入力してください。')
-      return
-    }
-
-    clearVerificationEmail()
-    trackAnalyticsEvent('signup_verify_success')
-    window.location.assign(returnTo)
   }
 
   return (
