@@ -3,13 +3,6 @@ import { GuardFactoryLineup } from './GuardFactoryProducts'
 import { guardFactoryProducts } from './guard-factory-products'
 import './parts-page.css'
 
-const developmentSteps = [
-  ['01', '採寸・設計', '実車を基準に取付位置、可動部、整備時のアクセスを確認します。'],
-  ['02', '試作', '切断・曲げ・溶接を行い、形状と取付方法を詰めます。'],
-  ['03', '実車確認', '走行前点検と干渉確認を重ね、必要な修正を反映します。'],
-  ['04', '製品情報公開', '適合、材質、重量、価格、納期、取付条件を製品ごとに案内します。'],
-]
-
 function PartsArrow() {
   return <span className="parts-arrow" aria-hidden="true">→</span>
 }
@@ -90,22 +83,6 @@ export default function PartsPage({ assetPath, basePath, contactUrl, officialXUr
       <section className="parts-products" id="parts-products" aria-label="Guard Factoryの全商品" tabIndex={-1}>
         <GuardFactoryLineup assetPath={assetPath} basePath={basePath} />
         <GuardFactoryLineup assetPath={assetPath} basePath={basePath} collection="f450gs" />
-      </section>
-
-      <section className="parts-development" aria-labelledby="parts-development-title">
-        <header className="parts-development__head reveal">
-          <p>DUST LINE GARAGE / DEVELOPMENT FLOW</p>
-          <h2 id="parts-development-title">売る前に、<br />実車で確かめる。</h2>
-        </header>
-        <ol className="parts-steps">
-          {developmentSteps.map(([number, title, text], index) => (
-            <li className="reveal" key={number} style={{ '--delay': `${index * 60}ms` }}>
-              <span>{number}</span>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </li>
-          ))}
-        </ol>
       </section>
 
       <section className="parts-craft" aria-labelledby="parts-craft-title">
