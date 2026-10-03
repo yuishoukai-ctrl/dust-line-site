@@ -22,15 +22,16 @@ function PendingPhoto() {
 
 export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel250' }) {
   const isCad = collection === 'f450gs'
+  const isFabrication = collection === 'fabrication'
   const products = guardFactoryProducts.filter((product) => product.collection === collection)
-  const sectionId = isCad ? 'lineup' : 'guard-factory'
+  const sectionId = isCad ? 'lineup' : isFabrication ? 'fabrication' : 'guard-factory'
   return (
     <section className={`gf-lineup${isCad ? ' gf-lineup--cad' : ''}`} id={sectionId} aria-labelledby={`${sectionId}-title`} tabIndex={-1}>
       <header className="gf-lineup__head reveal">
-        <div><p className="gf-eyebrow">GUARD FACTORY / {isCad ? 'BMW F 450 GS' : 'DJEBEL 250'}</p><h2 id={`${sectionId}-title`}>{isCad ? <>F 450 GSに、<br />4つのガード。</> : <>ジェベル250に、<br />{products.length}つのガード。</>}</h2></div>
+        <div><p className="gf-eyebrow">GUARD FACTORY / {isCad ? 'BMW F 450 GS' : isFabrication ? 'FABRICATION' : 'DJEBEL 250'}</p><h2 id={`${sectionId}-title`}>{isCad ? <>F 450 GSに、<br />4つのガード。</> : isFabrication ? <>足元を、<br />自分に合わせる。</> : <>ジェベル250に、<br />{products.length}つのガード。</>}</h2></div>
         <div className="gf-lineup__brand"><GuardFactoryLogo assetPath={assetPath} /><p>{isCad ? <>販売準備中の4商品を、実CADの画像で紹介。<br />価格・販売仕様・実車適合は確定後にご案内します。</> : <>ガードファクトリーの製品情報と実画像。<br />仕様・適合条件を、商品ごとにご案内します。</>}</p></div>
       </header>
-      <nav className="gf-lineup__navigation" aria-label={`${isCad ? 'BMW F 450 GS' : 'ジェベル250'}の商品一覧から移動`}>
+      <nav className="gf-lineup__navigation" aria-label={`${isCad ? 'BMW F 450 GS' : isFabrication ? '加工用パーツ' : 'ジェベル250'}の商品一覧から移動`}>
         <a href="#parts-models">車種を選び直す <span aria-hidden="true">↑</span></a>
         <a href="#parts-products">全{guardFactoryProducts.length}商品を見る <span aria-hidden="true">↑</span></a>
       </nav>
@@ -48,6 +49,7 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
               <p>{product.summary}</p>
               <div className="gf-card__foot"><p><strong>{product.priceLabel}</strong><span>{product.priceNote}</span></p><span className="gf-status">販売準備中</span></div>
               <a className="gf-text-link" href={guardFactoryProductPath(product.slug, basePath)}>{isCad ? 'CAD画像・開発情報を見る' : '仕様・商品情報を見る'} <span aria-hidden="true">→</span></a>
+              {product.service && <p className="gf-card__service">加工依頼：{product.service.priceLabel}<br />{product.service.includes}</p>}
             </div>
           </article>
         ))}
@@ -89,7 +91,9 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
     window.scrollTo(0, 0)
     return () => { document.title = previousTitle }
   }, [product])
-  const relatedProducts = guardFactoryProducts.filter((item) => item.slug !== slug && item.collection === product.collection)
+  const relatedProducts = product.collection === 'fabrication'
+    ? guardFactoryProducts.filter((item) => item.collection === 'djebel250')
+    : guardFactoryProducts.filter((item) => item.slug !== slug && item.collection === product.collection)
   return (
     <main className="gf-product-page" id="main">
       <div className="gf-product-shell">
@@ -105,6 +109,7 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
             <div className="gf-release"><span className="gf-status">販売準備中</span><p>販売開始日・在庫・納期は確認中です。<br />購入先は販売開始後にご案内します。</p></div>
             <a className="gf-button" href={contactUrl} target="_blank" rel="noreferrer">適合・販売について問い合わせる <span aria-hidden="true">↗</span><span className="gf-sr-only">（別タブで開きます）</span></a>
             <a className="gf-text-link" href="#gf-specifications">{product.development ? '開発情報と確認事項を見る' : '仕様と取付条件を確認する'} <span aria-hidden="true">↓</span></a>
+            {product.service && <a className="gf-text-link" href="#gf-fabrication-service">溶接・塗装まで依頼する <span aria-hidden="true">↓</span></a>}
           </div>
         </section>
       </div>
@@ -116,12 +121,16 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
           <div><dt>仕上げ</dt><dd>{product.finish}</dd></div>
           <div><dt>商品構成</dt><dd>{product.configuration}</dd></div>
           <div><dt>同梱品</dt><dd>{product.included}</dd></div>
-          <div><dt>重量・寸法</dt><dd>確認中</dd></div>
+          <div><dt>重量・寸法</dt><dd>{product.dimensions || '確認中'}</dd></div>
           <div><dt>在庫・納期</dt><dd>確認中</dd></div>
           <div><dt>保証・返品条件</dt><dd>確認中。販売開始前にご案内します。</dd></div>
         </dl>
       </section>
-      <aside className="gf-related" aria-labelledby="gf-related-title"><div><p className="gf-eyebrow">ALSO FROM GUARD FACTORY</p><h2 id="gf-related-title">{product.development ? 'F 450 GSのガード。' : 'ジェベル250のガード。'}</h2><ul>{relatedProducts.map((related) => <li key={related.slug}><a className="gf-text-link" href={guardFactoryProductPath(related.slug, basePath)}>{related.name} <span aria-hidden="true">→</span></a></li>)}</ul></div><a className="gf-text-link" href={`${basePath}parts/#${product.development ? 'lineup' : 'guard-factory'}`}>Partsの製品一覧へ戻る <span aria-hidden="true">→</span></a></aside>
+      {product.service && <section className="gf-fabrication-service" id="gf-fabrication-service" aria-labelledby="gf-service-title">
+        <div><p className="gf-eyebrow">DUST LINE GARAGE / WIDE STEP SERVICE</p><h2 id="gf-service-title">溶接から塗装まで、<br />加工を依頼する。</h2><p>{product.service.description}</p></div>
+        <div><p className="gf-price"><strong>{product.service.priceLabel}</strong></p><p>{product.service.includes}</p><p>プレート単品の販売価格とは別の、左右の加工サービス料金です。</p><a className="gf-button" href={contactUrl} target="_blank" rel="noreferrer">ワイドステップ加工を相談する <span aria-hidden="true">↗</span><span className="gf-sr-only">（お問い合わせフォームを別タブで開きます）</span></a></div>
+      </section>}
+      <aside className="gf-related" aria-labelledby="gf-related-title"><div><p className="gf-eyebrow">ALSO FROM GUARD FACTORY</p><h2 id="gf-related-title">{product.development ? 'F 450 GSのガード。' : product.collection === 'fabrication' ? 'Guard Factoryの製品。' : 'ジェベル250のガード。'}</h2><ul>{relatedProducts.map((related) => <li key={related.slug}><a className="gf-text-link" href={guardFactoryProductPath(related.slug, basePath)}>{related.name} <span aria-hidden="true">→</span></a></li>)}</ul></div><a className="gf-text-link" href={`${basePath}parts/#${product.development ? 'lineup' : product.collection === 'fabrication' ? 'fabrication' : 'guard-factory'}`}>Partsの製品一覧へ戻る <span aria-hidden="true">→</span></a></aside>
     </main>
   )
 }
