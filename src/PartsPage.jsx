@@ -11,6 +11,7 @@ function PartsModelChooser() {
   const models = [
     { collection: 'djebel250', label: 'ジェベル250', english: 'DJEBEL 250', href: '#guard-factory', state: '販売準備中' },
     { collection: 'f450gs', label: 'BMW F 450 GS', english: 'BMW F 450 GS', href: '#lineup', state: 'CAD開発画像・販売準備中' },
+    { collection: 'fabrication', label: '加工用パーツ', english: 'FABRICATION', href: '#fabrication', state: '溶接加工素材・加工依頼受付' },
   ]
   return (
     <section className="parts-models" id="parts-models" aria-labelledby="parts-models-title" tabIndex={-1}>
@@ -56,7 +57,7 @@ export default function PartsPage({ assetPath, basePath, contactUrl, officialXUr
           <h1 id="parts-title">走るための<br />部品を、<br className="parts-mobile-break" />つくる。</h1>
           <p className="parts-hero__lead">
             旅と整備の現場で感じた「ここに必要」を、形にする。Guard Factoryのジェベル250用ガード3点と、
-            BMW F 450 GS向けガード4点のCAD開発画像を紹介します。
+            BMW F 450 GS向けガード4点のCAD開発画像、ワイドステップ加工用プレートを紹介します。
           </p>
           <a className="parts-button parts-button--accent" href="#parts-models">車種から選ぶ <PartsArrow /></a>
           <a className="parts-text-link parts-hero__development-link" href="#lineup">BMW F 450 GSの4商品を見る <PartsArrow /></a>
@@ -83,6 +84,7 @@ export default function PartsPage({ assetPath, basePath, contactUrl, officialXUr
       <section className="parts-products" id="parts-products" aria-label="Guard Factoryの全商品" tabIndex={-1}>
         <GuardFactoryLineup assetPath={assetPath} basePath={basePath} />
         <GuardFactoryLineup assetPath={assetPath} basePath={basePath} collection="f450gs" />
+        <GuardFactoryLineup assetPath={assetPath} basePath={basePath} collection="fabrication" />
       </section>
 
       <section className="parts-craft" aria-labelledby="parts-craft-title">

@@ -49,7 +49,7 @@ const routes = [
     path: '/parts/',
     source: '/?page=parts',
     title: 'Guard Factory・オリジナル部品｜DUST LINE Parts',
-    description: 'Guard Factoryのジェベル250用ガード3商品と、BMW F 450 GS向けウインカー・リアマスターシリンダー・ブレーキホース・ラジエーターガード4商品のCAD開発画像を紹介。販売準備中。',
+    description: 'Guard Factoryのジェベル250用ガード、BMW F 450 GSのCAD開発画像、ワイドステップ加工用プレートを紹介。プレート2,480円、左右の溶接・パウダーコート加工は12,000円でご相談を受け付けます。',
     image: '/images/parts/guard-factory/djebel250-frame-installed-1280.webp',
     imageAlt: 'Guard Factoryのジェベル250用ガードの装着例',
     schemaType: 'CollectionPage',
