@@ -34,7 +34,7 @@ function authState(action, request, onSuccess = () => {}) {
   }
 }
 
-for (const action of ['signup', 'verify']) {
+for (const action of ['signup', 'verify', 'resend']) {
   test(`${action}: success waits for the request and always releases loading`, async () => {
     let completeRequest
     let requestCount = 0
@@ -92,6 +92,39 @@ for (const action of ['signup', 'verify']) {
     assert.ok(fixture.state.errorMessage)
     assert.ok(!fixture.state.errorMessage.includes('private client details'))
     assert.deepEqual(fixture.state.loadingChanges, [true, false])
+  })
+
+  test(`${action}: a stalled request releases the button without automatic retry or late navigation`, async () => {
+    let finishRequest
+    let requestCount = 0
+    const fixture = authState(action, () => {
+      requestCount += 1
+      return new Promise((resolve) => { finishRequest = resolve })
+    })
+    fixture.options.timeoutMs = 10
+    assert.equal(await runAuthAction(fixture.options), false)
+    assert.equal(fixture.state.submitting, false)
+    assert.equal(requestCount, 1)
+    assert.equal(fixture.state.successCount, 0)
+    assert.match(fixture.state.errorMessage, /処理結果を確認できません/)
+    assert.deepEqual(fixture.state.loadingChanges, [true, false])
+    finishRequest({ data: { session: null }, error: null })
+    await Promise.resolve()
+    assert.equal(fixture.state.successCount, 0)
+    assert.equal(requestCount, 1)
+  })
+
+  test(`${action}: a late rejection after timeout cannot replace the recovery message`, async () => {
+    let failRequest
+    const fixture = authState(action, () => new Promise((_resolve, reject) => { failRequest = reject }))
+    fixture.options.timeoutMs = 10
+    assert.equal(await runAuthAction(fixture.options), false)
+    const message = fixture.state.errorMessage
+    failRequest(new Error('private late failure'))
+    await Promise.resolve()
+    assert.equal(fixture.state.errorMessage, message)
+    assert.equal(fixture.state.submitting, false)
+    assert.equal(fixture.state.successCount, 0)
   })
 }
 
@@ -264,7 +297,7 @@ test('actual signup and login markup always exposes verification recovery withou
     context.window.location.search = `?returnTo=${encodeURIComponent(returnTo)}`
     for (const component of [module.namespace.SignupPage, module.namespace.LoginPage]) {
       const html = renderToStaticMarkup(React.createElement(component, { session: null }))
-      const recovery = html.match(/href="([^"]+)"[^>]*>確認メールが届いている方：6桁コードを入力<\/a>/)
+      const recovery = html.match(/href="([^"]+)"[^>]*>確認メールが届かない／6桁コードを入力<\/a>/)
       assert.ok(recovery)
       const url = new URL(recovery[1], 'https://example.invalid')
       assert.equal(url.pathname, '/account/verify/')
@@ -275,4 +308,7 @@ test('actual signup and login markup always exposes verification recovery withou
   const verifyHtml = renderToStaticMarkup(React.createElement(module.namespace.VerifyPage, { session: null }))
   assert.match(verifyHtml, /type="email"/)
   assert.match(verifyHtml, /6桁の認証コード/)
+  assert.match(verifyHtml, /type="button"[^>]*>確認メールを再送する/)
+  assert.match(verifyHtml, /no-reply@auth\.dustline\.jp/)
+  assert.match(verifyHtml, /mailto:contact@dustline\.jp/)
 })

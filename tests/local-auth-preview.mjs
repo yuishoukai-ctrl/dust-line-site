@@ -33,8 +33,9 @@ const bootstrap = `
     return values.includes(candidate) ? candidate : fallback;
   };
   const settings = {
-    qaSignup: choice('qaSignup', ['success', 'session', 'error', 'throw'], 'success'),
-    qaVerify: choice('qaVerify', ['success', 'error', 'throw'], 'success'),
+    qaSignup: choice('qaSignup', ['success', 'session', 'error', 'throw', 'hang'], 'success'),
+    qaVerify: choice('qaVerify', ['success', 'error', 'throw', 'hang'], 'success'),
+    qaResend: choice('qaResend', ['success', 'error', 'throw', 'rate-limit', 'hang'], 'success'),
     qaAnalytics: choice('qaAnalytics', ['ok', 'throw', 'throw-event'], 'ok'),
     qaStorage: choice('qaStorage', ['available', 'unavailable'], 'available'),
     qaConsent: choice('qaConsent', ['granted', 'denied', 'unset'], params.get('qaAnalytics')?.startsWith('throw') ? 'granted' : 'denied'),

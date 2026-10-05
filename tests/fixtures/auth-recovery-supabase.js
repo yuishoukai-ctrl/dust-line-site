@@ -30,6 +30,7 @@ const setSession = (nextSession) => {
 }
 const resultFor = (method, mode) => {
   record(method, mode)
+  if (mode === 'hang') return new Promise(() => {})
   if (mode === 'throw') throw new Error(`LOCAL QA simulated ${method} exception`)
   if (mode === 'error') {
     return { data: { user: null, session: null }, error: new Error(`LOCAL QA simulated ${method} returned error`) }
@@ -63,6 +64,18 @@ export const supabase = {
       const session = { user: { ...testUser } }
       setSession(session)
       return { data: { user: { ...testUser }, session }, error: null }
+    },
+    async resend({ type, email, options }) {
+      const redirect = new URL(options?.emailRedirectTo)
+      const returnTo = new URLSearchParams(window.location.search).get('returnTo') || '/library/'
+      if (type !== 'signup' || email !== 'reader@example.invalid' || redirect.pathname !== '/account/verify/' || redirect.searchParams.get('returnTo') !== returnTo) {
+        throw new Error('LOCAL QA resend must use signup confirmation and preserve the selected issue')
+      }
+      const mode = settings().qaResend || 'success'
+      const failure = resultFor('resend', mode)
+      if (failure) return failure
+      if (mode === 'rate-limit') return { data: null, error: { status: 429, code: 'over_request_rate_limit' } }
+      return { data: {}, error: null }
     },
     async signInWithPassword() {
       record('signInWithPassword', 'success')
