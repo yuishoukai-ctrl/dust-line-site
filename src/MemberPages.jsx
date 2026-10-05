@@ -229,7 +229,7 @@ function SignupPage({ session }) {
         </button>
       </form>
 
-      <p className="member-switch"><a href={authPath('/account/verify/', returnTo)} onClick={() => storeVerificationEmail(email)}>確認メールが届いている方：6桁コードを入力</a></p>
+      <p className="member-switch"><a href={authPath('/account/verify/', returnTo)} onClick={() => storeVerificationEmail(email)}>確認メールが届かない／6桁コードを入力</a></p>
       <p className="member-switch">登録済みの方は <a href={authPath('/account/login/', returnTo)}>会員ログイン</a></p>
     </section>
   )
@@ -286,7 +286,7 @@ function LoginPage({ session }) {
         </button>
       </form>
       <div className="member-switch member-switch--stack">
-        <a href={authPath('/account/verify/', returnTo)} onClick={() => storeVerificationEmail(email)}>確認メールが届いている方：6桁コードを入力</a>
+        <a href={authPath('/account/verify/', returnTo)} onClick={() => storeVerificationEmail(email)}>確認メールが届かない／6桁コードを入力</a>
         <a href="/account/reset-password/">パスワードを忘れた方</a>
         <span>初めての方は <a href={authPath('/account/signup/', returnTo)} onClick={() => trackAnalyticsEvent('signup_cta_click')}>無料会員登録</a></span>
       </div>
@@ -300,10 +300,53 @@ function VerifyPage({ session }) {
   const [otp, setOtp] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [resending, setResending] = useState(false)
+  const [resendSeconds, setResendSeconds] = useState(0)
+  const [resendMessage, setResendMessage] = useState('')
+
+  useEffect(() => {
+    if (resendSeconds <= 0) return undefined
+    const timer = window.setTimeout(() => setResendSeconds((seconds) => Math.max(0, seconds - 1)), 1000)
+    return () => window.clearTimeout(timer)
+  }, [resendSeconds])
+
+  const handleResend = async () => {
+    if (submitting || resending || resendSeconds > 0) return
+    setErrorMessage('')
+    setResendMessage('')
+    const confirmationEmail = email.trim()
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(confirmationEmail)) {
+      setErrorMessage('登録に使ったメールアドレスを入力してください。')
+      return
+    }
+
+    await runAuthAction({
+      action: 'resend',
+      setSubmitting: setResending,
+      setErrorMessage,
+      request: async () => {
+        const result = await supabase.auth.resend({
+          type: 'signup',
+          email: confirmationEmail,
+          options: { emailRedirectTo: `${window.location.origin}${authPath('/account/verify/', returnTo)}` },
+        })
+        if (result.error?.status === 429) setResendSeconds(60)
+        return result
+      },
+      onSuccess: () => {
+        storeVerificationEmail(confirmationEmail)
+        setOtp('')
+        setResendSeconds(60)
+        setResendMessage('再送を受け付けました。登録がメール確認待ちの場合は、確認メールが届きます。最新のメールに記載されたコードを入力してください。確認済みの方は会員ログインへ進んでください。')
+      },
+    })
+  }
 
   const handleOtpSubmit = async (event) => {
     event.preventDefault()
+    if (submitting || resending) return
     setErrorMessage('')
+    setResendMessage('')
 
     if (!/^\d{6}$/.test(otp.trim())) {
       setErrorMessage('認証コードは6桁の数字で入力してください。')
@@ -357,9 +400,19 @@ function VerifyPage({ session }) {
             />
           </label>
           {errorMessage && <p className="member-message member-message--error" role="alert">{errorMessage}</p>}
-          <button className="member-button member-button--accent" type="submit" disabled={submitting || !email.trim()}>
+          {resendMessage && <p className="member-message member-message--success" role="status">{resendMessage}</p>}
+          <button className="member-button member-button--accent" type="submit" disabled={submitting || resending || !email.trim()}>
             {submitting ? '確認しています…' : '登録を完了する'} {!submitting && <Arrow />}
           </button>
+          <section aria-labelledby="verification-help-title">
+            <h3 id="verification-help-title">確認メールが届かない場合</h3>
+            <p>迷惑メール・プロモーションフォルダと、メールアドレスの入力間違いをご確認ください。携帯メールなどで受信を制限している場合は、no-reply@auth.dustline.jp からのメールを受け取れるよう設定してください。</p>
+            <p>登録したメールアドレスを上の欄に入力し、最後の送信から少なくとも60秒あけて再送してください。</p>
+            <button className="member-button member-button--outline" type="button" onClick={handleResend} disabled={submitting || resending || resendSeconds > 0}>
+              {resending ? '再送しています…' : resendSeconds > 0 ? `再送まであと${resendSeconds}秒` : '確認メールを再送する'}
+            </button>
+            <p>登録をまだ送信していない方は登録画面へ、メール確認済みの方は <a href={authPath('/account/login/', returnTo)}>会員ログイン</a> へ進んでください。届かない場合は <a href="mailto:contact@dustline.jp">編集部へお問い合わせください</a>。</p>
+          </section>
           <a className="member-button member-button--outline" href={authPath('/account/signup/', returnTo)}>登録画面へ戻る</a>
         </form>
       )}
