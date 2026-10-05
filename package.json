@@ -18,5 +18,9 @@
     "react": "latest",
     "react-dom": "latest",
     "vite": "latest"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "stripe": "23.0.0"
   }
 }

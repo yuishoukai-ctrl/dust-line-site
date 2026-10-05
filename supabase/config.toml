@@ -1,1 +1,9 @@
 project_id = "vndhldmmhvmpqvaizqci"
+
+[functions.issue-checkout]
+# User identity is verified server-side with Auth.getUser(token).
+verify_jwt = false
+
+[functions.stripe-issue-webhook]
+# Stripe cannot send a Supabase JWT. Raw-body signature validation is mandatory.
+verify_jwt = false

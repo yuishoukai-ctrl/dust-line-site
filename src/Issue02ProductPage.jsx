@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { trackAnalyticsEvent } from './lib/analytics'
 import './issue-product.css'
+import IssueCheckout, { issuePaymentsEnabled } from './IssueCheckout'
 
 function Arrow() {
   return (
@@ -80,7 +81,7 @@ export default function Issue02ProductPage({
           </dl>
 
           <div className="issue-product__actions">
-            <button type="button" disabled>現在は購入できません</button>
+            {issuePaymentsEnabled ? <IssueCheckout /> : <button type="button" disabled>現在は購入できません</button>}
             <a href={signupPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>無料会員登録 <Arrow /></a>
           </div>
           <p className="issue-product__purchase-note">

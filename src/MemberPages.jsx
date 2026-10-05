@@ -15,6 +15,8 @@ import { safeLocalReturnPath, authPath } from './lib/member-navigation'
 import { loadIssuePdf } from './lib/issue-reader'
 import PdfMagazineViewer from './PdfMagazineViewer'
 import './member-pages.css'
+import { issuePaymentsEnabled } from './IssueCheckout'
+import { loadPaidIssueMetadata, loadPurchasedIssues } from './lib/issue-checkout'
 
 const pageTitles = {
   signup: '無料会員登録｜DUST LINE',
@@ -503,6 +505,14 @@ function ResetPasswordPage({ session }) {
 
 function LibraryPage({ session, assetPath }) {
   const [signingOut, setSigningOut] = useState(false)
+  const [purchased, setPurchased] = useState([])
+  const [purchaseError, setPurchaseError] = useState(false)
+  useEffect(() => {
+    if (!issuePaymentsEnabled || !session?.user?.id) return undefined
+    let active = true
+    loadPurchasedIssues(supabase,session.user.id).then(data => { if (active) { setPurchased(data); setPurchaseError(false) } }).catch(() => { if (active) setPurchaseError(true) })
+    return () => { active=false }
+  },[session?.user?.id])
   if (!session) return <AuthRequired returnPath="/library/" />
 
   const signOut = async () => {
@@ -522,10 +532,11 @@ function LibraryPage({ session, assetPath }) {
         </div>
         <button className="member-signout" type="button" onClick={signOut} disabled={signingOut}>{signingOut ? 'ログアウト中…' : 'ログアウト'}</button>
       </header>
-      {issues.map((issue) => (
+      {purchaseError && <p role="alert">購入した号を確認できませんでした。時間を置いてこのページを開き直してください。</p>}
+      {[...issues,...purchased.filter(p => !issues.some(i => i.slug === p.slug))].map((issue) => (
         <article className="member-issue-card" key={issue.slug}>
           <figure>
-            <img src={assetPath(issue.coverImage)} alt={`${issue.title}の表紙`} />
+            {issue.coverImage ? <img src={assetPath(issue.coverImage)} alt={`${issue.title}の表紙`} /> : <div className="member-paid-cover"><strong>DUST LINE</strong><span>{issue.issueNumber}</span></div>}
             <figcaption>{issue.publicationStatus === 'published' ? '公開中' : issue.statusLabel}</figcaption>
           </figure>
           <div className="member-issue-card__copy">
@@ -662,8 +673,19 @@ function IssueReaderPage({ session, issue }) {
 }
 
 export default function MemberPage({ view, assetPath, issueSlug }) {
-  const issue = view === 'issue' ? getIssue(issueSlug) : null
+  const staticIssue = view === 'issue' ? getIssue(issueSlug) : null
+  const [paidIssue, setPaidIssue] = useState(null)
+  const [paidIssueLoading, setPaidIssueLoading] = useState(false)
+  const issue = staticIssue ?? (paidIssue?.slug === issueSlug ? paidIssue : null)
   const { session, loading } = useAuthSession()
+
+  useEffect(() => {
+    if (view !== 'issue' || staticIssue || !issuePaymentsEnabled || !supabase) return undefined
+    let active=true
+    setPaidIssueLoading(true)
+    loadPaidIssueMetadata(supabase,issueSlug).then(data => { if(active) setPaidIssue(data) }).catch(() => { if(active) setPaidIssue(null) }).finally(() => { if(active) setPaidIssueLoading(false) })
+    return () => { active=false }
+  },[view,staticIssue,issueSlug])
 
   useEffect(() => {
     const previousTitle = document.title
@@ -675,7 +697,8 @@ export default function MemberPage({ view, assetPath, issueSlug }) {
   }, [view, issue])
 
   let content
-  if (view === 'issue' && !issue) content = <IssueNotFound />
+  if (paidIssueLoading) content = <LoadingPanel />
+  else if (view === 'issue' && !issue) content = <IssueNotFound />
   else if (!isSupabaseConfigured) content = <SetupNotice />
   else if (loading) content = <LoadingPanel />
   else if (view === 'signup') content = <SignupPage session={session} />

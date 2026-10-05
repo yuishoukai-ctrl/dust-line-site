@@ -191,8 +191,8 @@
   margin-top: 28px;
 }
 
-.issue-product__actions button,
-.issue-product__actions a,
+.issue-product__actions > button,
+.issue-product__actions > a,
 .issue-product__primary-link {
   display: inline-flex;
   min-height: 52px;
@@ -205,20 +205,20 @@
   letter-spacing: .11em;
 }
 
-.issue-product__actions button {
+.issue-product__actions > button {
   color: rgba(240, 236, 223, .58);
   background: #2c3032;
   cursor: not-allowed;
 }
 
-.issue-product__actions a,
+.issue-product__actions > a,
 .issue-product__primary-link {
   color: #fff8ed;
   background: var(--accent);
   transition: background .25s, transform .25s;
 }
 
-.issue-product__actions a:hover,
+.issue-product__actions > a:hover,
 .issue-product__primary-link:hover {
   background: #bd5428;
   transform: translateY(-2px);
@@ -522,8 +522,8 @@
     flex-direction: column;
   }
 
-  .issue-product__actions button,
-  .issue-product__actions a {
+  .issue-product__actions > button,
+  .issue-product__actions > a {
     width: 100%;
   }
 
