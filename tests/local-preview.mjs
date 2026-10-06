@@ -13,12 +13,15 @@ const pdfPath = process.argv[2] && resolve(process.argv[2])
 if (!pdfPath || !statSync(pdfPath).isFile()) throw new Error('Pass a local review PDF path.')
 const mock = resolve(root, 'tests/fixtures/local-supabase.js')
 const slowRender = process.argv.includes('--slow-render')
+const portArgument = process.argv.find(argument => argument.startsWith('--port='))
+const port = Number(portArgument?.slice('--port='.length) || 4174)
+if (!Number.isInteger(port) || port < 1024 || port > 65535) throw new Error('Use a valid local preview port.')
 const server = await createServer({
   configFile: false,
   root,
   envDir: false,
-  server: { host: '127.0.0.1', port: 4174, strictPort: true },
-  define: { 'import.meta.env.VITE_GA4_MEASUREMENT_ID': '""' },
+  server: { host: '127.0.0.1', port, strictPort: true },
+  define: { 'import.meta.env.VITE_GA4_MEASUREMENT_ID': '""', 'import.meta.env.VITE_ISSUE_PAYMENTS_ENABLED': '"false"' },
   plugins: [
     {
       name: 'local-issn-qa', enforce: 'pre',
@@ -46,4 +49,4 @@ const server = await createServer({
   ],
 })
 await server.listen()
-console.log('Local ISSN QA: http://127.0.0.1:4174/offroad-bike-magazine/')
+console.log(`Local ISSN QA: http://127.0.0.1:${port}/offroad-bike-magazine/`)

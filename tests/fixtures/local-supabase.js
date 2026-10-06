@@ -23,11 +23,16 @@ export const supabase = {
     },
     async signOut() { sessionStorage.removeItem(key); return {} },
   },
-  from() { return { select() { return { eq(_field, slug) { return {
-    async maybeSingle() {
-      return { data: { id: slug, status: 'published', storage_path: `${slug}/local-only.pdf` } }
-    },
-  } } } } } },
+  from(table) {
+    const issue = slug => ({ id: slug, issue_number: slug === 'issue-02' ? 2 : 1, title: `DUST LINE ${slug === 'issue-02' ? '第2号（ローカル検証）' : '創刊号'}`, subtitle: '架空の購入済み号・本番データではありません', price_jpy: slug === 'issue-02' ? 1480 : 0, published_at: '2026-10-06T00:00:00Z', status: 'published', storage_path: `${slug}/local-only.pdf` })
+    if (table === 'entitlements') return { select() { return { eq(_field, owner) { return {
+      async eq() { return { data: owner === user()?.id ? [{ issue_id: 'issue-02', expires_at: null }] : [], error: null } },
+    } } } } }
+    return { select() { return {
+      eq(_field, slug) { return { async maybeSingle() { return { data: issue(slug), error: null } } } },
+      async in(_field, slugs) { return { data: slugs.map(issue), error: null } },
+    } } }
+  },
   storage: { from() { return {
     async createSignedUrl() {
       if (user()?.email.startsWith('denied@')) return { data: null, error: new Error('Local simulated storage denial') }

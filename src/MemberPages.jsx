@@ -15,7 +15,6 @@ import { safeLocalReturnPath, authPath } from './lib/member-navigation'
 import { loadIssuePdf } from './lib/issue-reader'
 import PdfMagazineViewer from './PdfMagazineViewer'
 import './member-pages.css'
-import { issuePaymentsEnabled } from './IssueCheckout'
 import { loadPaidIssueMetadata, loadPurchasedIssues } from './lib/issue-checkout'
 
 const pageTitles = {
@@ -508,7 +507,9 @@ function LibraryPage({ session, assetPath }) {
   const [purchased, setPurchased] = useState([])
   const [purchaseError, setPurchaseError] = useState(false)
   useEffect(() => {
-    if (!issuePaymentsEnabled || !session?.user?.id) return undefined
+    setPurchased([])
+    setPurchaseError(false)
+    if (!session?.user?.id || !supabase) return undefined
     let active = true
     loadPurchasedIssues(supabase,session.user.id).then(data => { if (active) { setPurchased(data); setPurchaseError(false) } }).catch(() => { if (active) setPurchaseError(true) })
     return () => { active=false }
@@ -675,17 +676,17 @@ function IssueReaderPage({ session, issue }) {
 export default function MemberPage({ view, assetPath, issueSlug }) {
   const staticIssue = view === 'issue' ? getIssue(issueSlug) : null
   const [paidIssue, setPaidIssue] = useState(null)
-  const [paidIssueLoading, setPaidIssueLoading] = useState(false)
+  const [paidIssueLoading, setPaidIssueLoading] = useState(view === 'issue' && !staticIssue && Boolean(supabase))
   const issue = staticIssue ?? (paidIssue?.slug === issueSlug ? paidIssue : null)
   const { session, loading } = useAuthSession()
 
   useEffect(() => {
-    if (view !== 'issue' || staticIssue || !issuePaymentsEnabled || !supabase) return undefined
+    if (view !== 'issue' || staticIssue || !supabase) return undefined
     let active=true
     setPaidIssueLoading(true)
     loadPaidIssueMetadata(supabase,issueSlug).then(data => { if(active) setPaidIssue(data) }).catch(() => { if(active) setPaidIssue(null) }).finally(() => { if(active) setPaidIssueLoading(false) })
     return () => { active=false }
-  },[view,staticIssue,issueSlug])
+  },[view,staticIssue,issueSlug,session?.user?.id])
 
   useEffect(() => {
     const previousTitle = document.title

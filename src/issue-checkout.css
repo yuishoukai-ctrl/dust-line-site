@@ -4,4 +4,3 @@
 .issue-checkout button{min-height:48px;width:100%;margin:.5rem 0;background:#a23b23!important;color:#fff!important;border:0;padding:.8rem;font-size:1rem;cursor:pointer}
 .issue-checkout button:disabled{background:#726e64!important;cursor:default}.issue-checkout button:focus-visible,.issue-checkout a:focus-visible{outline:3px solid #314d43;outline-offset:4px}
 .issue-checkout nav{display:flex;gap:.75rem;flex-wrap:wrap;border-top:1px solid #b8ac95;padding-top:1rem;margin-top:1rem}.issue-checkout__error{color:#922515!important;font-weight:600}.issue-checkout__test{font-weight:600;color:#314d43}
-.member-paid-cover{aspect-ratio:210/297;display:grid;place-content:center;background:#24251f;color:#f5f1e6;gap:1rem;text-align:center;font-size:1.5rem;padding:1rem}

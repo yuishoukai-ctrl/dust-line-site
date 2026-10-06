@@ -39,6 +39,7 @@ export default function IssueCheckout() {
   }, [returned, orderId])
 
   const purchase = async () => {
+    if (!issuePaymentsEnabled) { setError('SALES_CLOSED'); return }
     setBusy(true); setError('')
     try {
       const data = await callIssueCheckout(supabase, { action: 'checkout', issue_id: 'issue-02' })
@@ -68,9 +69,19 @@ export default function IssueCheckout() {
       ) : (
         <>
           {cancelled && <p role="status">決済画面から戻りました。購入済みか不明な場合は、先にマイライブラリをご確認ください。</p>}
-          <label><input type="checkbox" checked={confirmed} onChange={event => setConfirmed(event.target.checked)} />対象号・税込価格・単品購入と提供条件を確認しました。</label>
-          <button type="button" disabled={!confirmed || busy} onClick={purchase}>{busy ? '決済画面を準備中…' : '1,480円で購入手続きへ'}</button>
-          <p>支払いはStripeの画面で行います。DUST LINE会員ログインとメール確認が必要です。</p>
+          {issuePaymentsEnabled ? (
+            <>
+              <label><input type="checkbox" checked={confirmed} onChange={event => setConfirmed(event.target.checked)} />対象号・税込価格・単品購入と提供条件を確認しました。</label>
+              <button type="button" disabled={!confirmed || busy} onClick={purchase}>{busy ? '決済画面を準備中…' : '1,480円で購入手続きへ'}</button>
+              <p>支払いはStripeの画面で行います。DUST LINE会員ログインとメール確認が必要です。</p>
+            </>
+          ) : (
+            <>
+              <button type="button" disabled>現在は購入できません</button>
+              <p>販売開始の案内をお待ちください。</p>
+              <a href="/library/">マイライブラリへ</a>
+            </>
+          )}
         </>
       )}
       {error && <p className="issue-checkout__error" role="alert">{checkoutMessages[error] ?? checkoutMessages.UNAVAILABLE}</p>}
