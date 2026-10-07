@@ -1,0 +1,11 @@
+/account/*
+  Cache-Control: no-store
+
+/library/*
+  Cache-Control: no-store
+
+/issues/*
+  Cache-Control: no-store
+
+/magazine/issue-02/*
+  Cache-Control: no-store

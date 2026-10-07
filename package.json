@@ -9,7 +9,9 @@
     "build": "vite build && npm run prerender",
     "build:spa": "vite build",
     "prerender": "node scripts/prerender.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check:cloudflare": "node scripts/check-cloudflare-assets.mjs",
+    "preview:cloudflare": "wrangler dev --local --port 4191"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",
@@ -21,6 +23,11 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.8",
-    "stripe": "23.0.0"
+    "stripe": "23.0.0",
+    "wrangler": "4.148.0"
+  },
+  "overrides": {
+    "sharp": "0.35.5",
+    "source-map-js": "1.2.2"
   }
 }

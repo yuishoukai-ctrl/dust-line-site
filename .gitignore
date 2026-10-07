@@ -6,4 +6,5 @@ dist
 !.env.example
 qa/
 supabase/.temp/
+.wrangler/
 
