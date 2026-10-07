@@ -33,13 +33,13 @@ Required GitHub Actions secrets:
 - New: `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`.
 - Existing optional variable: `VITE_GA4_MEASUREMENT_ID`.
 
-Use an account-scoped token with **Workers Scripts: Edit** for the intended Cloudflare account. Do not grant all-account, DNS, billing, database or Supabase access. The owner creates the token and stores it directly in this repository's Actions secrets; never put it in chat, source, reports or the company ledger. Review any additional permission request before accepting it.
+Prefer an account-owned token scoped to **Specified Workers → dust-line-site → Individual Workers Editor**. This is the narrowly scoped policy prepared in the Cloudflare dashboard. Do not grant all-account, DNS, billing, database or Supabase access. The owner creates the token and stores it directly in this repository's Actions secrets; never put it in chat, source, reports or the company ledger. Verify an actual deployment with this token before calling CI complete; review any additional permission request before accepting it.
 
 `VITE_ISSUE_PAYMENTS_ENABLED` is explicitly `false` in this workflow. Enabling sales is a separate, reviewed change after catalogue/content, Stripe readiness and paid-access checks.
 
 ## Domain cutover gate
 
-1. Export the complete current DNS zone from the domain/DNS manager. Public DNS observations are only a partial backup, not a complete zone export.
+1. Export the complete current DNS zone from **シンドメイン / シンクラウドアカウント**, the contract service confirmed by the owner on 2026-10-07. Official login guide: https://www.shin-domain.jp/support/manual/man_tool_info.php . Public DNS observations are only a partial backup, not a complete zone export. Do not infer the contract provider from `ns*.wpx.ne.jp` or direct the owner to the XServer account portal on that basis.
 2. Add `dustline.jp` to the intended Cloudflare account with the Free plan. Review all imported records, including MX, SPF, DKIM, DMARC, Resend and domain-verification records. Mail records must remain DNS-only.
 3. Verify the Cloudflare URL on desktop and mobile. Check directory redirects, account forms, sales-OFF UI and unauthenticated reader protection. Existing-account login can be tested on that URL; signup/reset email callbacks need approved redirect URLs or testing on the final canonical domain.
 4. Record the actual assigned Cloudflare nameservers and the old zone/nameservers. Confirm the final DNS cutover scope before changing the registrar's nameservers.
