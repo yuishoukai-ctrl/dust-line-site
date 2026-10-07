@@ -5,7 +5,7 @@ export function safeLocalReturnPath(candidate, origin, fallback = '/library/') {
     const url = new URL(candidate, origin)
     if (url.origin !== origin || url.username || url.password) return fallback
     const path = `${url.pathname.replace(/\/+$/, '')}/`
-    if (path !== '/library/' && !/^\/issues\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(path)) return fallback
+    if (path !== '/library/' && path !== '/magazine/issue-02/' && !/^\/issues\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(path)) return fallback
     return path
   } catch {
     return fallback

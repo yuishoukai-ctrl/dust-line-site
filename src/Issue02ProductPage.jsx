@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { trackAnalyticsEvent } from './lib/analytics'
 import './issue-product.css'
+import IssueCheckout from './IssueCheckout'
+import { authPath } from './lib/member-navigation'
 
 function Arrow() {
   return (
@@ -37,6 +39,7 @@ export default function Issue02ProductPage({
   digitalDeliveryPath = '/digital-delivery/',
   supportEmail = 'dustlineadv@gmail.com',
 }) {
+  const productSignupPath = authPath(signupPath, '/magazine/issue-02/')
   useEffect(() => {
     const previousTitle = document.title
     document.title = 'DUST LINE ISSUE 02｜商品情報・販売準備中'
@@ -80,8 +83,8 @@ export default function Issue02ProductPage({
           </dl>
 
           <div className="issue-product__actions">
-            <button type="button" disabled>現在は購入できません</button>
-            <a href={signupPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>無料会員登録 <Arrow /></a>
+            <IssueCheckout />
+            <a href={productSignupPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>無料会員登録 <Arrow /></a>
           </div>
           <p className="issue-product__purchase-note">
             現在は注文・決済を受け付けていません。販売開始前に、表紙、収録内容、公開日、購入ボタンを本ページへ表示します。
@@ -155,7 +158,7 @@ export default function Issue02ProductPage({
           <h2 id="issue-02-closing-title">第2号を待つあいだに、<br />創刊号を。</h2>
         </div>
         <div className="issue-product__closing-actions reveal">
-          <a className="issue-product__primary-link" href={signupPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>無料会員登録 <Arrow /></a>
+          <a className="issue-product__primary-link" href={productSignupPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>無料会員登録 <Arrow /></a>
           <a href={magazinePath}>DUST LINEについて <Arrow /></a>
           <a href={`mailto:${supportEmail}`}>商品について問い合わせる <Arrow /></a>
         </div>

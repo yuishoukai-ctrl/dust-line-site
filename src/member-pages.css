@@ -505,3 +505,4 @@
 @media (prefers-reduced-motion: reduce) {
   .member-spinner { animation: none; }
 }
+.member-paid-cover{aspect-ratio:210/297;display:grid;place-content:center;background:#24251f;color:#f5f1e6;gap:1rem;text-align:center;font-size:1.5rem;padding:1rem}

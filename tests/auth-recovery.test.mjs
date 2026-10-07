@@ -10,6 +10,7 @@ import * as authAction from '../src/lib/authAction.js'
 import * as verificationEmail from '../src/lib/verificationEmail.js'
 import * as memberContent from '../src/member-content.js'
 import * as memberNavigation from '../src/lib/member-navigation.js'
+import * as issueCheckout from '../src/lib/issue-checkout.js'
 
 const { getAuthErrorMessage, runAuthAction } = authAction
 const analyticsSource = await readFile(new URL('../src/lib/analytics.js', import.meta.url), 'utf8')
@@ -283,6 +284,8 @@ test('actual signup and login markup always exposes verification recovery withou
     './lib/issue-reader': { loadIssuePdf: () => {} },
     './PdfMagazineViewer': { default: () => null },
     './member-pages.css': {},
+    './IssueCheckout': { issuePaymentsEnabled: false },
+    './lib/issue-checkout': issueCheckout,
   }
   const module = new vm.SourceTextModule(transformed.code, { context })
   await module.link((specifier) => {

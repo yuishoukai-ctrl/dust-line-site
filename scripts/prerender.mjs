@@ -281,6 +281,17 @@ const routes = [
     robots: 'noindex,nofollow',
     expectedText: 'READ BEYOND',
   },
+  {
+    path: '/issues/issue-02/',
+    source: '/issues/issue-02/',
+    title: 'DUST LINE 第2号｜会員閲覧',
+    description: 'DUST LINE第2号の購入済み会員向け閲覧ページです。販売・配信は準備中です。',
+    image: '/og.png',
+    imageAlt: 'DUST LINE',
+    schemaType: 'WebPage',
+    robots: 'noindex,nofollow',
+    expectedText: 'READ BEYOND',
+  },
   ...issues.map((issue) => ({
     path: issue.readerPath,
     source: issue.readerPath,
