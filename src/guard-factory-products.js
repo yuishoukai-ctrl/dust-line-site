@@ -1,5 +1,5 @@
 // Facts: supplied Djebel250 manuscript and 商品台帳_v08.json (2026-09-30).
-// F 450 GS images: I05, P013 90-degree R02, B05 and R06 CAD archive (2026-09-30).
+// F 450 GS: indicator/hose CAD archive (2026-09-30); master/radiator real photos (2026-10-13).
 // CAD parameters and supplier quotes are not confirmed retail specifications or prices.
 const djebelDetails = {
   collection: 'djebel250',
@@ -15,6 +15,7 @@ const f450Details = {
   collection: 'f450gs',
   modelLabel: 'BMW F 450 GS向け',
   development: true,
+  imageKind: 'cad',
   priceLabel: '価格未定',
   priceNote: '決定後にご案内します',
   fitment: 'BMW F 450 GS（開発対象）',
@@ -148,13 +149,16 @@ export const guardFactoryProducts = [
     shortName: 'リアマスターシリンダーガード',
     headingParts: ['リアマスター', 'シリンダーガード'],
     category: 'REAR MASTER CYLINDER GUARD',
-    imageRevision: 'P013 / 90度曲げ・R02候補',
-    summary: 'リアマスターシリンダー周辺のガードを開発中。G.Fの切り抜き、前面の開口、取付部の形状をCADで確認できます。',
-    description: '掲載画像はP013の90度曲げ・R02候補に対応する仮合わせCADモデルです。色分けは曲げ部分と別体スペーサを識別するための表示で、製品の塗装色や付属品構成を示していません。',
+    imageKind: 'photo',
+    imageRevision: '製作したガード単体',
+    summary: 'リアマスターシリンダー周辺のガードを開発中。製作した部品の実物写真で、G.Fの切り抜き、前面の開口、曲げ部と取付部を紹介します。',
+    description: '製作したリアマスターシリンダーガードの単体写真です。前面の開口とG.Fの切り抜き、曲げ部・取付部の形状を掲載しています。取付部品・付属品の販売構成は未確定です。',
+    galleryNote: '製作した部品の実物写真です。写真の背景を編集しています。取付部品・付属品の販売構成は確認中です。',
+    verificationNote: '実物写真は外観を紹介するものです。実車適合・強度・耐久性などの検証は未完了です。',
     installation: '取付部の支持、回り止めの接触、ボルトのかかり長さ、ホースなどとの隙間を確認中です。実車での確認を経て、取付方法をご案内します。',
     photos: [
-      { name: 'f450gs-master-oblique-cad', width: 1280, height: 985, alt: 'P013リアマスターシリンダーガード90度曲げ候補の実CAD斜視画像。曲げ部がオレンジ、スペーサが青で識別表示', caption: 'CAD開発イメージ／P013 R02候補・斜視。色分けは設計確認用です。' },
-      { name: 'f450gs-master-top-cad', width: 1280, height: 985, alt: 'P013リアマスターシリンダーガードの上面CAD画像。曲げ形状と別体スペーサの位置', caption: 'CAD開発イメージ／上面。別体スペーサを含む仮合わせ表示です。' },
+      { name: 'f450gs-master-oblique-photo-20261013', width: 1280, height: 960, alt: '黒く塗装したリアマスターシリンダーガードの実物。G.F切り抜き、曲げ部と取付穴を斜めから撮影', caption: 'リアマスターシリンダーガードの実物／曲げ部と取付部' },
+      { name: 'f450gs-master-front-photo-20261013', width: 1280, height: 960, alt: 'リアマスターシリンダーガードの実物を正面から撮影。2か所の開口、G.F切り抜きと側面の取付部', caption: 'リアマスターシリンダーガードの実物／正面' },
     ],
   },
   {
@@ -180,13 +184,16 @@ export const guardFactoryProducts = [
     shortName: 'ラジエーターガード',
     headingParts: ['ラジエーターガード'],
     category: 'RADIATOR GUARD',
-    imageRevision: 'R06 / 設計モデル',
-    summary: 'ラジエーター前面向けのガードを開発中。中央のG.Fロゴとハニカム開口を備えた、R06のCADモデルを紹介します。',
-    description: 'BMW F 450 GSを開発対象とするラジエーターガードの設計案です。掲載画像はR06のガード単体を表示しています。実車の取付位置・背面の隙間・冷却への影響などは未確認です。',
+    imageKind: 'photo',
+    imageRevision: '製作したガード単体',
+    summary: 'ラジエーター前面向けのガードを開発中。製作した部品の実物写真で、中央のG.F切り抜きとハニカム開口、4か所の取付耳を紹介します。',
+    description: '製作したラジエーターガードの単体写真です。中央のG.F切り抜き、ハニカム開口と4か所の取付耳を掲載しています。実車の取付位置・背面の隙間・冷却への影響などは未確認です。',
+    galleryNote: '製作した部品の実物写真です。写真の背景を編集しています。形状・色・販売仕様は変更する場合があります。',
+    verificationNote: '実物写真は外観を紹介するものです。実車適合・強度・耐久性、冷却への影響などの検証は未完了です。',
     installation: '取付穴と実車側の位置、背面の隙間、周辺部品との干渉を確認中です。取付方法と必要部品は、実車確認後にご案内します。',
     photos: [
-      { name: 'f450gs-radiator-oblique-cad', width: 1280, height: 800, alt: 'R06ラジエーターガードの実CAD斜視画像。中央のG.Fロゴ、ハニカム開口と4か所の取付耳', caption: 'CAD開発イメージ／R06・斜視。ガード単体の設計案です。' },
-      { name: 'f450gs-radiator-front-cad', width: 1280, height: 800, alt: 'R06ラジエーターガードの実CAD正面画像。ハニカム開口とG.F切り抜きの配置', caption: 'CAD開発イメージ／R06・正面。実車適合・冷却性能は未確認です。' },
+      { name: 'f450gs-radiator-oblique-photo-20261013', width: 1280, height: 960, alt: '黒く塗装したラジエーターガードの実物を斜めから撮影。中央のG.F切り抜き、ハニカム開口と4か所の取付耳', caption: 'ラジエーターガードの実物／斜視' },
+      { name: 'f450gs-radiator-front-photo-20261013', width: 1280, height: 960, alt: 'ラジエーターガードの実物を正面から撮影。ハニカム開口、G.F切り抜きと4か所の取付穴', caption: 'ラジエーターガードの実物／正面' },
     ],
   },
 ]
