@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { guardFactoryProducts, guardFactoryProductPath, guardFactoryPhotoPath } from './guard-factory-products'
+import PartsReservationForm, { canReservePart } from './PartsReservationForm'
 import './guard-factory.css'
 
 export function GuardFactoryLogo({ assetPath }) {
@@ -49,6 +50,7 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
               <p>{product.summary}</p>
               <div className="gf-card__foot"><p><strong>{product.priceLabel}</strong><span>{product.priceNote}</span></p><span className="gf-status">販売準備中</span></div>
               <a className="gf-text-link" href={guardFactoryProductPath(product.slug, basePath)}>{isCad ? product.imageKind === 'photo' ? '実物写真・開発情報を見る' : 'CAD画像・開発情報を見る' : '仕様・商品情報を見る'} <span aria-hidden="true">→</span></a>
+              {canReservePart(product) && <a className="gf-text-link" href={`${guardFactoryProductPath(product.slug, basePath)}#gf-reservation`}>無料仮予約へ <span aria-hidden="true">→</span></a>}
               {product.service && <p className="gf-card__service">加工依頼：{product.service.priceLabel}<br />{product.service.includes}</p>}
             </div>
           </article>
@@ -88,8 +90,10 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
   useEffect(() => {
     const previousTitle = document.title
     document.title = `${product.name}｜Guard Factory｜DUST LINE Parts`
-    window.scrollTo(0, 0)
-    return () => { document.title = previousTitle }
+    const reservationAnchor = window.location.hash === '#gf-reservation' && canReservePart(product)
+    const frame = reservationAnchor ? requestAnimationFrame(() => document.getElementById('gf-reservation')?.scrollIntoView()) : null
+    if (!reservationAnchor) window.scrollTo(0, 0)
+    return () => { document.title = previousTitle; if (frame !== null) cancelAnimationFrame(frame) }
   }, [product])
   const relatedProducts = product.collection === 'fabrication'
     ? guardFactoryProducts.filter((item) => item.collection === 'djebel250')
@@ -107,6 +111,7 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
             <p className="gf-product-copy__summary">{product.summary}</p>
             <p className="gf-price"><strong>{product.priceLabel}</strong><span>{product.priceNote}</span></p>
             <div className="gf-release"><span className="gf-status">販売準備中</span><p>販売開始日・在庫・納期は確認中です。<br />購入先は販売開始後にご案内します。</p></div>
+            {canReservePart(product) && <a className="gf-button" href="#gf-reservation">無料で仮予約する <span aria-hidden="true">↓</span></a>}
             <a className="gf-button" href={contactUrl} target="_blank" rel="noreferrer">適合・販売について問い合わせる <span aria-hidden="true">↗</span><span className="gf-sr-only">（別タブで開きます）</span></a>
             <a className="gf-text-link" href="#gf-specifications">{product.development ? '開発情報と確認事項を見る' : '仕様と取付条件を確認する'} <span aria-hidden="true">↓</span></a>
             {product.service && <a className="gf-text-link" href="#gf-fabrication-service">溶接・塗装まで依頼する <span aria-hidden="true">↓</span></a>}
@@ -126,6 +131,7 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
           <div><dt>保証・返品条件</dt><dd>確認中。販売開始前にご案内します。</dd></div>
         </dl>
       </section>
+      <PartsReservationForm key={product.slug} product={product} basePath={basePath} contactUrl={contactUrl} />
       {product.service && <section className="gf-fabrication-service" id="gf-fabrication-service" aria-labelledby="gf-service-title">
         <div><p className="gf-eyebrow">DUST LINE GARAGE / WIDE STEP SERVICE</p><h2 id="gf-service-title">溶接から塗装まで、<br />加工を依頼する。</h2><p>{product.service.description}</p></div>
         <div><p className="gf-price"><strong>{product.service.priceLabel}</strong></p><p>{product.service.includes}</p><p>プレート単品の販売価格とは別の、左右の加工サービス料金です。</p><a className="gf-button" href={contactUrl} target="_blank" rel="noreferrer">ワイドステップ加工を相談する <span aria-hidden="true">↗</span><span className="gf-sr-only">（お問い合わせフォームを別タブで開きます）</span></a></div>

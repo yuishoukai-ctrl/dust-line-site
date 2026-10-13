@@ -7,3 +7,7 @@ verify_jwt = false
 [functions.stripe-issue-webhook]
 # Stripe cannot send a Supabase JWT. Raw-body signature validation is mandatory.
 verify_jwt = false
+
+[functions.parts-reservation]
+# Guest form: strict input/origin checks, mandatory Turnstile, private service RPC.
+verify_jwt = false
