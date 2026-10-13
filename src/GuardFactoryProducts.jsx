@@ -49,6 +49,7 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
               <h3><a href={guardFactoryProductPath(product.slug, basePath)}>{product.shortName}</a></h3>
               <p>{product.summary}</p>
               <div className="gf-card__foot"><p><strong>{product.priceLabel}</strong><span>{product.priceNote}</span></p><span className="gf-status">販売準備中</span></div>
+              {product.shippingEstimate && <p>発送予定：{product.shippingEstimate}<br />製作状況により変更になる場合があります。</p>}
               <a className="gf-text-link" href={guardFactoryProductPath(product.slug, basePath)}>{isCad ? product.imageKind === 'photo' ? '実物写真・開発情報を見る' : 'CAD画像・開発情報を見る' : '仕様・商品情報を見る'} <span aria-hidden="true">→</span></a>
               {canReservePart(product) && <a className="gf-text-link" href={`${guardFactoryProductPath(product.slug, basePath)}#gf-reservation`}>無料仮予約へ <span aria-hidden="true">→</span></a>}
               {product.service && <p className="gf-card__service">加工依頼：{product.service.priceLabel}<br />{product.service.includes}</p>}
@@ -56,7 +57,7 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
           </article>
         ))}
       </div>
-      <p className="gf-lineup__note">{isCad && <>実物写真とCAD画像を掲載しています。形状・色・販売仕様は変更する場合があります。<br /></>}販売開始日・在庫・納期は確認中です。購入先は販売開始後にご案内します。</p>
+      <p className="gf-lineup__note">{isCad && <>実物写真とCAD画像を掲載しています。形状・色・販売仕様は変更する場合があります。<br /></>}{isCad ? '販売開始日・在庫と、発送予定の記載がない商品の納期は確認中です。' : '販売開始日・在庫・納期は確認中です。'}購入先は販売開始後にご案内します。</p>
     </section>
   )
 }
@@ -110,16 +111,16 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
             <h1 id="gf-product-title"><span className="gf-product-model">{product.modelLabel} </span>{product.headingParts.map((term) => <span className="gf-product-term" key={term}>{term}</span>)}</h1>
             <p className="gf-product-copy__summary">{product.summary}</p>
             <p className="gf-price"><strong>{product.priceLabel}</strong><span>{product.priceNote}</span></p>
-            <div className="gf-release"><span className="gf-status">販売準備中</span><p>販売開始日・在庫・納期は確認中です。<br />購入先は販売開始後にご案内します。</p></div>
+            <div className="gf-release"><span className="gf-status">販売準備中</span><p>{product.shippingEstimate ? <>発送予定：{product.shippingEstimate}<br />製作状況により変更になる場合があります。<br />販売開始日・在庫は確認中です。</> : '販売開始日・在庫・納期は確認中です。'}<br />購入先は販売開始後にご案内します。</p></div>
             {canReservePart(product) && <a className="gf-button" href="#gf-reservation">無料で仮予約する <span aria-hidden="true">↓</span></a>}
             <a className="gf-button" href={contactUrl} target="_blank" rel="noreferrer">適合・販売について問い合わせる <span aria-hidden="true">↗</span><span className="gf-sr-only">（別タブで開きます）</span></a>
-            <a className="gf-text-link" href="#gf-specifications">{product.development ? '開発情報と確認事項を見る' : '仕様と取付条件を確認する'} <span aria-hidden="true">↓</span></a>
+            <a className="gf-text-link" href="#gf-specifications">{product.compactDetails ? '製品情報を見る' : product.development ? '開発情報と確認事項を見る' : '仕様と取付条件を確認する'} <span aria-hidden="true">↓</span></a>
             {product.service && <a className="gf-text-link" href="#gf-fabrication-service">溶接・塗装まで依頼する <span aria-hidden="true">↓</span></a>}
           </div>
         </section>
       </div>
-      <section className="gf-specifications" id="gf-specifications" aria-labelledby="gf-spec-title">
-        <div className="gf-specifications__intro"><p className="gf-eyebrow">{product.development ? 'DEVELOPMENT DETAILS' : 'PRODUCT DETAILS'}</p><h2 id="gf-spec-title">{product.development ? '開発情報と、確認事項。' : '仕様と、取付前の確認。'}</h2><p>{product.description}</p><h3>取付について</h3><p>{product.installation}</p><p>{product.verificationNote}</p></div>
+      <section className={`gf-specifications${product.compactDetails ? ' gf-specifications--compact' : ''}`} id="gf-specifications" aria-labelledby="gf-spec-title">
+        {product.compactDetails ? <h2 id="gf-spec-title">製品情報。</h2> : <div className="gf-specifications__intro"><p className="gf-eyebrow">{product.development ? 'DEVELOPMENT DETAILS' : 'PRODUCT DETAILS'}</p><h2 id="gf-spec-title">{product.development ? '開発情報と、確認事項。' : '仕様と、取付前の確認。'}</h2><p>{product.description}</p><h3>取付について</h3><p>{product.installation}</p><p>{product.verificationNote}</p></div>}
         <dl className="gf-spec-table">
           <div><dt>{product.development ? '開発対象' : '対象車種'}</dt><dd>{product.fitment}<small>{product.fitmentNote}</small></dd></div>
           <div><dt>材質・板厚</dt><dd>{product.material}</dd></div>
@@ -127,7 +128,7 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
           <div><dt>商品構成</dt><dd>{product.configuration}</dd></div>
           <div><dt>同梱品</dt><dd>{product.included}</dd></div>
           <div><dt>重量・寸法</dt><dd>{product.dimensions || '確認中'}</dd></div>
-          <div><dt>在庫・納期</dt><dd>確認中</dd></div>
+          <div><dt>在庫・納期</dt><dd>{product.shippingEstimate ? <>在庫：確認中<br />発送予定：{product.shippingEstimate}<small>製作状況により変更になる場合があります。</small></> : '確認中'}</dd></div>
           <div><dt>保証・返品条件</dt><dd>確認中。販売開始前にご案内します。</dd></div>
         </dl>
       </section>
