@@ -35,6 +35,8 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           VITE_GA4_MEASUREMENT_ID: ${{ vars.VITE_GA4_MEASUREMENT_ID }}
           VITE_ISSUE_PAYMENTS_ENABLED: 'false'
+          VITE_PARTS_RESERVATIONS_ENABLED: ${{ vars.VITE_PARTS_RESERVATIONS_ENABLED }}
+          VITE_PARTS_RESERVATION_TURNSTILE_SITE_KEY: ${{ vars.VITE_PARTS_RESERVATION_TURNSTILE_SITE_KEY }}
       - name: Check public assets
         run: npm run check:cloudflare
       - name: Deploy static site
