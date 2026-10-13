@@ -66,6 +66,7 @@
 .gf-button:active { transform: translateY(1px); }
 .gf-product-copy > .gf-text-link { margin-top: 12px; }
 .gf-specifications { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: clamp(36px, 6vw, 90px); padding: clamp(64px, 7vw, 110px) clamp(20px, 5vw, 80px); color: var(--ink); background: var(--paper); scroll-margin-top: 76px; }
+.gf-specifications--compact { grid-template-columns: 1fr; gap: 0; }
 .gf-specifications .gf-eyebrow { color: #6d5534; }
 .gf-specifications h2 { font-size: clamp(1.65rem, 2.6vw, 2.6rem); line-height: 1.5; letter-spacing: -.045em; margin: 20px 0 26px; }
 .gf-specifications h3 { font-size: 1rem; margin: 36px 0 12px; }

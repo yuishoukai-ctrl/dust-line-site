@@ -49,6 +49,7 @@ export default function PartsReservationForm({ product, contactUrl, basePath = '
       <h2 id="gf-reservation-title">無料で、仮予約する。</h2>
       <p className="gf-reservation__product">{product.name}</p>
       <p className="gf-price"><strong>{product.priceLabel}</strong><span>{product.priceNote}／送料未定</span></p>
+      {product.shippingEstimate && <p>発送予定：{product.shippingEstimate}<br />製作状況により変更になる場合があります。</p>}
       <p>会員登録は不要です。販売条件と発送時期が決まり次第、入力いただいたメールアドレスへご案内します。</p>
       <ol className="gf-reservation__steps"><li>無料仮予約</li><li>仕様・納期のご案内</li><li>希望される方がStripeでお支払い</li></ol>
     </header>
@@ -57,7 +58,7 @@ export default function PartsReservationForm({ product, contactUrl, basePath = '
         <h3>仮予約の条件</h3>
         <ul>
           <li>今回は希望数量と連絡先の受付です。代金は発生せず、注文や在庫の確保をお約束するものではありません。</li>
-          <li>適合・販売仕様・発送時期・送料は確認中です。価格や形状が変更になる場合があります。</li>
+          <li>{product.shippingEstimate ? '適合・販売仕様・送料は確認中です。発送予定は製作状況により変更になる場合があります。' : '適合・販売仕様・発送時期・送料は確認中です。'}価格や形状が変更になる場合があります。</li>
           <li>確定した価格・送料・納期・返品条件を確認いただき、購入を希望される場合に後日お支払いいただきます。自動で請求しません。</li>
           <li>同じメールアドレス・商品での再送は数量の追加として扱いません。数量の変更・取り消しは受付番号を添えてお問い合わせください。</li>
         </ul>

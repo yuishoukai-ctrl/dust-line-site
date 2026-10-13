@@ -145,6 +145,8 @@ export const guardFactoryProducts = [
   {
     ...f450Details,
     slug: 'f450gs-rear-master-cylinder-guard',
+    shippingEstimate: '2026年11月中旬〜12月中',
+    compactDetails: true,
     name: 'BMW F 450 GS向け リアマスターシリンダーカップガード',
     shortName: 'リアマスターシリンダーカップガード',
     headingParts: ['リアマスター', 'シリンダー', 'カップガード'],
@@ -182,6 +184,7 @@ export const guardFactoryProducts = [
   {
     ...f450Details,
     slug: 'f450gs-radiator-guard',
+    shippingEstimate: '2026年11月中旬〜12月中',
     name: 'BMW F 450 GS向け ラジエーターガード',
     shortName: 'ラジエーターガード',
     headingParts: ['ラジエーターガード'],
