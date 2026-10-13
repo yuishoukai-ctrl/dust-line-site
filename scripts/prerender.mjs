@@ -456,7 +456,7 @@ const launchBrowser = async (browser) => {
         }
       })
       socket.close()
-      await rm(userDataDir, { recursive: true, force: true })
+      await rm(userDataDir, { recursive: true, force: true, maxRetries: 8, retryDelay: 250 })
     },
   }
 }
