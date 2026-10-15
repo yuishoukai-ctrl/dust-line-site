@@ -9,6 +9,7 @@ import GuardFactoryProductPage from './GuardFactoryProducts'
 import { guardFactoryProducts, guardFactoryProductPath } from './guard-factory-products'
 import WorldTripArticle from './WorldTripArticle'
 import CategoryPage from './CategoryPages'
+import MotorradShizuokaPage, { ShopIndexPage } from './ShopPages'
 import OffroadMagazinePage from './OffroadMagazinePage'
 import Issue02ProductPage from './Issue02ProductPage'
 import ReleaseDelayNoticePage from './ReleaseDelayNoticePage'
@@ -35,6 +36,7 @@ const travelPagePath = `${homePath}travel/`
 const buildPagePath = `${homePath}build/`
 const garagePagePath = `${homePath}garage/`
 const partsPagePath = `${homePath}parts/`
+const shopsPagePath = `${homePath}shops/`
 const paintPagePath = `${homePath}paint/`
 const magazinePagePath = `${homePath}offroad-bike-magazine/`
 const issue02ProductPagePath = `${homePath}magazine/issue-02/`
@@ -167,6 +169,7 @@ function Header({ currentPage = null }) {
         <a href={partsPagePath} aria-current={currentPage === 'parts' ? 'page' : undefined} onClick={() => setOpen(false)}>Parts</a>
         <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined} onClick={() => setOpen(false)}>Paint</a>
         <a href={magazinePagePath} aria-current={currentPage === 'magazine' ? 'page' : undefined} onClick={() => setOpen(false)}>Magazine</a>
+        <a href={shopsPagePath} aria-current={currentPage === 'shops' ? 'page' : undefined} onClick={() => setOpen(false)}>ショップ紹介</a>
         <a href={libraryPagePath} aria-current={currentPage === 'member' ? 'page' : undefined} onClick={() => setOpen(false)}>Library</a>
         <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined} onClick={() => setOpen(false)}>Goods</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined} onClick={() => setOpen(false)}>Company</a>
@@ -1237,6 +1240,7 @@ function Footer({ currentPage = null }) {
         <a href={partsPagePath} aria-current={currentPage === 'parts' ? 'page' : undefined}>Parts</a>
         <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined}>Paint</a>
         <a href={magazinePagePath} aria-current={currentPage === 'magazine' ? 'page' : undefined}>Magazine</a>
+        <a href={shopsPagePath} aria-current={currentPage === 'shops' ? 'page' : undefined}>ショップ紹介</a>
         <a href={issue02ProductPagePath} aria-current={currentPage === 'issue-02-product' ? 'page' : undefined}>第2号 商品情報</a>
         <a href={issue01DelayNoticePath} aria-current={currentPage === 'issue-01-delay' ? 'page' : undefined}>News</a>
         <a href={libraryPagePath} aria-current={currentPage === 'member' ? 'page' : undefined}>Library</a>
@@ -1312,6 +1316,8 @@ function App() {
     '/magazine/issue-02/': 'issue-02-product',
     '/news/issue-01-release-delay/': 'issue-01-delay',
     '/parts/': 'parts',
+    '/shops/': 'shops',
+    '/shops/motorrad-shizuoka/': 'shop-motorrad-shizuoka',
     '/paint/': 'paint',
     '/offroad-bike-magazine/': 'magazine',
     '/account/signup/': 'member-signup',
@@ -1329,6 +1335,18 @@ function App() {
   if (page === 'commercial-disclosure') return <CommercialDisclosurePage />
   if (page === 'refund-policy') return <RefundPolicyPage />
   if (page === 'digital-delivery') return <DigitalDeliveryPage />
+  if (page === 'shops' || page === 'shop-motorrad-shizuoka') {
+    return (
+      <>
+        <a className="skip-link" href="#main">本文へ移動</a>
+        <Header currentPage="shops" />
+        {page === 'shops'
+          ? <ShopIndexPage assetPath={assetPath} basePath={homePath} />
+          : <MotorradShizuokaPage assetPath={assetPath} basePath={homePath} />}
+        <Footer currentPage="shops" />
+      </>
+    )
+  }
   if (page === 'issue-01-delay') {
     return (
       <>

@@ -450,7 +450,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 @keyframes route { to { stroke-dashoffset: -180; } }
 @keyframes loading { 0%,100% { transform: scaleX(.25); transform-origin: left; } 50% { transform: scaleX(1); transform-origin: left; } }
 
-@media (max-width: 1080px) {
+@media (max-width: 1440px) {
   .site-header { height: 66px; }
   .brand small { display: none; }
   .menu-button { display: flex; }
