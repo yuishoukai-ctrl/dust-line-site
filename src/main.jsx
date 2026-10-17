@@ -14,7 +14,7 @@ import OffroadMagazinePage from './OffroadMagazinePage'
 import Issue02ProductPage from './Issue02ProductPage'
 import ReleaseDelayNoticePage from './ReleaseDelayNoticePage'
 import MemberPage from './MemberPages'
-import { firstIssue, getIssueSlug, getIssueDescription } from './member-content'
+import { firstIssue, getIssueSlug } from './member-content'
 import AnalyticsConsent from './AnalyticsConsent'
 import LineCommunity from './LineCommunity'
 import { trackAnalyticsEvent } from './lib/analytics'
@@ -753,8 +753,6 @@ function MagazinePreview() {
   const webArticle = `${homePath}articles/world-trip/`
   const page026 = assetPath('issue-01/world-trip-026.webp')
   const page027 = assetPath('issue-01/world-trip-027.webp')
-  const page030 = assetPath('issue-01/world-trip-030.webp')
-  const page031 = assetPath('issue-01/world-trip-031.webp')
 
   return (
     <section className="sneak-peek section" id="magazine">
@@ -781,17 +779,6 @@ function MagazinePreview() {
         <span className="sneak-peek__open">FREE MEMBER / READ ISSUE 01 <ArrowIcon /></span>
       </a>
 
-      <div className="sneak-peek__tease reveal" aria-label="創刊号に収録する加工記事の誌面を一部公開">
-        <div className="sneak-peek__tease-spread">
-          <img src={page030} alt="タンク装着加工を掲載した誌面 030" loading="lazy" decoding="async" />
-          <img src={page031} alt="燃料系統を解説した誌面 031" loading="lazy" decoding="async" />
-        </div>
-        <div className="sneak-peek__veil">
-          <span>ISSUE 01 / 8-PAGE FEATURE</span>
-          <strong>準備の全記録は、創刊号で。</strong>
-          <a href={webArticle}>WEBダイジェストを読む <ArrowIcon /></a>
-        </div>
-      </div>
     </section>
   )
 }
@@ -825,47 +812,6 @@ function Issue() {
           <div><dt>RELEASE</dt><dd><time dateTime={firstIssue.releaseDate}>{firstIssue.releaseDateLabel} 公開</time></dd></div>
         </dl>
         <a className="button button--outline" href={firstIssue.readerPath}>創刊号を無料で読む <ArrowIcon /></a>
-      </div>
-    </section>
-  )
-}
-
-function RouteStrip() {
-  return (
-    <section className="route-strip" aria-label="旅の写真">
-      <div className="route-strip__image route-strip__image--one"><img src={assetPath('coastal-view.jpg')} alt="海を望む峠に停めたバイク" loading="lazy" decoding="async" /></div>
-      <div className="route-strip__statement reveal">
-        <span>THE DISTANCE IS NOT THE POINT.</span>
-        <strong><span>遠くへ行くことより、</span><span>何を持ち帰ったか。</span></strong>
-        <p>距離や速さでは測れない旅の記憶を、写真と文章で残していく。</p>
-      </div>
-      <svg className="route-line" viewBox="0 0 1000 180" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 125 C160 40 260 160 410 92 S690 15 1000 110" />
-      </svg>
-    </section>
-  )
-}
-
-function Newsletter() {
-  return (
-    <section className="newsletter section" id="newsletter">
-      <div className="newsletter__image reveal"><img src={assetPath('mountain-stop.jpg')} alt="山を望む道路に停めたアドベンチャーバイク" loading="lazy" decoding="async" /></div>
-      <div className="newsletter__copy reveal">
-        <div className="section-label"><span>05</span><span>MEMBER LIBRARY</span></div>
-        <h2>創刊号を、<br />無料で読む。</h2>
-        <p>{getIssueDescription(firstIssue)} 無料会員登録でお読みいただけます。</p>
-        <div className="newsletter__pending">
-          <span>FREE MEMBER / ISSUE 01</span>
-          <strong>無料会員登録</strong>
-          <p>メールアドレスを登録し、確認メールの6桁コードを入力すると、マイライブラリから創刊号をお読みいただけます。</p>
-          <a
-            className="button button--accent"
-            href={signupPagePath}
-            onClick={() => trackAnalyticsEvent('signup_cta_click')}
-          >
-            無料会員登録へ <ArrowIcon />
-          </a>
-        </div>
       </div>
     </section>
   )
@@ -1483,8 +1429,6 @@ function App() {
         <PaintServiceBanner />
         <MagazinePreview />
         <Issue />
-        <RouteStrip />
-        <Newsletter />
         <LineCommunity assetPath={assetPath} />
       </main>
       <Footer />
