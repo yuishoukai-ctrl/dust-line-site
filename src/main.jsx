@@ -749,40 +749,6 @@ function PaintServiceBanner() {
   )
 }
 
-function MagazinePreview() {
-  const webArticle = `${homePath}articles/world-trip/`
-  const page026 = assetPath('issue-01/world-trip-026.webp')
-  const page027 = assetPath('issue-01/world-trip-027.webp')
-
-  return (
-    <section className="sneak-peek section" id="magazine">
-      <div className="sneak-peek__intro reveal">
-        <div className="section-label"><span>03</span><span>INSIDE THE MAGAZINE</span></div>
-        <div>
-          <p className="sneak-peek__kicker">ISSUE 01 / OPEN FEATURE</p>
-          <h2>世界一周に<br />行こうとしたら。</h2>
-          <p>WEBでは計画と車両選び、加工の要点をダイジェストで紹介。創刊号では全工程とDUST DATAを8ページで収録します。</p>
-          <div className="sneak-peek__actions">
-            <a className="button button--accent" href={webArticle}>WEBダイジェストを読む <ArrowIcon /></a>
-            <a className="sneak-peek__notify" href={firstIssue.readerPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>創刊号を無料で読む <ArrowIcon /></a>
-            <a className="sneak-peek__notify" href={officialXUrl} target="_blank" rel="noreferrer">公式Xで発売情報を見る <ArrowIcon /></a>
-          </div>
-        </div>
-      </div>
-
-      <a className="sneak-peek__primary reveal" href={firstIssue.readerPath} aria-label="創刊号を無料で読む" onClick={() => trackAnalyticsEvent('signup_cta_click')}>
-        <span className="sneak-peek__ribbon">SAMPLE / ISSUE 01</span>
-        <div className="sneak-peek__spread">
-          <figure><img src={page026} alt="世界一周に行こうとしたら。扉ページ 026" loading="lazy" decoding="async" /></figure>
-          <figure><img src={page027} alt="計画ルートを掲載した誌面 027" loading="lazy" decoding="async" /></figure>
-        </div>
-        <span className="sneak-peek__open">FREE MEMBER / READ ISSUE 01 <ArrowIcon /></span>
-      </a>
-
-    </section>
-  )
-}
-
 function Issue() {
   return (
     <section className="issue section" id="issue">
@@ -799,7 +765,7 @@ function Issue() {
         </div>
       </div>
       <div className="issue__copy reveal">
-        <div className="section-label section-label--light"><span>04</span><span>FIRST ISSUE</span></div>
+        <div className="section-label section-label--light"><span>03</span><span>FIRST ISSUE</span></div>
         <p className="issue__status">{firstIssue.issueNumber} / {firstIssue.releaseDate} / FREE</p>
         <h2>BEYOND<br />THE PAVEMENT</h2>
         <p>
@@ -1427,7 +1393,6 @@ function App() {
         <FeaturedStory />
         <StoryGrid />
         <PaintServiceBanner />
-        <MagazinePreview />
         <Issue />
         <LineCommunity assetPath={assetPath} />
       </main>
