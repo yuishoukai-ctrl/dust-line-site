@@ -47,8 +47,6 @@ const CATEGORY_CONTENT = {
     label: 'BUILD',
     title: '車両製作',
     lead: '市販のままでは届かない場所へ行くために、何を選び、何を作り直したのか。長距離とダートを見据えた車両、そして長く乗って分かった機械の手応えを記録します。',
-    statement: '売っていないなら、つくる。',
-    description: 'KTM 990 ADVENTURE Sを12年乗った記録、KLR650のIMS 37Lタンク、R1200GSの60Lタンク。完成形だけでなく、選んだ理由と判断の過程まで残します。',
     heroImage: 'ktm-990-adv-s/01-dirt-slide.webp',
     heroAlt: 'ダートを走るKTM 990 ADVENTURE S',
     cards: [
@@ -180,18 +178,20 @@ export default function CategoryPage({ category = 'travel', assetPath }) {
         </div>
       </nav>
 
-      <section className="dl-category-intro" aria-labelledby="category-statement">
-        <div className="dl-category-intro__label"><span>{content.index}</span><span>EDITORIAL LINE</span></div>
-        <div className="dl-category-intro__body">
-          <h2 id="category-statement">{content.statement}</h2>
-          <p>{content.description}</p>
-          {content.serviceLink && (
-            <a className="dl-category-intro__service" href={content.serviceLink.href}>
-              {content.serviceLink.label}<span aria-hidden="true">→</span>
-            </a>
-          )}
-        </div>
-      </section>
+      {content.statement && (
+        <section className="dl-category-intro" aria-labelledby="category-statement">
+          <div className="dl-category-intro__label"><span>{content.index}</span><span>EDITORIAL LINE</span></div>
+          <div className="dl-category-intro__body">
+            <h2 id="category-statement">{content.statement}</h2>
+            <p>{content.description}</p>
+            {content.serviceLink && (
+              <a className="dl-category-intro__service" href={content.serviceLink.href}>
+                {content.serviceLink.label}<span aria-hidden="true">→</span>
+              </a>
+            )}
+          </div>
+        </section>
+      )}
 
       <section className="dl-category-stories" aria-labelledby="category-stories-title">
         <header className="dl-category-stories__header">

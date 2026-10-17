@@ -273,17 +273,9 @@
   letter-spacing: -.02em;
 }
 
-.paint-price__intro,
 .paint-price__catalog,
 .paint-price__conditions {
   padding: clamp(72px, 9vw, 132px) clamp(22px, 6vw, 92px);
-}
-
-.paint-price__intro {
-  display: grid;
-  grid-template-columns: minmax(160px, .7fr) minmax(0, 2fr);
-  gap: clamp(40px, 8vw, 140px);
-  border-bottom: 1px solid rgba(21, 23, 25, .2);
 }
 
 .paint-price__section-label {
@@ -300,18 +292,10 @@
   color: var(--accent);
 }
 
-.paint-price__intro h2,
 .paint-price__conditions h2 {
   margin: 0;
   font: 900 clamp(2.8rem, 6vw, 6.5rem)/.96 var(--display);
   letter-spacing: -.06em;
-}
-
-.paint-price__intro > div:last-child > p {
-  max-width: 720px;
-  margin: 32px 0 0;
-  font-size: clamp(1rem, 1.3vw, 1.16rem);
-  line-height: 2.1;
 }
 
 .paint-price__catalog {
@@ -654,7 +638,6 @@
     transform-origin: right bottom;
   }
 
-  .paint-price__intro,
   .paint-price__work-head,
   .paint-price__conditions-grid {
     grid-template-columns: 1fr;

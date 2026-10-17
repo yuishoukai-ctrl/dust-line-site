@@ -228,17 +228,6 @@ export default function PaintPricePage({ formUrl }) {
         </div>
       </section>
 
-      <section className="paint-price__intro" aria-labelledby="paint-intro-title">
-        <div className="paint-price__section-label"><span>01</span><span>SELECT THE FINISH</span></div>
-        <div>
-          <h2 id="paint-intro-title">同じ黒でも、<br />役割が違う。</h2>
-          <p>
-            飛び石を受けるガード、熱を逃がすラジエーター、高温に晒される排気系。
-            見た目だけで塗料を決めず、部品が置かれる環境から施工方法を選びます。
-          </p>
-        </div>
-      </section>
-
       <section className="paint-price__catalog" aria-labelledby="paint-catalog-title">
         <header className="paint-price__catalog-head">
           <div>
@@ -276,7 +265,7 @@ export default function PaintPricePage({ formUrl }) {
       </section>
 
       <section className="paint-price__conditions" aria-labelledby="paint-conditions-title">
-        <div className="paint-price__section-label paint-price__section-label--light"><span>02</span><span>BEFORE REQUEST</span></div>
+        <div className="paint-price__section-label paint-price__section-label--light"><span>01</span><span>BEFORE REQUEST</span></div>
         <div className="paint-price__conditions-grid">
           <div>
             <h2 id="paint-conditions-title">写真で分かること。<br />実物で決めること。</h2>
