@@ -50,8 +50,10 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
               <p>{product.summary}</p>
               <div className="gf-card__foot"><p><strong>{product.priceLabel}</strong><span>{product.priceNote}</span></p><span className="gf-status">販売準備中</span></div>
               {product.shippingEstimate && <p>発送予定：{product.shippingEstimate}<br />製作状況により変更になる場合があります。</p>}
-              <a className="gf-text-link" href={guardFactoryProductPath(product.slug, basePath)}>{isCad ? product.imageKind === 'photo' ? '実物写真・開発情報を見る' : 'CAD画像・開発情報を見る' : '仕様・商品情報を見る'} <span aria-hidden="true">→</span></a>
-              {canReservePart(product) && <a className="gf-text-link" href={`${guardFactoryProductPath(product.slug, basePath)}#gf-reservation`}>無料仮予約へ <span aria-hidden="true">→</span></a>}
+              <div className="gf-card__actions">
+                <a className="gf-text-link" href={guardFactoryProductPath(product.slug, basePath)}>{isCad ? product.imageKind === 'photo' ? '実物写真・開発情報を見る' : 'CAD画像・開発情報を見る' : '仕様・商品情報を見る'} <span aria-hidden="true">→</span></a>
+                {canReservePart(product) && <a className="gf-text-link gf-card__reserve" href={`${guardFactoryProductPath(product.slug, basePath)}#gf-reservation`}>無料仮予約へ <span aria-hidden="true">→</span></a>}
+              </div>
               {product.service && <p className="gf-card__service">加工依頼：{product.service.priceLabel}<br />{product.service.includes}</p>}
             </div>
           </article>

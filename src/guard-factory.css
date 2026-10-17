@@ -30,6 +30,14 @@
 .gf-status { display: inline-block; padding: 7px 10px; border: 1px solid var(--dust); color: var(--dust); font-size: .78rem; font-weight: 700; white-space: nowrap; }
 .gf-text-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 44px; font-size: .86rem; font-weight: 700; }
 .gf-text-link:hover { color: var(--dust); }
+.gf-card__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 16px; }
+.gf-card__actions .gf-text-link { min-height: 48px; }
+.gf-card__reserve { padding: 0 16px; border: 1px solid var(--dust); color: var(--paper); }
+@media (max-width: 600px) {
+  .gf-card__actions { display: grid; gap: 12px; }
+  .gf-card__actions .gf-text-link { padding: 10px 14px; border: 1px solid var(--line); font-size: .875rem; }
+  .gf-card__actions .gf-card__reserve { border-color: var(--dust); color: var(--dust); }
+}
 .gf-lineup__note { margin: 32px 0 0; color: var(--gf-muted); font-size: .86rem; line-height: 1.8; }
 .gf-product-shell { padding: 116px clamp(20px, 5vw, 80px) 72px; }
 .gf-breadcrumb { margin-bottom: 36px; color: var(--gf-muted); font-size: .78rem; line-height: 1.8; }
