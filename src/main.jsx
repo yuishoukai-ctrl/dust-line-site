@@ -1,4 +1,4 @@
-import { StrictMode, useEffect, useState } from 'react'
+import { StrictMode, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import HokkaidoArticle from './HokkaidoArticle'
 import Ktm990Article from './Ktm990Article'
@@ -147,45 +147,99 @@ function MenuIcon({ open }) {
 
 function Header({ currentPage = null }) {
   const [open, setOpen] = useState(false)
+  const [expandedGroup, setExpandedGroup] = useState(null)
+  const headerRef = useRef(null)
+  const menuRef = useRef(null)
   const subpage = Boolean(currentPage)
-  const sectionHref = (id) => subpage ? `${homePath}#${id}` : `#${id}`
+  const closeMenu = () => { setOpen(false); setExpandedGroup(null) }
+  const articleLinks = [
+    { href: travelPagePath, label: '旅の記録', page: 'travel' },
+    { href: buildPagePath, label: '車両製作', page: 'build' },
+    { href: garagePagePath, label: 'ガレージ記事', page: 'garage' },
+  ]
+  const aboutLinks = [
+    { href: companyPagePath, label: 'DUST LINEについて', page: 'company' },
+    { href: goodsPagePath, label: '公式グッズ', page: 'goods' },
+    { href: advertisePagePath, label: '広告・掲載のご相談', page: 'advertise' },
+    { href: suzuriShopUrl, label: 'グッズを購入（SUZURI）', external: true },
+    { href: officialXUrl, label: '公式X', external: true },
+  ]
+
+  const renderGroup = (id, label, links) => (
+    <div className="nav__group">
+      <button
+        id={`nav-${id}-toggle`}
+        className="nav__group-toggle"
+        type="button"
+        aria-expanded={expandedGroup === id}
+        aria-controls={`nav-${id}-links`}
+        data-current={links.some((link) => link.page === currentPage) || undefined}
+        onClick={() => setExpandedGroup((value) => value === id ? null : id)}
+      >
+        {label}<span aria-hidden="true">⌄</span>
+      </button>
+      <div id={`nav-${id}-links`} className="nav__submenu" hidden={expandedGroup !== id}>
+        {links.map((link) => (
+          <a key={link.href} href={link.href} aria-current={currentPage === link.page ? 'page' : undefined}
+            target={link.external ? '_blank' : undefined} rel={link.external ? 'noreferrer' : undefined}
+            onClick={closeMenu}>
+            {link.label}{link.external && <span aria-hidden="true">↗</span>}
+          </a>
+        ))}
+      </div>
+    </div>
+  )
 
   useEffect(() => {
-    const close = () => setOpen(false)
+    const close = () => { setOpen(false); setExpandedGroup(null) }
+    const closeOutside = (event) => {
+      if (!headerRef.current?.contains(event.target)) close()
+    }
     window.addEventListener('resize', close)
-    return () => window.removeEventListener('resize', close)
+    document.addEventListener('pointerdown', closeOutside)
+    return () => {
+      window.removeEventListener('resize', close)
+      document.removeEventListener('pointerdown', closeOutside)
+    }
   }, [])
 
   return (
-    <header className="site-header">
+    <header className="site-header" ref={headerRef} onKeyDown={(event) => {
+      if (event.key !== 'Escape') return
+      if (expandedGroup) {
+        document.getElementById(`nav-${expandedGroup}-toggle`)?.focus()
+        setExpandedGroup(null)
+      } else if (open) {
+        closeMenu()
+        menuRef.current?.focus()
+      }
+    }} onBlur={(event) => {
+      if (!event.currentTarget.contains(event.relatedTarget)) closeMenu()
+    }}>
       <a className="brand" href={subpage ? homePath : '#top'} aria-label="DUST LINE ホーム">
         <span>DUST LINE</span>
         <small>ADVENTURE JOURNAL</small>
       </a>
-      <nav className={open ? 'nav nav--open' : 'nav'} aria-label="メインナビゲーション">
-        <a href={travelPagePath} aria-current={currentPage === 'travel' ? 'page' : undefined} onClick={() => setOpen(false)}>Travel</a>
-        <a href={buildPagePath} aria-current={currentPage === 'build' ? 'page' : undefined} onClick={() => setOpen(false)}>Build</a>
-        <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined} onClick={() => setOpen(false)}>Garage</a>
-        <a href={partsPagePath} aria-current={currentPage === 'parts' ? 'page' : undefined} onClick={() => setOpen(false)}>Parts</a>
-        <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined} onClick={() => setOpen(false)}>Paint</a>
-        <a href={magazinePagePath} aria-current={currentPage === 'magazine' ? 'page' : undefined} onClick={() => setOpen(false)}>Magazine</a>
-        <a href={shopsPagePath} aria-current={currentPage === 'shops' ? 'page' : undefined} onClick={() => setOpen(false)}>ショップ紹介</a>
-        <a href={libraryPagePath} aria-current={currentPage === 'member' ? 'page' : undefined} onClick={() => setOpen(false)}>Library</a>
-        <a href={goodsPagePath} aria-current={currentPage === 'goods' ? 'page' : undefined} onClick={() => setOpen(false)}>Goods</a>
-        <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined} onClick={() => setOpen(false)}>Company</a>
-        <a href={advertisePagePath} aria-current={currentPage === 'advertise' ? 'page' : undefined} onClick={() => setOpen(false)}>広告募集</a>
-        <a className="nav__cta" href={suzuriShopUrl} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>Shop</a>
-        <a className="nav__mobile-x" href={officialXUrl} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>Official X</a>
-      </nav>
       <button
+        ref={menuRef}
         className="menu-button"
         type="button"
         aria-label={open ? 'メニューを閉じる' : 'メニューを開く'}
         aria-expanded={open}
-        onClick={() => setOpen((value) => !value)}
+        aria-controls="site-navigation"
+        onClick={() => { setOpen((value) => !value); setExpandedGroup(null) }}
       >
         <MenuIcon open={open} />
       </button>
+      <nav id="site-navigation" className={open ? 'nav nav--open' : 'nav'} aria-label="メインナビゲーション">
+        <a href={magazinePagePath} aria-current={currentPage === 'magazine' ? 'page' : undefined} onClick={closeMenu}>雑誌を読む</a>
+        {renderGroup('articles', '記事を読む', articleLinks)}
+        <a href={partsPagePath} aria-current={currentPage === 'parts' ? 'page' : undefined} onClick={closeMenu}>パーツ</a>
+        <a href={paintPagePath} aria-current={currentPage === 'paint' ? 'page' : undefined} onClick={closeMenu}>塗装サービス</a>
+        <a href={shopsPagePath} aria-current={currentPage === 'shops' ? 'page' : undefined} onClick={closeMenu}>ショップ紹介</a>
+        {renderGroup('about', 'ご案内', aboutLinks)}
+        <a className="nav__cta" href={libraryPagePath} aria-current={currentPage === 'member' ? 'page' : undefined} onClick={closeMenu}>会員ページ</a>
+      </nav>
     </header>
   )
 }
@@ -207,42 +261,12 @@ function Hero() {
           <a className="button button--accent" href={firstIssue.readerPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>創刊号を無料で読む <ArrowIcon /></a>
           <a className="text-link" href="#issue">創刊号について見る <ArrowIcon /></a>
         </div>
+        <p className="hero__reading-note">全130ページ · 無料会員登録で読めます</p>
       </div>
       <div className="hero__index" aria-hidden="true">
         <span>DL</span><span>001</span><span>JPN</span>
       </div>
       <div className="scroll-cue" aria-hidden="true"><span />SCROLL</div>
-    </section>
-  )
-}
-
-function IssueReleaseNotice() {
-  return (
-    <section className="issue-release-notice" aria-labelledby="issue-release-title">
-      <div className="issue-release-notice__inner">
-        <div className="issue-release-notice__meta reveal">
-          <p>FIRST ISSUE / NOW AVAILABLE</p>
-          <strong>10.01</strong>
-          <span>2026 / FREE DIGITAL EDITION</span>
-        </div>
-        <div className="issue-release-notice__copy reveal">
-          <p className="issue-release-notice__eyebrow">DUST LINE / ISSUE 01</p>
-          <h2 id="issue-release-title">
-            <span className="issue-release-notice__model"><span>DUST LINE</span><span>創刊号</span></span>
-            <span className="issue-release-notice__schedule"><span>無料公開中。</span></span>
-          </h2>
-          <p className="issue-release-notice__body">
-            {firstIssue.releaseDateLabel}、DUST LINE創刊号を公開しました。
-            旅・カスタム・ものづくりから、ショップとイベントの紹介まで全130ページ。
-            無料会員登録で、本誌をお読みいただけます。
-          </p>
-          <div className="issue-release-notice__links">
-            <a className="button button--accent" href={firstIssue.readerPath}>創刊号を無料で読む <ArrowIcon /></a>
-            <a className="text-link" href={magazinePagePath}>創刊号について見る <ArrowIcon /></a>
-          </div>
-        </div>
-      </div>
-      <span className="issue-release-notice__index" aria-hidden="true">01</span>
     </section>
   )
 }
@@ -742,13 +766,13 @@ function MagazinePreview() {
           <p>WEBでは計画と車両選び、加工の要点をダイジェストで紹介。創刊号では全工程とDUST DATAを8ページで収録します。</p>
           <div className="sneak-peek__actions">
             <a className="button button--accent" href={webArticle}>WEBダイジェストを読む <ArrowIcon /></a>
-            <a className="sneak-peek__notify" href={signupPagePath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>創刊号を無料で読む <ArrowIcon /></a>
+            <a className="sneak-peek__notify" href={firstIssue.readerPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>創刊号を無料で読む <ArrowIcon /></a>
             <a className="sneak-peek__notify" href={officialXUrl} target="_blank" rel="noreferrer">公式Xで発売情報を見る <ArrowIcon /></a>
           </div>
         </div>
       </div>
 
-      <a className="sneak-peek__primary reveal" href={signupPagePath} aria-label="創刊号を無料で読む" onClick={() => trackAnalyticsEvent('signup_cta_click')}>
+      <a className="sneak-peek__primary reveal" href={firstIssue.readerPath} aria-label="創刊号を無料で読む" onClick={() => trackAnalyticsEvent('signup_cta_click')}>
         <span className="sneak-peek__ribbon">SAMPLE / ISSUE 01</span>
         <div className="sneak-peek__spread">
           <figure><img src={page026} alt="世界一周に行こうとしたら。扉ページ 026" loading="lazy" decoding="async" /></figure>
@@ -1451,9 +1475,8 @@ function App() {
     <>
       <a className="skip-link" href="#main">本文へ移動</a>
       <Header />
-      <main id="main">
+      <main id="main" className="home-page">
         <Hero />
-        <IssueReleaseNotice />
         <Manifesto />
         <FeaturedStory />
         <StoryGrid />

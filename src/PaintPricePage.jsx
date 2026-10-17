@@ -167,7 +167,7 @@ export default function PaintPricePage({ formUrl }) {
         </div>
         <div className="paint-price__hero-copy">
           <p className="paint-price__eyebrow">DUST LINE GARAGE / PAINT REQUEST</p>
-          <h1>走る部品を、<br />もう一度仕上げる。</h1>
+          <h1><span>走る部品を、</span><span>もう一度</span><span>仕上げる。</span></h1>
           <p className="paint-price__lead">
             パウダーコート、ガンコート、セラコート。
             部品の用途と状態から、必要な仕上げを選びます。
@@ -175,6 +175,12 @@ export default function PaintPricePage({ formUrl }) {
           <a className="paint-price__hero-cta" href={formUrl} target="_blank" rel="noreferrer">
             写真で見積を依頼する <span aria-hidden="true">→</span>
           </a>
+          <nav className="paint-price__jump-links" aria-label="塗装サービスのページ内案内">
+            <a href="#paint-catalog-title">参考価格 <span aria-hidden="true">↓</span></a>
+            <a href="#paint-work-title">施工例 <span aria-hidden="true">↓</span></a>
+            <a href="#paint-conditions-title">依頼の流れ <span aria-hidden="true">↓</span></a>
+            <a href="#paint-equipment">設備導入 <span aria-hidden="true">↓</span></a>
+          </nav>
         </div>
         <figure className="paint-price__hero-visual">
           <img
@@ -246,6 +252,12 @@ export default function PaintPricePage({ formUrl }) {
           <strong>部品写真を確認して、正式な料金を案内します。</strong>
           <p>表示価格は税込・部品単体・標準ブラック系・通常マスキングを基準にした参考価格です。</p>
         </div>
+
+        {document && <nav className="paint-price__category-links" aria-label="塗装方式別の価格へ移動">
+          {CATEGORY_ORDER.filter((category) => publishedItems.some((item) => item.category === category)).map((category) => (
+            <a key={category} href={`#paint-${category}`}>{CATEGORY_META[category].label}<span aria-hidden="true">↓</span></a>
+          ))}
+        </nav>}
 
         {!document && !error && <LoadingPriceList />}
         {error && (
