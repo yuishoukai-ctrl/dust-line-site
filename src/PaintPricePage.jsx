@@ -287,6 +287,38 @@ export default function PaintPricePage({ formUrl }) {
           <i aria-hidden="true">→</i>
         </a>
       </section>
+
+      <section id="paint-equipment" className="paint-equipment" aria-labelledby="paint-equipment-title">
+        <div className="paint-equipment__brand">
+          <p className="paint-equipment__eyebrow">FOR SHOPS & WORKSHOPS</p>
+          <img
+            src={paintAsset('kensou-systems-logo.png')}
+            width="1400"
+            height="356"
+            alt="研装システムズ KENSO SYSTEMS"
+            loading="lazy"
+            decoding="async"
+          />
+          <p className="paint-equipment__brand-caption">塗装設備の導入相談</p>
+        </div>
+        <div className="paint-equipment__content">
+          <p className="paint-equipment__eyebrow">EQUIPMENT GUIDE</p>
+          <h2 id="paint-equipment-title">自社で塗装を始めたい<br />ショップの方へ。</h2>
+          <p className="paint-equipment__lead">
+            乾燥炉・粉体塗装機・ブラスト設備の導入は、研装システムズへ。
+            処理する部品の大きさや作業量、設置環境に合わせてご相談いただけます。
+          </p>
+          <div className="paint-equipment__actions">
+            <a className="paint-equipment__cta" href="https://kensosystems.jp/drying-oven/" target="_blank" rel="noreferrer">
+              乾燥炉の仕様・相談窓口を見る <span aria-hidden="true">↗</span>
+            </a>
+            <a className="paint-equipment__more" href="https://kensosystems.jp/#lineup" target="_blank" rel="noreferrer">
+              設備一覧を見る <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <p className="paint-equipment__note">設備の仕様・価格・納期は、研装システムズでご案内します。</p>
+        </div>
+      </section>
     </main>
   )
 }
