@@ -9,12 +9,22 @@ export function GuardFactoryLogo({ assetPath }) {
 
 function ProductPhoto({ photo, assetPath, sizes, eager = false, ...props }) {
   const largeWidth = photo.width || 1280
-  return <img
+  const image = <img
     src={assetPath(guardFactoryPhotoPath(photo.name, largeWidth))}
     srcSet={`${assetPath(guardFactoryPhotoPath(photo.name, 640))} 640w, ${assetPath(guardFactoryPhotoPath(photo.name, largeWidth))} ${largeWidth}w`}
     sizes={sizes} width={photo.width || 1280} height={photo.height || 960} alt={photo.alt}
     loading={eager ? 'eager' : 'lazy'} fetchPriority={eager ? 'high' : 'auto'} decoding="async" {...props}
   />
+  if (photo.rotationDeg == null) return image
+  // Rotate the actual cutout as one layer; fit its full rotated bounds in a 4:3 frame.
+  const aspect = (photo.width || 1280) / (photo.height || 960)
+  const height = Math.min(1, (4 / 3) / aspect)
+  const width = height * aspect
+  const radians = photo.rotationDeg * Math.PI / 180
+  const rotatedWidth = Math.abs(width * Math.cos(radians)) + Math.abs(height * Math.sin(radians))
+  const rotatedHeight = Math.abs(width * Math.sin(radians)) + Math.abs(height * Math.cos(radians))
+  const scale = photo.framing?.scale ?? .9 * Math.min((4 / 3) / rotatedWidth, 1 / rotatedHeight)
+  return <picture className="gf-cutout-frame" style={{ '--photo-turn': `${photo.rotationDeg}deg`, '--photo-scale': scale, '--photo-x': `${photo.framing?.x || 0}%`, '--photo-y': `${photo.framing?.y || 0}%` }}>{image}</picture>
 }
 
 function PendingPhoto() {
@@ -30,7 +40,7 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
     <section className={`gf-lineup${isCad ? ' gf-lineup--cad' : ''}`} id={sectionId} aria-labelledby={`${sectionId}-title`} tabIndex={-1}>
       <header className="gf-lineup__head reveal">
         <div><p className="gf-eyebrow">GUARD FACTORY / {isCad ? 'BMW F 450 GS' : isFabrication ? 'FABRICATION' : 'DJEBEL 250'}</p><h2 id={`${sectionId}-title`}>{isCad ? <>F 450 GSに、<br />4つのガード。</> : isFabrication ? <>足元を、<br />自分に合わせる。</> : <>ジェベル250に、<br />{products.length}つのガード。</>}</h2></div>
-        <div className="gf-lineup__brand"><GuardFactoryLogo assetPath={assetPath} /><p>{isCad ? <>販売準備中の4商品を、実物写真とCAD画像で紹介。<br />価格・販売仕様・実車適合は確定後にご案内します。</> : <>ガードファクトリーの製品情報と実画像。<br />仕様・適合条件を、商品ごとにご案内します。</>}</p></div>
+        <div className="gf-lineup__brand"><GuardFactoryLogo assetPath={assetPath} /><p>{isCad ? <>販売準備中の4商品を、実物写真で紹介。<br />販売予定価格と製品情報を、商品ごとにご案内します。</> : <>ガードファクトリーの製品情報と実画像。<br />仕様・適合条件を、商品ごとにご案内します。</>}</p></div>
       </header>
       <nav className="gf-lineup__navigation" aria-label={`${isCad ? 'BMW F 450 GS' : isFabrication ? '加工用パーツ' : 'ジェベル250'}の商品一覧から移動`}>
         <a href="#parts-models">車種を選び直す <span aria-hidden="true">↑</span></a>
@@ -39,7 +49,7 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
       <div className="gf-lineup__products">
         {products.map((product, index) => (
           <article className="gf-card reveal" key={product.slug}>
-            <a className="gf-card__photo" href={guardFactoryProductPath(product.slug, basePath)} aria-label={`${product.name}の詳細を見る`}>
+            <a className={`gf-card__photo${product.photoTreatment === 'cutout' ? ' gf-card__photo--cutout' : ''}`} href={guardFactoryProductPath(product.slug, basePath)} aria-label={`${product.name}の詳細を見る`}>
               {product.photos.length ? <ProductPhoto photo={product.photos[0]} assetPath={assetPath} sizes="(max-width: 760px) calc(100vw - 40px), 44vw" /> : <PendingPhoto />}
               {isCad && <span className="gf-card__cad-label">{product.imageKind === 'photo' ? '実物写真 / 開発中' : 'CAD / 開発イメージ'}</span>}
               <span aria-hidden="true">0{index + 1} / VIEW PRODUCT →</span>
@@ -59,7 +69,7 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
           </article>
         ))}
       </div>
-      <p className="gf-lineup__note">{isCad && <>実物写真とCAD画像を掲載しています。形状・色・販売仕様は変更する場合があります。<br /></>}{isCad ? '販売開始日・在庫と、発送予定の記載がない商品の納期は確認中です。' : '販売開始日・在庫・納期は確認中です。'}購入先は販売開始後にご案内します。</p>
+      <p className="gf-lineup__note">{isCad && <>製作した部品の実物写真です。形状・色・販売仕様は変更する場合があります。<br /></>}{isCad ? '販売開始日・在庫と、発送予定の記載がない商品の納期は確認中です。' : '販売開始日・在庫・納期は確認中です。'}購入先は販売開始後にご案内します。</p>
     </section>
   )
 }
@@ -69,7 +79,7 @@ function ProductGallery({ product, assetPath }) {
   const [imageFailed, setImageFailed] = useState(false)
   const activePhoto = product.photos[activeIndex]
   return (
-    <div className={`gf-gallery${product.portraitPhoto ? ' gf-gallery--portrait' : ''}`}>
+    <div className={`gf-gallery${product.portraitPhoto ? ' gf-gallery--portrait' : ''}${product.photoTreatment === 'cutout' ? ' gf-gallery--cutout' : ''}`}>
       {product.development && <p className="gf-gallery__cad-label">{product.imageKind === 'photo' ? '実物写真 / 開発中' : 'CAD / 開発イメージ'} <span>{product.imageRevision}</span></p>}
       {activePhoto ? <figure className="gf-gallery__main">
         <ProductPhoto photo={activePhoto} assetPath={assetPath} sizes="(max-width: 900px) calc(100vw - 40px), 53vw" eager onError={() => setImageFailed(true)} onLoad={() => setImageFailed(false)} />
@@ -79,7 +89,7 @@ function ProductGallery({ product, assetPath }) {
       {product.photos.length > 1 && <div className="gf-gallery__thumbs" role="group" aria-label={product.imageKind === 'cad' ? 'CAD画像を選択' : '商品写真を選択'}>
         {product.photos.map((photo, index) => (
           <button type="button" key={photo.name} aria-pressed={activeIndex === index} aria-label={`${index + 1}枚目：${photo.caption}`} onClick={() => { setActiveIndex(index); setImageFailed(false) }}>
-            <img src={assetPath(guardFactoryPhotoPath(photo.name, 640))} width="640" height={Math.round((photo.height || 960) * 640 / (photo.width || 1280))} alt="" decoding="async" />
+            {photo.rotationDeg != null ? <ProductPhoto photo={{ ...photo, alt: '' }} assetPath={assetPath} sizes="110px" /> : <img src={assetPath(guardFactoryPhotoPath(photo.name, 640))} width="640" height={Math.round((photo.height || 960) * 640 / (photo.width || 1280))} alt="" decoding="async" />}
           </button>
         ))}
       </div>}
