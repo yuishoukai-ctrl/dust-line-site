@@ -197,11 +197,11 @@ export const guardFactoryProducts = [
     verificationNote: '実車適合・取付条件は確認中です。',
     installation: '取付面の支持、回り止め、ボルト長、ホースの作動時の隙間を確認中です。取付方法・必要部品は販売仕様とともにご案内します。',
     photos: [
-      { name: 'f450gs-brake-hose-oblique-photo-20261021', width: 1280, height: 962, rotationDeg: -68, framing: { scale: 0.72961, x: -4.69096, y: 3.0222 }, alt: '黒いブレーキホースガードの実物。G.F切り抜き、幾何学的な開口、段差のある取付部', caption: 'ブレーキホースガードの実物／全体と取付部' },
-      { name: 'f450gs-brake-hose-front-photo-20261021', width: 1280, height: 962, rotationDeg: -47, framing: { scale: 0.76951, x: -2.45787, y: -0.68497 }, alt: 'ブレーキホースガードを正面寄りから撮影。前面の開口と取付穴', caption: 'ブレーキホースガードの実物／前面の開口' },
-      { name: 'f450gs-brake-hose-angle01-photo-20261021', width: 1108, height: 1475, rotationDeg: 19, framing: { scale: 0.9446, x: -2.77671, y: -2.29916 }, alt: 'ブレーキホースガード単体の斜め写真。曲げ部と取付穴', caption: 'ブレーキホースガードの実物／斜めから見た形状' },
-      { name: 'f450gs-brake-hose-angle02-photo-20261021', width: 1108, height: 1475, rotationDeg: 14, framing: { scale: 0.93086, x: -2.88378, y: -1.49624 }, alt: 'ブレーキホースガードの曲げによる段差とプレート表面', caption: 'ブレーキホースガードの実物／曲げ部の段差' },
-      { name: 'f450gs-brake-hose-angle03-photo-20261021', width: 1108, height: 831, rotationDeg: 52, framing: { scale: 0.82798, x: -0.93464, y: -2.19509 }, alt: '別角度から撮影したブレーキホースガードの外形とG.F切り抜き', caption: 'ブレーキホースガードの実物／別角度' },
+      { name: 'f450gs-brake-hose-oblique-photo-20261021', width: 1280, height: 962, rotationDeg: 112, framing: { scale: 0.72961, x: 4.69096, y: -3.0222 }, alt: '黒いブレーキホースガードの実物。G.F切り抜き、幾何学的な開口、段差のある取付部', caption: 'ブレーキホースガードの実物／全体と取付部' },
+      { name: 'f450gs-brake-hose-front-photo-20261021', width: 1280, height: 962, rotationDeg: 133, framing: { scale: 0.76951, x: 2.45787, y: 0.68497 }, alt: 'ブレーキホースガードを正面寄りから撮影。前面の開口と取付穴', caption: 'ブレーキホースガードの実物／前面の開口' },
+      { name: 'f450gs-brake-hose-angle01-photo-20261021', width: 1108, height: 1475, rotationDeg: 199, framing: { scale: 0.9446, x: 2.77671, y: 2.29916 }, alt: 'ブレーキホースガード単体の斜め写真。曲げ部と取付穴', caption: 'ブレーキホースガードの実物／斜めから見た形状' },
+      { name: 'f450gs-brake-hose-angle02-photo-20261021', width: 1108, height: 1475, rotationDeg: 194, framing: { scale: 0.93086, x: 2.88378, y: 1.49624 }, alt: 'ブレーキホースガードの曲げによる段差とプレート表面', caption: 'ブレーキホースガードの実物／曲げ部の段差' },
+      { name: 'f450gs-brake-hose-angle03-photo-20261021', width: 1108, height: 831, rotationDeg: 232, framing: { scale: 0.82798, x: 0.93464, y: 2.19509 }, alt: '別角度から撮影したブレーキホースガードの外形とG.F切り抜き', caption: 'ブレーキホースガードの実物／別角度' },
     ],
   },
   {

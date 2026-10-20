@@ -87,27 +87,6 @@ export default function PartsPage({ assetPath, basePath, contactUrl, officialXUr
         <GuardFactoryLineup assetPath={assetPath} basePath={basePath} collection="fabrication" />
       </section>
 
-      <section className="parts-craft" aria-labelledby="parts-craft-title">
-        <div className="parts-craft__copy reveal">
-          <div className="parts-section-index"><span>02</span><span>OUR FABRICATION</span></div>
-          <p>DUST LINE GARAGE / MADE FROM THE RIDE</p>
-          <h2 id="parts-craft-title">誌面で伝えてきた製作を、<br />次は部品へ。</h2>
-          <p>
-            溶接、塗装、整備を記事にするだけでなく、実際に使う部品として届ける準備を進めます。
-            写真はF 450 GS用製品ではなく、これまでの製作姿勢を伝える過去のサイドスタンド拡張事例です。
-          </p>
-        </div>
-        <figure className="parts-craft__media reveal">
-          <img
-            src={assetPath('parts/side-stand-extension-finished.jpeg')}
-            alt="塗装まで完了したサイドスタンド拡張部の過去の製作事例"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption><span>PAST WORK</span>溶接・仕上げ・塗装まで行った製作事例</figcaption>
-        </figure>
-      </section>
-
       <section className="parts-notice" aria-labelledby="parts-notice-title">
         <div className="parts-notice__title reveal">
           <p>BEFORE RELEASE</p>
