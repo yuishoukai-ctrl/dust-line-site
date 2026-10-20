@@ -60,7 +60,7 @@
 .gf-gallery__thumbs button[aria-pressed='true'] { border-color: var(--dust); }
 .gf-gallery__thumbs img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; }
 .gf-cutout-frame { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; background: #e7e5df; }
-.gf-lineup--cad .gf-card__photo--cutout .gf-cutout-frame > img,
+.gf-card__photo--cutout .gf-cutout-frame > img,
 .gf-gallery--cutout .gf-cutout-frame > img { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; object-fit: contain; background: transparent; transform: translate(var(--photo-x), var(--photo-y)) rotate(var(--photo-turn)) scale(var(--photo-scale)); transform-origin: center; }
 .gf-gallery__note { color: var(--gf-muted); font-size: .76rem; line-height: 1.8; margin: 16px 0 0; }
 .gf-product-copy .gf-logo { width: 250px; margin: -46px 0 18px; }
