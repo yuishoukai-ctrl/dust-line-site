@@ -10,6 +10,7 @@
 .gf-lineup__products { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 64px); }
 .gf-lineup:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
 .gf-lineup__navigation { display: flex; flex-wrap: wrap; gap: 12px 28px; margin: -24px 0 32px; }
+.gf-lineup__navigation:first-child { margin-top: 0; }
 .gf-lineup__navigation a { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; border-bottom: 1px solid var(--line); font-size: .8rem; font-weight: 700; }
 .gf-lineup__navigation a:hover { color: var(--dust); }
 .gf-card { min-width: 0; border-bottom: 1px solid var(--line); }
