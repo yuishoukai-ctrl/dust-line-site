@@ -30,7 +30,7 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
     <section className={`gf-lineup${isCad ? ' gf-lineup--cad' : ''}`} id={sectionId} aria-labelledby={`${sectionId}-title`} tabIndex={-1}>
       <header className="gf-lineup__head reveal">
         <div><p className="gf-eyebrow">GUARD FACTORY / {isCad ? 'BMW F 450 GS' : isFabrication ? 'FABRICATION' : 'DJEBEL 250'}</p><h2 id={`${sectionId}-title`}>{isCad ? <>F 450 GSに、<br />4つのガード。</> : isFabrication ? <>足元を、<br />自分に合わせる。</> : <>ジェベル250に、<br />{products.length}つのガード。</>}</h2></div>
-        <div className="gf-lineup__brand"><GuardFactoryLogo assetPath={assetPath} /><p>{isCad ? <>販売準備中の4商品を、実物写真とCAD画像で紹介。<br />価格・販売仕様・実車適合は確定後にご案内します。</> : <>ガードファクトリーの製品情報と実画像。<br />仕様・適合条件を、商品ごとにご案内します。</>}</p></div>
+        <div className="gf-lineup__brand"><GuardFactoryLogo assetPath={assetPath} /><p>{isCad ? <>販売準備中の4商品を、実物写真で紹介。<br />販売予定価格と製品情報を、商品ごとにご案内します。</> : <>ガードファクトリーの製品情報と実画像。<br />仕様・適合条件を、商品ごとにご案内します。</>}</p></div>
       </header>
       <nav className="gf-lineup__navigation" aria-label={`${isCad ? 'BMW F 450 GS' : isFabrication ? '加工用パーツ' : 'ジェベル250'}の商品一覧から移動`}>
         <a href="#parts-models">車種を選び直す <span aria-hidden="true">↑</span></a>
@@ -59,7 +59,7 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
           </article>
         ))}
       </div>
-      <p className="gf-lineup__note">{isCad && <>実物写真とCAD画像を掲載しています。形状・色・販売仕様は変更する場合があります。<br /></>}{isCad ? '販売開始日・在庫と、発送予定の記載がない商品の納期は確認中です。' : '販売開始日・在庫・納期は確認中です。'}購入先は販売開始後にご案内します。</p>
+      <p className="gf-lineup__note">{isCad && <>製作した部品の実物写真です。形状・色・販売仕様は変更する場合があります。<br /></>}{isCad ? '販売開始日・在庫と、発送予定の記載がない商品の納期は確認中です。' : '販売開始日・在庫・納期は確認中です。'}購入先は販売開始後にご案内します。</p>
     </section>
   )
 }
