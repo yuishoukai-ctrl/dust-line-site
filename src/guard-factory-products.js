@@ -1,6 +1,6 @@
 // Facts: supplied Djebel250 manuscript and 商品台帳_v08.json (2026-09-30).
 // F 450 GS: master/radiator real photos (2026-10-13); indicator/hose real photos and user-confirmed prices (2026-10-21).
-// CAD parameters and supplier quotes are not confirmed retail specifications or prices.
+// CAD-derived dimensions and weights must be labeled as design/calculated values; supplier quotes are not retail prices.
 const djebelDetails = {
   collection: 'djebel250',
   modelLabel: 'ジェベル250用',
@@ -46,11 +46,14 @@ export const guardFactoryProducts = [
     imageKind: 'photo',
     photoTreatment: 'cutout',
     compactDetails: true,
-    summary: 'ステンレスの素材感を生かした、無塗装の焚き火台。側面にはG.Fの切り抜きと幾何学的な開口を配しています。',
+    summary: 'バイクでのソロツーリングキャンプにおすすめの、コンパクトな焚き火台。ステンレスの素材感を生かした無塗装仕上げです。',
     galleryNote: '実物写真の背景を除去しています。',
     specifications: [
       ['素材', 'ステンレス'],
       ['仕上げ', '無塗装'],
+      ['組立サイズ（設計値）', '幅200 × 奥行150 × 高さ110 mm'],
+      ['収納サイズ（設計値）', '幅200 × 奥行120 × 厚さ7 mm（分解して重ねた状態。袋・梱包を除く）'],
+      ['参考重量', '約750 g（本体のみ・CAD計算値。実測値ではありません）'],
     ],
     photos: [
       { name: 'stainless-fire-pit-front-20261021', width: 1280, height: 960, rotationDeg: 0, framing: { scale: 1, x: 0, y: 0 }, alt: '無塗装のステンレス焚き火台。正面のG.F切り抜きと脚部', caption: 'ステンレス焚き火台／正面' },
