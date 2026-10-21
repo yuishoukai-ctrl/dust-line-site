@@ -12,14 +12,15 @@ function PartsModelChooser() {
     { collection: 'djebel250', label: 'ジェベル250', english: 'DJEBEL 250', href: '#guard-factory', state: '販売準備中' },
     { collection: 'f450gs', label: 'BMW F 450 GS', english: 'BMW F 450 GS', href: '#lineup', state: '実物写真・販売準備中' },
     { collection: 'fabrication', label: '加工用パーツ', english: 'FABRICATION', href: '#fabrication', state: '溶接加工素材・加工依頼受付' },
+    { collection: 'outdoor', label: 'アウトドア用品', english: 'OUTDOOR', href: '#outdoor', state: 'ステンレス焚き火台' },
   ]
   return (
     <section className="parts-models" id="parts-models" aria-labelledby="parts-models-title" tabIndex={-1}>
       <header className="parts-models__head reveal">
-        <div><p>CHOOSE YOUR MOTORCYCLE</p><h2 id="parts-models-title">車種から選ぶ。</h2></div>
+        <div><p>CHOOSE YOUR CATEGORY</p><h2 id="parts-models-title">車種・用途から選ぶ。</h2></div>
         <a className="parts-models__all" href="#parts-products">全{guardFactoryProducts.length}商品を見る <PartsArrow /></a>
       </header>
-      <nav aria-label="車種別の商品一覧へ移動">
+      <nav aria-label="車種・用途別の商品一覧へ移動">
         <ul className="parts-models__list">
           {models.map((model) => {
             const count = guardFactoryProducts.filter((product) => product.collection === model.collection).length
@@ -28,7 +29,7 @@ function PartsModelChooser() {
                 <span className="parts-model-card__label">{model.english}</span>
                 <strong>{model.label}</strong>
                 <span className="parts-model-card__state">{count}商品 / {model.state}</span>
-                <span className="parts-model-card__action">この車種の商品を見る <PartsArrow /></span>
+                <span className="parts-model-card__action">商品を見る <PartsArrow /></span>
               </a>
             </li>
           })}
@@ -57,9 +58,9 @@ export default function PartsPage({ assetPath, basePath, contactUrl, officialXUr
           <h1 id="parts-title">走るための<br />部品を、<br className="parts-mobile-break" />つくる。</h1>
           <p className="parts-hero__lead">
             旅と整備の現場で感じた「ここに必要」を、形にする。Guard Factoryのジェベル250用ガード3点と、
-            BMW F 450 GS向けガード4点の実物写真、ワイドステップ加工用プレートを紹介します。
+            BMW F 450 GS向けガード4点の実物写真、ワイドステップ加工用プレート、ステンレス焚き火台を紹介します。
           </p>
-          <a className="parts-button parts-button--accent" href="#parts-models">車種から選ぶ <PartsArrow /></a>
+          <a className="parts-button parts-button--accent" href="#parts-models">車種・用途から選ぶ <PartsArrow /></a>
           <a className="parts-text-link parts-hero__development-link" href="#lineup">BMW F 450 GSの4商品を見る <PartsArrow /></a>
         </div>
 
@@ -85,6 +86,7 @@ export default function PartsPage({ assetPath, basePath, contactUrl, officialXUr
         <GuardFactoryLineup assetPath={assetPath} basePath={basePath} />
         <GuardFactoryLineup assetPath={assetPath} basePath={basePath} collection="f450gs" />
         <GuardFactoryLineup assetPath={assetPath} basePath={basePath} collection="fabrication" />
+        <GuardFactoryLineup assetPath={assetPath} basePath={basePath} collection="outdoor" />
       </section>
 
       <section className="parts-notice" aria-labelledby="parts-notice-title">

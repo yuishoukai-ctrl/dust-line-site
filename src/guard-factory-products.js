@@ -30,6 +30,37 @@ const f450Details = {
 
 export const guardFactoryProducts = [
   {
+    collection: 'outdoor',
+    slug: 'stainless-fire-pit',
+    name: 'ステンレス焚き火台',
+    shortName: 'ステンレス焚き火台',
+    headingParts: ['ステンレス', '焚き火台'],
+    modelLabel: 'OUTDOOR / GUARD FACTORY',
+    category: 'STAINLESS STEEL / FIRE PIT',
+    priceLabel: '5,980円',
+    priceNote: '税込',
+    statusLabel: 'お問い合わせ受付',
+    salesNote: 'ご購入希望・在庫・発送時期は、お問い合わせください。',
+    material: 'ステンレス',
+    finish: '無塗装',
+    imageKind: 'photo',
+    photoTreatment: 'cutout',
+    compactDetails: true,
+    summary: 'ステンレスの素材感を生かした、無塗装の焚き火台。側面にはG.Fの切り抜きと幾何学的な開口を配しています。',
+    galleryNote: '実物写真の背景を除去しています。',
+    specifications: [
+      ['素材', 'ステンレス'],
+      ['仕上げ', '無塗装'],
+    ],
+    photos: [
+      { name: 'stainless-fire-pit-front-20261021', width: 1280, height: 960, rotationDeg: 0, framing: { scale: 1, x: 0, y: 0 }, alt: '無塗装のステンレス焚き火台。正面のG.F切り抜きと脚部', caption: 'ステンレス焚き火台／正面' },
+      { name: 'stainless-fire-pit-oblique-20261021', width: 1280, height: 960, rotationDeg: 0, framing: { scale: 1, x: 0, y: 0 }, alt: 'ステンレス焚き火台の全体を斜めから撮影', caption: 'ステンレス焚き火台／斜めから見た全体' },
+      { name: 'stainless-fire-pit-side-20261021', width: 1280, height: 960, rotationDeg: 0, framing: { scale: 1, x: 0, y: 0 }, alt: '焚き火台の側面と火床、ステンレス表面の質感', caption: 'ステンレス焚き火台／側面と火床' },
+      { name: 'stainless-fire-pit-top-20261021', width: 1280, height: 960, rotationDeg: 0, framing: { scale: 1, x: 0, y: 0 }, alt: 'ステンレス焚き火台の火床と細長い開口を上から撮影', caption: 'ステンレス焚き火台／火床の開口' },
+      { name: 'stainless-fire-pit-detail-20261021', width: 1280, height: 960, rotationDeg: 0, framing: { scale: 1, x: 0, y: 0 }, alt: 'ステンレス焚き火台の内側と側板の切り抜き', caption: 'ステンレス焚き火台／内側と側板' },
+    ],
+  },
+  {
     collection: 'fabrication',
     slug: 'wide-step-welding-plate',
     name: 'ワイドステップ加工用プレート',

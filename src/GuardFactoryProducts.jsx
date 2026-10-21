@@ -34,16 +34,19 @@ function PendingPhoto() {
 export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel250' }) {
   const isCad = collection === 'f450gs'
   const isFabrication = collection === 'fabrication'
+  const isOutdoor = collection === 'outdoor'
   const products = guardFactoryProducts.filter((product) => product.collection === collection)
-  const sectionId = isCad ? 'lineup' : isFabrication ? 'fabrication' : 'guard-factory'
+  const sectionId = isCad ? 'lineup' : isFabrication ? 'fabrication' : isOutdoor ? 'outdoor' : 'guard-factory'
+  const compactHeading = isFabrication || isOutdoor
+  const collectionLabel = isOutdoor ? 'アウトドア用品' : isFabrication ? '加工用パーツ' : isCad ? 'BMW F 450 GS' : 'ジェベル250'
   return (
-    <section className={`gf-lineup${isCad ? ' gf-lineup--cad' : ''}`} id={sectionId} aria-labelledby={isFabrication ? undefined : `${sectionId}-title`} aria-label={isFabrication ? '加工用パーツ' : undefined} tabIndex={-1}>
-      {!isFabrication && <header className="gf-lineup__head reveal">
+    <section className={`gf-lineup${isCad ? ' gf-lineup--cad' : ''}`} id={sectionId} aria-labelledby={compactHeading ? undefined : `${sectionId}-title`} aria-label={compactHeading ? collectionLabel : undefined} tabIndex={-1}>
+      {!compactHeading && <header className="gf-lineup__head reveal">
         <div><p className="gf-eyebrow">GUARD FACTORY / {isCad ? 'BMW F 450 GS' : 'DJEBEL 250'}</p><h2 id={`${sectionId}-title`}>{isCad ? <>F 450 GSに、<br />4つのガード。</> : <>ジェベル250に、<br />{products.length}つのガード。</>}</h2></div>
         <div className="gf-lineup__brand"><GuardFactoryLogo assetPath={assetPath} /><p>{isCad ? <>販売準備中の4商品を、実物写真で紹介。<br />販売予定価格と製品情報を、商品ごとにご案内します。</> : <>ガードファクトリーの製品情報と実画像。<br />仕様・適合条件を、商品ごとにご案内します。</>}</p></div>
       </header>}
-      <nav className="gf-lineup__navigation" aria-label={`${isCad ? 'BMW F 450 GS' : isFabrication ? '加工用パーツ' : 'ジェベル250'}の商品一覧から移動`}>
-        <a href="#parts-models">車種を選び直す <span aria-hidden="true">↑</span></a>
+      <nav className="gf-lineup__navigation" aria-label={`${collectionLabel}の商品一覧から移動`}>
+        <a href="#parts-models">{isOutdoor ? 'カテゴリを選び直す' : '車種を選び直す'} <span aria-hidden="true">↑</span></a>
         <a href="#parts-products">全{guardFactoryProducts.length}商品を見る <span aria-hidden="true">↑</span></a>
       </nav>
       <div className="gf-lineup__products">
@@ -58,7 +61,7 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
               <p className="gf-eyebrow">{product.category}</p>
               <h3><a href={guardFactoryProductPath(product.slug, basePath)}>{product.shortName}</a></h3>
               <p>{product.summary}</p>
-              <div className="gf-card__foot"><p><strong>{product.priceLabel}</strong><span>{product.priceNote}</span></p><span className="gf-status">販売準備中</span></div>
+              <div className="gf-card__foot"><p><strong>{product.priceLabel}</strong><span>{product.priceNote}</span></p><span className="gf-status">{product.statusLabel || '販売準備中'}</span></div>
               {product.shippingEstimate && <p>発送予定：{product.shippingEstimate}<br />製作状況により変更になる場合があります。</p>}
               <div className="gf-card__actions">
                 <a className="gf-text-link" href={guardFactoryProductPath(product.slug, basePath)}>{isCad ? product.imageKind === 'photo' ? '実物写真・開発情報を見る' : 'CAD画像・開発情報を見る' : '仕様・商品情報を見る'} <span aria-hidden="true">→</span></a>
@@ -69,7 +72,7 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
           </article>
         ))}
       </div>
-      <p className="gf-lineup__note">{isCad && <>製作した部品の実物写真です。形状・色・販売仕様は変更する場合があります。<br /></>}{isCad ? '販売開始日・在庫と、発送予定の記載がない商品の納期は確認中です。' : '販売開始日・在庫・納期は確認中です。'}購入先は販売開始後にご案内します。</p>
+      <p className="gf-lineup__note">{isOutdoor ? 'ご購入希望・在庫・発送時期は、お問い合わせください。' : <>{isCad && <>製作した部品の実物写真です。形状・色・販売仕様は変更する場合があります。<br /></>}{isCad ? '販売開始日・在庫と、発送予定の記載がない商品の納期は確認中です。' : '販売開始日・在庫・納期は確認中です。'}購入先は販売開始後にご案内します。</>}</p>
     </section>
   )
 }
@@ -100,6 +103,7 @@ function ProductGallery({ product, assetPath }) {
 
 export default function GuardFactoryProductPage({ slug, assetPath, basePath, contactUrl }) {
   const product = guardFactoryProducts.find((item) => item.slug === slug)
+  const isOutdoor = product.collection === 'outdoor'
   useEffect(() => {
     const previousTitle = document.title
     document.title = `${product.name}｜Guard Factory｜DUST LINE Parts`
@@ -108,7 +112,7 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
     if (!reservationAnchor) window.scrollTo(0, 0)
     return () => { document.title = previousTitle; if (frame !== null) cancelAnimationFrame(frame) }
   }, [product])
-  const relatedProducts = product.collection === 'fabrication'
+  const relatedProducts = product.collection === 'fabrication' || isOutdoor
     ? guardFactoryProducts.filter((item) => item.collection === 'djebel250')
     : guardFactoryProducts.filter((item) => item.slug !== slug && item.collection === product.collection)
   return (
@@ -123,9 +127,9 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
             <h1 id="gf-product-title"><span className="gf-product-model">{product.modelLabel} </span>{product.headingParts.map((term) => <span className="gf-product-term" key={term}>{term}</span>)}</h1>
             <p className="gf-product-copy__summary">{product.summary}</p>
             <p className="gf-price"><strong>{product.priceLabel}</strong><span>{product.priceNote}</span></p>
-            <div className="gf-release"><span className="gf-status">販売準備中</span><p>{product.shippingEstimate ? <>発送予定：{product.shippingEstimate}<br />製作状況により変更になる場合があります。<br />販売開始日・在庫は確認中です。</> : '販売開始日・在庫・納期は確認中です。'}<br />購入先は販売開始後にご案内します。</p></div>
+            <div className="gf-release"><span className="gf-status">{product.statusLabel || '販売準備中'}</span><p>{product.salesNote || <>{product.shippingEstimate ? <>発送予定：{product.shippingEstimate}<br />製作状況により変更になる場合があります。<br />販売開始日・在庫は確認中です。</> : '販売開始日・在庫・納期は確認中です。'}<br />購入先は販売開始後にご案内します。</>}</p></div>
             {canReservePart(product) && <a className="gf-button" href="#gf-reservation">無料で仮予約する <span aria-hidden="true">↓</span></a>}
-            <a className="gf-button" href={contactUrl} target="_blank" rel="noreferrer">適合・販売について問い合わせる <span aria-hidden="true">↗</span><span className="gf-sr-only">（別タブで開きます）</span></a>
+            <a className="gf-button" href={contactUrl} target="_blank" rel="noreferrer">{isOutdoor ? '購入について問い合わせる' : '適合・販売について問い合わせる'} <span aria-hidden="true">↗</span><span className="gf-sr-only">（別タブで開きます）</span></a>
             <a className="gf-text-link" href="#gf-specifications">{product.compactDetails ? '製品情報を見る' : product.development ? '開発情報と確認事項を見る' : '仕様と取付条件を確認する'} <span aria-hidden="true">↓</span></a>
             {product.service && <a className="gf-text-link" href="#gf-fabrication-service">溶接・塗装まで依頼する <span aria-hidden="true">↓</span></a>}
           </div>
@@ -134,6 +138,7 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
       <section className={`gf-specifications${product.compactDetails ? ' gf-specifications--compact' : ''}`} id="gf-specifications" aria-labelledby="gf-spec-title">
         {product.compactDetails ? <h2 id="gf-spec-title">製品情報。</h2> : <div className="gf-specifications__intro"><p className="gf-eyebrow">{product.development ? 'DEVELOPMENT DETAILS' : 'PRODUCT DETAILS'}</p><h2 id="gf-spec-title">{product.development ? '開発情報と、確認事項。' : '仕様と、取付前の確認。'}</h2><p>{product.description}</p><h3>取付について</h3><p>{product.installation}</p><p>{product.verificationNote}</p></div>}
         <dl className="gf-spec-table">
+          {product.specifications ? product.specifications.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>) : <>
           <div><dt>{product.development ? '開発対象' : '対象車種'}</dt><dd>{product.fitment}<small>{product.fitmentNote}</small></dd></div>
           <div><dt>材質・板厚</dt><dd>{product.material}</dd></div>
           <div><dt>仕上げ</dt><dd>{product.finish}</dd></div>
@@ -142,6 +147,7 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
           <div><dt>重量・寸法</dt><dd>{product.dimensions || '確認中'}</dd></div>
           <div><dt>在庫・納期</dt><dd>{product.shippingEstimate ? <>在庫：確認中<br />発送予定：{product.shippingEstimate}<small>製作状況により変更になる場合があります。</small></> : '確認中'}</dd></div>
           <div><dt>保証・返品条件</dt><dd>確認中。販売開始前にご案内します。</dd></div>
+          </>}
         </dl>
       </section>
       <PartsReservationForm key={product.slug} product={product} basePath={basePath} contactUrl={contactUrl} />
@@ -149,7 +155,7 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
         <div><p className="gf-eyebrow">DUST LINE GARAGE / WIDE STEP SERVICE</p><h2 id="gf-service-title">溶接から塗装まで、<br />加工を依頼する。</h2><p>{product.service.description}</p></div>
         <div><p className="gf-price"><strong>{product.service.priceLabel}</strong></p><p>{product.service.includes}</p><p>プレート単品の販売価格とは別の、左右の加工サービス料金です。</p><a className="gf-button" href={contactUrl} target="_blank" rel="noreferrer">ワイドステップ加工を相談する <span aria-hidden="true">↗</span><span className="gf-sr-only">（お問い合わせフォームを別タブで開きます）</span></a></div>
       </section>}
-      <aside className="gf-related" aria-labelledby="gf-related-title"><div><p className="gf-eyebrow">ALSO FROM GUARD FACTORY</p><h2 id="gf-related-title">{product.development ? 'F 450 GSのガード。' : product.collection === 'fabrication' ? 'Guard Factoryの製品。' : 'ジェベル250のガード。'}</h2><ul>{relatedProducts.map((related) => <li key={related.slug}><a className="gf-text-link" href={guardFactoryProductPath(related.slug, basePath)}>{related.name} <span aria-hidden="true">→</span></a></li>)}</ul></div><a className="gf-text-link" href={`${basePath}parts/#${product.development ? 'lineup' : product.collection === 'fabrication' ? 'fabrication' : 'guard-factory'}`}>Partsの製品一覧へ戻る <span aria-hidden="true">→</span></a></aside>
+      <aside className="gf-related" aria-labelledby="gf-related-title"><div><p className="gf-eyebrow">ALSO FROM GUARD FACTORY</p><h2 id="gf-related-title">{product.development ? 'F 450 GSのガード。' : product.collection === 'fabrication' || isOutdoor ? 'Guard Factoryの製品。' : 'ジェベル250のガード。'}</h2><ul>{relatedProducts.map((related) => <li key={related.slug}><a className="gf-text-link" href={guardFactoryProductPath(related.slug, basePath)}>{related.name} <span aria-hidden="true">→</span></a></li>)}</ul></div><a className="gf-text-link" href={`${basePath}parts/#${isOutdoor ? 'outdoor' : product.development ? 'lineup' : product.collection === 'fabrication' ? 'fabrication' : 'guard-factory'}`}>Partsの製品一覧へ戻る <span aria-hidden="true">→</span></a></aside>
     </main>
   )
 }
