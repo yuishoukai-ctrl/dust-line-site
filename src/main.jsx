@@ -10,6 +10,7 @@ import { guardFactoryProducts, guardFactoryProductPath } from './guard-factory-p
 import WorldTripArticle from './WorldTripArticle'
 import CategoryPage from './CategoryPages'
 import MotorradShizuokaPage, { ShopIndexPage } from './ShopPages'
+import HotelAzPage from './HotelAzPage'
 import OffroadMagazinePage from './OffroadMagazinePage'
 import Issue02ProductPage from './Issue02ProductPage'
 import ReleaseDelayNoticePage from './ReleaseDelayNoticePage'
@@ -1254,6 +1255,7 @@ function App() {
     '/parts/': 'parts',
     '/shops/': 'shops',
     '/shops/motorrad-shizuoka/': 'shop-motorrad-shizuoka',
+    '/shops/hotel-az/': 'shop-hotel-az',
     '/paint/': 'paint',
     '/offroad-bike-magazine/': 'magazine',
     '/account/signup/': 'member-signup',
@@ -1271,14 +1273,13 @@ function App() {
   if (page === 'commercial-disclosure') return <CommercialDisclosurePage />
   if (page === 'refund-policy') return <RefundPolicyPage />
   if (page === 'digital-delivery') return <DigitalDeliveryPage />
-  if (page === 'shops' || page === 'shop-motorrad-shizuoka') {
+  if (page === 'shops' || page === 'shop-motorrad-shizuoka' || page === 'shop-hotel-az') {
+    const ShopPage = page === 'shops' ? ShopIndexPage : page === 'shop-hotel-az' ? HotelAzPage : MotorradShizuokaPage
     return (
       <>
         <a className="skip-link" href="#main">本文へ移動</a>
         <Header currentPage="shops" />
-        {page === 'shops'
-          ? <ShopIndexPage assetPath={assetPath} basePath={homePath} />
-          : <MotorradShizuokaPage assetPath={assetPath} basePath={homePath} />}
+        <ShopPage assetPath={assetPath} basePath={homePath} />
         <Footer currentPage="shops" />
       </>
     )
