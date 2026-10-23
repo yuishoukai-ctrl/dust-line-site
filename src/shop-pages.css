@@ -95,11 +95,19 @@ body:has(.shop-pages) { min-width: 0; }
 .shop-feature__number { position: absolute; bottom: 0; left: 0; padding: 13px 18px; color: #fff; background: var(--shop-blue); font: 700 .66rem/1.5 Arial,sans-serif; letter-spacing: .1em; }
 .shop-feature__copy .shop-eyebrow { margin-bottom: 12px; }
 .shop-feature__category { font-size: .73rem; line-height: 1.7; color: var(--shop-muted); }
-.shop-feature h2 { margin-block: 8px 18px; font-size: 1.9rem; line-height: 1.5; }
+.shop-feature :is(h2,h3) { margin-block: 8px 18px; font-size: 1.9rem; line-height: 1.5; }
 .shop-feature__headline { margin-bottom: 17px !important; font-size: 1.05rem; font-weight: 700; line-height: 1.8; }
 .shop-feature__copy > p:not([class]) { font-size: .86rem; line-height: 2; color: var(--shop-muted); }
 .shop-tags { display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 20px 0 12px; list-style: none; }
 .shop-tags li { border: 1px solid #dce0e4; padding: 4px 9px; color: var(--shop-muted); font-size: .72rem; line-height: 1.7; }
+.shop-directory__categories { display: flex; flex-wrap: wrap; gap: 15px 28px; margin-top: 28px; }
+.shop-directory__categories a { display: inline-flex; gap: 24px; align-items: center; min-height: 48px; border-bottom: 1px solid #b4bbc2; font-size: .85rem; font-weight: 700; }
+.shop-directory__categories a:hover { color: var(--shop-blue); }
+.shop-pages .shop-directory__section-title { margin-bottom: 30px; font-size: 1.5rem; line-height: 1.6; }
+.shop-directory__list { scroll-margin-top: 95px; }
+.shop-directory__stays { margin-top: 65px; }
+.shop-feature--stay { --shop-blue: #b54b25; }
+.shop-feature--stay .shop-feature__image img { aspect-ratio: auto; }
 
 @media (max-width: 1440px) { .shop-pages { padding-top: 66px; } }
 @media (max-width: 1000px) {
@@ -158,6 +166,8 @@ body:has(.shop-pages) { min-width: 0; }
   .shop-directory__intro { font-size: .88rem; }
   .shop-directory__list { padding-top: 30px; }
   .shop-feature { grid-template-columns: 1fr; gap: 25px; }
-  .shop-feature h2 { font-size: 1.8rem; }
+  .shop-feature :is(h2,h3) { font-size: 1.8rem; }
+  .shop-directory__stays { margin-top: 45px; }
+  .shop-pages .shop-directory__section-title { font-size: 1.3rem; margin-bottom: 24px; }
 }
 @media (prefers-reduced-motion: reduce) { .shop-feature__image img { transition: none; } }

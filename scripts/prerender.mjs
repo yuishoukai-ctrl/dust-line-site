@@ -7,7 +7,7 @@ import { tmpdir } from 'node:os'
 import { fileURLToPath } from 'node:url'
 import { firstIssue, issues, journal } from '../src/member-content.js'
 import { guardFactoryProducts, guardFactoryProductPath, guardFactoryPhotoPath } from '../src/guard-factory-products.js'
-import { motorradShizuoka, shopPhotoPath } from '../src/shop-profiles.js'
+import { motorradShizuoka, shopPhotoPath, hotelAz, hotelAzPhotoPath } from '../src/shop-profiles.js'
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = join(projectRoot, 'dist')
@@ -20,11 +20,11 @@ const routes = [
     path: '/shops/',
     source: '/?page=shops',
     title: 'ショップ紹介｜DUST LINE',
-    description: 'バイクを選ぶ、旅を相談する。その先を一緒に楽しめるお店を、DUST LINEが写真と言葉で紹介します。',
+    description: 'バイクショップから、ツーリングや遠征の宿泊先まで。モトラッド静岡やHOTEL AZを、DUST LINEが写真と言葉で紹介します。',
     image: `/images/${shopPhotoPath('exterior', 1920)}`,
     imageAlt: 'BMW Motorrad正規ディーラー・モトラッド静岡の外観',
     schemaType: 'CollectionPage',
-    modifiedDate: '2026-10-15',
+    modifiedDate: '2026-10-23',
     expectedText: 'ショップ紹介',
   },
   {
@@ -39,6 +39,19 @@ const routes = [
     publishedDate: '2026-10-15',
     modifiedDate: '2026-10-15',
     expectedText: 'モトラッド静岡',
+  },
+  {
+    path: hotelAz.path,
+    source: '/?page=shop-hotel-az',
+    title: 'HOTEL AZ｜旅の拠点になるホテルを紹介｜DUST LINE',
+    description: hotelAz.description,
+    image: `/images/${hotelAzPhotoPath('wajiro', 1668)}`,
+    imageAlt: 'HOTEL AZ福岡和白店の外観。写真提供：HOTEL AZ',
+    schemaType: 'Article',
+    section: '宿泊先紹介',
+    publishedDate: '2026-10-23',
+    modifiedDate: '2026-10-23',
+    expectedText: '旅の拠点に、',
   },
   {
     path: '/',
@@ -676,7 +689,8 @@ const pageSchema = (route) => {
           : route.path.startsWith('/shops/') && route.path !== '/shops/'
             ? [
               { '@type': 'ListItem', position: 2, name: 'ショップ紹介', item: `${siteOrigin}/shops/` },
-              { '@type': 'ListItem', position: 3, name: route.title.split('｜')[0], item: canonical },
+              ...(route.section === '宿泊先紹介' ? [{ '@type': 'ListItem', position: 3, name: '宿泊先紹介', item: `${siteOrigin}/shops/#stays` }] : []),
+              { '@type': 'ListItem', position: route.section === '宿泊先紹介' ? 4 : 3, name: route.title.split('｜')[0], item: canonical },
             ]
             : [{ '@type': 'ListItem', position: 2, name: route.title.split('｜')[0], item: canonical }]),
       ],

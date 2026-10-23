@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { motorradShizuoka as shop, shopPhotoPath } from './shop-profiles'
+import { motorradShizuoka as shop, shopPhotoPath, hotelAz as hotel } from './shop-profiles'
+import { HotelAzPhoto } from './HotelAzPage'
 import './shop-pages.css'
 
 function ShopPhoto({ assetPath, name, alt, eager = false, sizes = '(max-width: 760px) 100vw, 90vw' }) {
@@ -30,11 +31,13 @@ export function ShopIndexPage({ assetPath, basePath = '/' }) {
       <header className="shop-directory__heading shop-container">
         <p className="shop-eyebrow">DUST LINE / SHOP VISIT</p>
         <h1>ショップ紹介</h1>
-        <p className="shop-directory__lead">バイクを選ぶ。旅を相談する。<br />その先を、一緒に楽しめるお店へ。</p>
-        <p className="shop-directory__intro">DUST LINEが紹介する、バイクと人が集まる場所。お店の考え方や得意なことを、写真と言葉でお届けします。</p>
+        <p className="shop-directory__lead">バイクを選ぶ。旅を相談する。<br />旅を支える、お店と宿へ。</p>
+        <p className="shop-directory__intro">バイクショップから、ツーリングや遠征の宿泊先まで。DUST LINEが写真と言葉で紹介します。</p>
+        <nav className="shop-directory__categories" aria-label="紹介カテゴリ"><a href="#bike-shops">バイクショップ<span aria-hidden="true">↓</span></a><a href="#stays">宿泊先紹介<span aria-hidden="true">↓</span></a></nav>
       </header>
 
-      <section className="shop-container shop-directory__list" aria-label="紹介ショップ一覧">
+      <section id="bike-shops" className="shop-container shop-directory__list" aria-labelledby="bike-shops-title">
+        <h2 id="bike-shops-title" className="shop-directory__section-title">バイクショップ</h2>
         <article className="shop-feature">
           <a className="shop-feature__image" href={`${basePath}shops/${shop.slug}/`} aria-label="モトラッド静岡の紹介を読む">
             <ShopPhoto assetPath={assetPath} name="exterior" alt="BMW Motorradのサインを掲げたモトラッド静岡の外観" eager sizes="(max-width: 760px) 100vw, 60vw" />
@@ -43,11 +46,29 @@ export function ShopIndexPage({ assetPath, basePath = '/' }) {
           <div className="shop-feature__copy">
             <p className="shop-eyebrow">{shop.region}</p>
             <p className="shop-feature__category">{shop.category}</p>
-            <h2><a href={`${basePath}shops/${shop.slug}/`}>{shop.name}</a></h2>
+            <h3><a href={`${basePath}shops/${shop.slug}/`}>{shop.name}</a></h3>
             <p className="shop-feature__headline">{shop.headline}</p>
             <p>新しい一台の相談も、次のツーリングの話も。静岡市駿河区のショールームから、「バイクのある人生」を楽しむきっかけを。</p>
             <ul className="shop-tags" aria-label="取扱い・サービス"><li>新車・中古車</li><li>整備</li><li>試乗相談</li></ul>
             <a className="shop-link shop-feature__read" href={`${basePath}shops/${shop.slug}/`}>紹介を読む<span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+      </section>
+
+      <section id="stays" className="shop-container shop-directory__list shop-directory__stays" aria-labelledby="stays-title">
+        <h2 id="stays-title" className="shop-directory__section-title">宿泊先紹介</h2>
+        <article className="shop-feature shop-feature--stay">
+          <a className="shop-feature__image" href={`${basePath}shops/${hotel.slug}/`} aria-label="HOTEL AZの宿泊先紹介を読む">
+            <HotelAzPhoto assetPath={assetPath} name="wajiro" alt="HOTEL AZ福岡和白店の外観" sizes="(max-width: 760px) 100vw, 60vw" />
+            <span className="shop-feature__number" aria-hidden="true">STAY GUIDE 01</span>
+          </a>
+          <div className="shop-feature__copy">
+            <p className="shop-eyebrow">九州を中心に各地へ</p><p className="shop-feature__category">ホテルチェーン / 宿泊先紹介</p>
+            <h3><a href={`${basePath}shops/${hotel.slug}/`}>HOTEL AZ</a></h3>
+            <p className="shop-feature__headline">{hotel.headline}</p>
+            <p>客室、朝食、料金・予約方法を提供写真とともに紹介。ツーリングやイベント遠征の一泊を、旅のルートから探す。</p>
+            <ul className="shop-tags" aria-label="紹介するサービス"><li>朝食バイキング無料</li><li>全室無料Wi-Fi</li><li>館内レストラン</li></ul>
+            <a className="shop-link shop-feature__read" href={`${basePath}shops/${hotel.slug}/`}>紹介を読む<span aria-hidden="true">→</span></a>
           </div>
         </article>
       </section>
