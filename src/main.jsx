@@ -1317,6 +1317,7 @@ function App() {
           assetPath={assetPath}
           signupPath={signupPagePath}
           magazinePath={magazinePagePath}
+          hotelAzPath={`${homePath}shops/hotel-az/`}
           commercialDisclosurePath={commercialDisclosurePagePath}
           refundPolicyPath={refundPolicyPagePath}
           digitalDeliveryPath={digitalDeliveryPagePath}
