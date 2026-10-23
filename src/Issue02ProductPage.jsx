@@ -34,6 +34,7 @@ export default function Issue02ProductPage({
   assetPath,
   signupPath = '/account/signup/',
   magazinePath = '/offroad-bike-magazine/',
+  hotelAzPath = '/shops/hotel-az/',
   commercialDisclosurePath = '/commercial-disclosure/',
   refundPolicyPath = '/refund-policy/',
   digitalDeliveryPath = '/digital-delivery/',
@@ -42,7 +43,7 @@ export default function Issue02ProductPage({
   const productSignupPath = authPath(signupPath, '/magazine/issue-02/')
   useEffect(() => {
     const previousTitle = document.title
-    document.title = 'DUST LINE ISSUE 02｜商品情報・販売準備中'
+    document.title = 'DUST LINE 第2号予告｜DesertX・ユーラシア大陸横断'
     window.scrollTo(0, 0)
     return () => { document.title = previousTitle }
   }, [])
@@ -52,33 +53,31 @@ export default function Issue02ProductPage({
       <section className="issue-product__hero" aria-labelledby="issue-02-title">
         <figure className="issue-product__cover reveal">
           <img
-            src={assetPath('hero-rider.jpg')}
-            alt="ダートを走るDUST LINE編集部のアドベンチャーバイク"
+            src={assetPath('magazine/issue-02/desertx-cover-960.webp')}
+            srcSet={`${assetPath('magazine/issue-02/desertx-cover-480.webp')} 480w, ${assetPath('magazine/issue-02/desertx-cover-960.webp')} 960w, ${assetPath('magazine/issue-02/desertx-cover-1415.webp')} 1415w`}
+            sizes="(max-width: 780px) 88vw, 500px"
+            width="1415"
+            height="2000"
+            alt="DUST LINE第2号の制作中の表紙。decheeeeさんとDUCATI DesertX、ユーラシア大陸横断の見出し"
             fetchPriority="high"
           />
-          <div className="issue-product__cover-shade" aria-hidden="true" />
-          <div className="issue-product__cover-copy" aria-hidden="true">
-            <span>DUST LINE</span>
-            <small>ADVENTURE MOTORCYCLE JOURNAL</small>
-            <strong>02</strong>
-            <p>BEYOND<br />THE NEXT LINE.</p>
-          </div>
-          <figcaption>仮表紙・実際の第2号とは異なります</figcaption>
+          <figcaption>制作中の表紙。最終版は変更になる場合があります。写真：decheeee</figcaption>
         </figure>
 
         <div className="issue-product__summary reveal">
-          <div className="issue-product__status"><span aria-hidden="true" />販売準備中</div>
+          <div className="issue-product__status"><span aria-hidden="true" />第2号予告 / 制作・校正中</div>
           <p className="issue-product__eyebrow">ISSUE 02 / DIGITAL QUARTERLY</p>
           <h1 id="issue-02-title">DUST LINE <span>ISSUE 02</span></h1>
           <p className="issue-product__lead">
-            オフロード／アドベンチャーバイクの旅、実車、ものづくりを、現場から届ける季刊デジタル雑誌の第2号です。
-            収録内容は現在編集中です。
+            decheeeeさんとDUCATI DesertXでたどる、ユーラシア大陸横断。
+            日本・韓国・ロシア・モンゴルの旅に、FS650Eのインプレッション、BONSAIMOTOの連載、HOTEL AZの紹介を収録予定です。
           </p>
+          <a className="issue-product__contents-link" href="#issue-02-contents">収録予定を見る <Arrow /></a>
 
           <dl className="issue-product__facts">
             <div><dt>販売価格</dt><dd><strong>1,480円</strong><span>税込・日本円</span></dd></div>
             <div><dt>販売方式</dt><dd>各号単品<span>自動更新なし</span></dd></div>
-            <div><dt>公開日</dt><dd>調整中<span>確定後に本ページで案内</span></dd></div>
+            <div><dt>発行目標</dt><dd>2026年クリスマス頃<span>正式な公開日は確定後に案内</span></dd></div>
             <div><dt>提供形式</dt><dd>デジタル雑誌<span>Webブラウザで閲覧</span></dd></div>
           </dl>
 
@@ -87,29 +86,49 @@ export default function Issue02ProductPage({
             <a href={productSignupPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>無料会員登録 <Arrow /></a>
           </div>
           <p className="issue-product__purchase-note">
-            現在は注文・決済を受け付けていません。販売開始前に、表紙、収録内容、公開日、購入ボタンを本ページへ表示します。
+            現在は注文・決済を受け付けていません。全56ページの校正稿をもとに制作を進めています。収録内容・ページ数・表紙は、最終校正で変更になる場合があります。
           </p>
         </div>
       </section>
 
-      <section className="issue-product__editorial" aria-labelledby="issue-02-editorial-title">
-        <div className="issue-product__section-label reveal"><span>01</span><span>EDITORIAL STATUS</span></div>
-        <div className="issue-product__editorial-grid">
-          <div className="reveal">
-            <p className="issue-product__kicker">IN PRODUCTION / CONTENT TO BE CONFIRMED</p>
-            <h2 id="issue-02-editorial-title">内容を固めてから、<br />販売を始めます。</h2>
-          </div>
-          <div className="issue-product__editorial-copy reveal">
-            <p>
-              第2号は現在編集中です。特集名、収録記事、ページ数、表紙、公開日は、内容の確定後に本ページへ掲載します。
-              未確定の内容を商品情報として表示したまま販売することはありません。
-            </p>
-            <p>
-              表紙に使用している写真は、DUST LINE編集部が保有する実写素材による構成見本です。
-              写真の車両や企画が第2号へ収録されることを示すものではありません。
-            </p>
-          </div>
+      <section className="issue-product__editorial" id="issue-02-contents" aria-labelledby="issue-02-editorial-title">
+        <div className="issue-product__section-label reveal"><span>01</span><span>IN THIS ISSUE</span></div>
+        <header className="issue-product__preview-heading reveal">
+          <p className="issue-product__kicker">TRAVEL / MACHINE / COLUMN / STAY</p>
+          <h2 id="issue-02-editorial-title">旅と、走りと、挑戦と。</h2>
+          <p>第2号でお届けする、4つの収録予定記事をご紹介します。</p>
+        </header>
+        <div className="issue-product__features">
+          <article className="reveal">
+            <p className="issue-product__kicker">TRAVEL / decheeee</p>
+            <h3>ユーラシアへ。</h3>
+            <p className="issue-product__feature-meta">日本・韓国・ロシア・モンゴル</p>
+            <p>DUCATI DesertXで日本を出発し、韓国、ロシアを経てモンゴルのゴビ砂漠へ。decheeeeさんの原文と、大きな実写でたどる旅の記録です。</p>
+            <p className="issue-product__feature-credit">文・写真：decheeee <a href="https://x.com/decheeee_adv" target="_blank" rel="noopener noreferrer">@decheeee_adv ↗</a></p>
+            <p className="issue-product__feature-note">ゴビ砂漠からノルウェー・ノールカップへの続きは、第3号に掲載予定です。</p>
+          </article>
+          <article className="reveal">
+            <p className="issue-product__kicker">MACHINE / OWNER IMPRESSION</p>
+            <h3>フサベル FS650E</h3>
+            <p className="issue-product__feature-meta">伝説級のモタード。</p>
+            <p>2005年頃のFS650Eと過ごした記憶。強烈な走り、ブレーキの感触、熱との付き合い、整備まで。所有して走らせた実感を振り返ります。</p>
+          </article>
+          <article className="reveal">
+            <p className="issue-product__kicker">BONSAIMOTO / COLUMN 02</p>
+            <h3>「前例がない」なら、<br />作ってしまえ！</h3>
+            <p className="issue-product__feature-meta">中国でバイクの臨時免許取得に挑む。</p>
+            <p>BONSAIMOTO代表・多川さんが、中国・台州で挑んだ臨時免許取得。現地の写真とともに、手続きの壁を越えていく体験をお届けします。</p>
+            <p className="issue-product__feature-credit">文：多川 / 写真提供：BONSAIMOTO</p>
+          </article>
+          <article className="reveal">
+            <p className="issue-product__kicker">STAY / HOTEL AZ</p>
+            <h3>旅の拠点に、HOTEL AZ。</h3>
+            <p className="issue-product__feature-meta">5ページで紹介する、旅を支えるホテル。</p>
+            <p>客室、朝食やレストラン、料金条件と各地の店舗。提供写真と日本地図でホテルの特徴を紹介し、公式サイトへアクセスできるQRコードも掲載します。</p>
+            <a className="issue-product__feature-link" href={hotelAzPath}>HOTEL AZのWeb紹介を読む <Arrow /></a>
+          </article>
         </div>
+        <p className="issue-product__preview-note">このほか、店舗広告・紹介記事の募集ページも掲載予定です。初回掲載は無料、2回目以降は有料となります。詳細は編集部へお問い合わせください。</p>
       </section>
 
       <section className="issue-product__delivery" aria-labelledby="issue-02-delivery-title">
