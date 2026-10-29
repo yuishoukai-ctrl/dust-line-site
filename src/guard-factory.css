@@ -34,6 +34,13 @@
 .gf-card__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 16px; }
 .gf-card__actions .gf-text-link { min-height: 48px; }
 .gf-card__reserve { padding: 0 16px; border: 1px solid var(--dust); color: var(--paper); }
+.gf-amazon { margin-top: 22px; }
+.gf-amazon__label { margin: 0 0 10px; color: var(--paper); font-size: .85rem; font-weight: 800; }
+.gf-amazon__link { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 12px 16px; margin-top: 8px; border: 1px solid var(--dust); color: var(--paper); font-size: .85rem; line-height: 1.6; }
+.gf-amazon__link > span { min-width: 0; overflow-wrap: anywhere; }
+.gf-amazon__link strong { flex-shrink: 0; font-size: .9rem; font-variant-numeric: tabular-nums; }
+.gf-amazon__link:hover { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+.gf-amazon__link:focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
 @media (max-width: 600px) {
   .gf-card__actions { display: grid; gap: 12px; }
   .gf-card__actions .gf-text-link { padding: 10px 14px; border: 1px solid var(--line); font-size: .875rem; }

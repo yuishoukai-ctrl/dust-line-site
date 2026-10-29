@@ -9,9 +9,9 @@ function PartsArrow() {
 
 function PartsModelChooser() {
   const models = [
-    { collection: 'djebel250', label: 'ジェベル250', english: 'DJEBEL 250', href: '#guard-factory', state: '販売準備中' },
+    { collection: 'djebel250', label: 'ジェベル250', english: 'DJEBEL 250', href: '#guard-factory', state: '左右フレーム・リアマスターはAmazonで販売中' },
     { collection: 'f450gs', label: 'BMW F 450 GS', english: 'BMW F 450 GS', href: '#lineup', state: '実物写真・販売準備中' },
-    { collection: 'fabrication', label: '加工用パーツ', english: 'FABRICATION', href: '#fabrication', state: '溶接加工素材・加工依頼受付' },
+    { collection: 'fabrication', label: '加工用パーツ', english: 'FABRICATION', href: '#fabrication', state: 'プレートをAmazonで販売中・加工依頼受付' },
     { collection: 'outdoor', label: 'アウトドア用品', english: 'OUTDOOR', href: '#outdoor', state: 'ステンレス焚き火台' },
   ]
   return (
@@ -57,7 +57,7 @@ export default function PartsPage({ assetPath, basePath, contactUrl, officialXUr
           <p className="parts-status">GUARD FACTORY / DJEBEL 250 & F 450 GS</p>
           <h1 id="parts-title">走るための<br />部品を、<br className="parts-mobile-break" />つくる。</h1>
           <p className="parts-hero__lead">
-            旅と整備の現場で感じた「ここに必要」を、形にする。Guard Factoryのジェベル250用ガード3点と、
+            旅と整備の現場で感じた「ここに必要」を、形にする。Guard Factoryのジェベル250用ガード4点と、
             BMW F 450 GS向けガード4点の実物写真、ワイドステップ加工用プレート、ステンレス焚き火台を紹介します。
           </p>
           <a className="parts-button parts-button--accent" href="#parts-models">車種・用途から選ぶ <PartsArrow /></a>
@@ -91,12 +91,12 @@ export default function PartsPage({ assetPath, basePath, contactUrl, officialXUr
 
       <section className="parts-notice" aria-labelledby="parts-notice-title">
         <div className="parts-notice__title reveal">
-          <p>BEFORE RELEASE</p>
+          <p>PURCHASE GUIDE</p>
           <h2 id="parts-notice-title">適合と条件は、<br />製品ごとに明記します。</h2>
         </div>
         <div className="parts-notice__body reveal">
           <p>
-            販売開始時には、対応車種・年式、材質、重量、取付方法、必要な加工、他社部品との干渉、価格、納期、返品・保証条件を各商品ページに掲載します。
+            対応車種・年式、材質、取付条件は各商品ページをご確認ください。Amazon掲載商品の最新価格・在庫・配送・返品条件は、リンク先でご案内します。
           </p>
           <p>
             DUST LINEはBMW MotorradおよびBMW AGとは関係のない独立した編集・製作チームです。
