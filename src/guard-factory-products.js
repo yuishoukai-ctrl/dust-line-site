@@ -1,6 +1,7 @@
 // Facts: supplied Djebel250 manuscript and 商品台帳_v08.json (2026-09-30).
 // F 450 GS: master/radiator real photos (2026-10-13); indicator/hose real photos and user-confirmed prices (2026-10-21).
 // CAD-derived dimensions and weights must be labeled as design/calculated values; supplier quotes are not retail prices.
+// Amazon URLs, finishes and tax-inclusive prices were checked in Seller Central on 2026-10-29.
 const djebelDetails = {
   collection: 'djebel250',
   modelLabel: 'ジェベル250用',
@@ -72,7 +73,10 @@ export const guardFactoryProducts = [
     modelLabel: '切断・曲げ・溶接用',
     category: 'WIDE STEP / WELDING PLATE',
     priceLabel: '2,480円',
-    priceNote: 'プレート1枚・税込・販売予定価格',
+    priceNote: 'プレート1枚・税込',
+    amazonOffers: [
+      { asin: 'B0HNVMP5M2', label: '未塗装／1枚', priceLabel: '2,480円' },
+    ],
     summary: '既存のステップを広げるための鉄製プレート。長さ22cmの1枚を11cmずつに切断し、左右に分けて加工します。',
     description: '商品は、長さ22cm・板厚2mmの鉄製プレート1枚です。11cmずつの2本に切断し、既存ステップの形状に合わせて曲げ・溶接する加工素材です。完成したステップや塗装済みの完成品ではありません。',
     fitment: '既存ステップへの溶接加工用',
@@ -102,7 +106,14 @@ export const guardFactoryProducts = [
     shortName: '右フレームガード',
     headingParts: ['右フレームガード'],
     category: 'FRAME GUARD / RIGHT SIDE',
-    priceLabel: '3,980円',
+    priceLabel: '3,980円〜',
+    priceNote: '税込・仕上げにより異なります',
+    finish: 'ブラスト仕上げ／シルバー、パウダーコート／黒',
+    amazonOffers: [
+      { asin: 'B0HLVW9WYG', label: 'ブラスト／シルバー', priceLabel: '3,980円' },
+      { asin: 'B0HNVBJY6C', label: 'パウダーコート／黒', priceLabel: '4,280円' },
+    ],
+    galleryNote: '掲載写真はシルバーの装着例です。車両・周辺部品・別商品は付属しません。仕上げごとの商品写真はAmazonでご確認ください。',
     summary: '車体右側のフレームを覆う、ステンレス製のガード。ブーツが接する部分をプレートで受け止める形状です。',
     description: 'ジェベル250・ジェベル250XC・DR250のSJ45A向けに製作した右側用フレームガードです。フレームへのブーツの接触や擦れを抑えることを目的に、車体側面を覆う形状としています。',
     fitment: 'ジェベル250・ジェベル250XC・DR250／SJ45A向け',
@@ -118,12 +129,49 @@ export const guardFactoryProducts = [
   },
   {
     ...djebelDetails,
+    slug: 'djebel250-left-frame-guard',
+    name: 'ジェベル250用 左フレームガード',
+    shortName: '左フレームガード',
+    headingParts: ['左フレームガード'],
+    category: 'FRAME GUARD / LEFT SIDE',
+    priceLabel: '3,980円〜',
+    priceNote: '税込・仕上げにより異なります',
+    finish: 'ウェットブラスト／シルバー、パウダーコート／黒',
+    amazonOffers: [
+      { asin: 'B0HNV9R1JW', label: 'ウェットブラスト／シルバー', priceLabel: '3,980円' },
+      { asin: 'B0HNV4ZYNJ', label: 'パウダーコート／黒', priceLabel: '4,280円' },
+    ],
+    summary: '車体左側のフレームを覆う、ステンレス2mmのガード。ウェットブラストのシルバーと、パウダーコートの黒から選べます。',
+    description: 'ジェベル250向けの左側用フレームガードです。G.Fの切り抜き入りで、タイラップ4本を付属します。右フレームガードとは別売りです。',
+    fitment: 'ジェベル250向け',
+    fitmentNote: '型式・年式別、およびジェベル250XC・DR250への適合は確認中です。取付部の形状を確認のうえご相談ください。',
+    configuration: '左側用・本体1枚（左右セットではありません）',
+    included: '左フレームガード本体1枚、タイラップ4本',
+    installation: '付属のタイラップ4本で固定する構成です。取付位置と周辺部品との干渉を確認してください。正式な取付手順は確認中です。',
+    verificationNote: '実車の取付条件・強度・耐久性の検証状況は確認中です。',
+    galleryNote: '背景を除去した実物写真です。シルバーはウェットブラスト、黒はパウダーコート仕上げ。左右セットではありません。',
+    photos: [
+      { name: 'djebel250-left-frame-wetblast-front-20261029', width: 1254, height: 1254, alt: 'ウェットブラスト仕上げの左フレームガード。G.Fの切り抜きと長穴', caption: '左フレームガード／ウェットブラスト・シルバー' },
+      { name: 'djebel250-left-frame-black-front-20261029', width: 1254, height: 1254, alt: 'パウダーコート黒の左フレームガード', caption: '左フレームガード／パウダーコート・黒' },
+      { name: 'djebel250-left-frame-wetblast-angle-20261029', width: 1254, height: 1254, alt: 'ウェットブラストの左フレームガードを斜めから見た写真', caption: '左フレームガード／ウェットブラスト・斜めから' },
+      { name: 'djebel250-left-frame-wetblast-reverse-20261029', width: 1254, height: 1254, alt: 'ウェットブラストの左フレームガードの裏面', caption: '左フレームガード／ウェットブラスト・裏面' },
+    ],
+  },
+  {
+    ...djebelDetails,
     slug: 'djebel250-rear-master-cylinder-guard',
     name: 'ジェベル250用 リアマスターシリンダーガード',
     shortName: 'リアマスターシリンダーガード',
     headingParts: ['リアマスター', 'シリンダーガード'],
     category: 'REAR MASTER CYLINDER GUARD',
-    priceLabel: '2,980円',
+    priceLabel: '2,980円〜',
+    priceNote: '税込・仕上げにより異なります',
+    finish: 'ブラスト仕上げ／シルバー、パウダーコート／黒',
+    amazonOffers: [
+      { asin: 'B0HLVVSWWY', label: 'ブラスト／シルバー', priceLabel: '2,980円' },
+      { asin: 'B0HNMNKXR3', label: 'パウダーコート／黒', priceLabel: '3,280円' },
+    ],
+    galleryNote: '掲載写真はシルバーの装着例です。車両・周辺部品・別商品は付属しません。仕上げごとの商品写真はAmazonでご確認ください。',
     summary: 'リアブレーキのマスターシリンダー周辺を覆うガード。G.Fの切り抜きを入れた、ステンレス製のプレートです。',
     description: 'ジェベル250・ジェベル250XC・DR250向けのリアマスターシリンダーガードです。マスターシリンダー周辺の保護を目的としたプレート形状で、ボルト2本とカラー2個を組み合わせて取り付けます。',
     fitment: 'ジェベル250・ジェベル250XC・DR250向け',
@@ -263,5 +311,7 @@ export const guardFactoryProducts = [
 ]
 
 export const guardFactoryProductPath = (slug, basePath = '/') => `${basePath}parts/guard-factory/${slug}/`
+
+export const guardFactoryAmazonUrl = (asin) => `https://www.amazon.co.jp/dp/${asin}`
 
 export const guardFactoryPhotoPath = (name, width) => `parts/guard-factory/${name}-${width}.webp`

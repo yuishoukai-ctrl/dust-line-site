@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { guardFactoryProducts, guardFactoryProductPath, guardFactoryPhotoPath } from './guard-factory-products'
+import { guardFactoryProducts, guardFactoryProductPath, guardFactoryPhotoPath, guardFactoryAmazonUrl } from './guard-factory-products'
 import PartsReservationForm, { canReservePart } from './PartsReservationForm'
 import './guard-factory.css'
 
@@ -31,11 +31,22 @@ function PendingPhoto() {
   return <div className="gf-photo-pending"><p>PRODUCT PHOTO</p><span>商品画像は準備中です。</span></div>
 }
 
+export function AmazonPurchaseLinks({ product }) {
+  if (!product.amazonOffers?.length) return null
+  return <div className="gf-amazon" role="group" aria-label={`${product.name}をAmazonで購入`}>
+    <p className="gf-amazon__label">Amazonで購入</p>
+    {product.amazonOffers.map((offer) => <a className="gf-amazon__link" key={offer.asin} href={guardFactoryAmazonUrl(offer.asin)} target="_blank" rel="noopener noreferrer" aria-label={`${product.name} ${offer.label} ${offer.priceLabel}をAmazonで購入（別タブで開きます）`}>
+      <span>{offer.label}</span><strong>{offer.priceLabel} <span aria-hidden="true">↗</span></strong>
+    </a>)}
+  </div>
+}
+
 export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel250' }) {
   const isCad = collection === 'f450gs'
   const isFabrication = collection === 'fabrication'
   const isOutdoor = collection === 'outdoor'
   const products = guardFactoryProducts.filter((product) => product.collection === collection)
+  const hasAmazonOffers = products.some((product) => product.amazonOffers?.length)
   const sectionId = isCad ? 'lineup' : isFabrication ? 'fabrication' : isOutdoor ? 'outdoor' : 'guard-factory'
   const compactHeading = isFabrication || isOutdoor
   const collectionLabel = isOutdoor ? 'アウトドア用品' : isFabrication ? '加工用パーツ' : isCad ? 'BMW F 450 GS' : 'ジェベル250'
@@ -61,7 +72,8 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
               <p className="gf-eyebrow">{product.category}</p>
               <h3><a href={guardFactoryProductPath(product.slug, basePath)}>{product.shortName}</a></h3>
               <p>{product.summary}</p>
-              <div className="gf-card__foot"><p><strong>{product.priceLabel}</strong><span>{product.priceNote}</span></p><span className="gf-status">{product.statusLabel || '販売準備中'}</span></div>
+              <div className="gf-card__foot"><p><strong>{product.priceLabel}</strong><span>{product.priceNote}</span></p><span className="gf-status">{product.amazonOffers?.length ? 'Amazonで販売中' : product.statusLabel || '販売準備中'}</span></div>
+              <AmazonPurchaseLinks product={product} />
               {product.shippingEstimate && <p>発送予定：{product.shippingEstimate}<br />製作状況により変更になる場合があります。</p>}
               <div className="gf-card__actions">
                 <a className="gf-text-link" href={guardFactoryProductPath(product.slug, basePath)}>{isCad ? product.imageKind === 'photo' ? '実物写真・開発情報を見る' : 'CAD画像・開発情報を見る' : '仕様・商品情報を見る'} <span aria-hidden="true">→</span></a>
@@ -72,7 +84,7 @@ export function GuardFactoryLineup({ assetPath, basePath, collection = 'djebel25
           </article>
         ))}
       </div>
-      <p className="gf-lineup__note">{isOutdoor ? 'ご購入希望・在庫・発送時期は、お問い合わせください。' : <>{isCad && <>製作した部品の実物写真です。形状・色・販売仕様は変更する場合があります。<br /></>}{isCad ? '販売開始日・在庫と、発送予定の記載がない商品の納期は確認中です。' : '販売開始日・在庫・納期は確認中です。'}購入先は販売開始後にご案内します。</>}</p>
+      <p className="gf-lineup__note">{hasAmazonOffers ? 'Amazon掲載商品の最新価格・在庫・配送条件は、リンク先でご確認ください。' : isOutdoor ? 'ご購入希望・在庫・発送時期は、お問い合わせください。' : <>{isCad && <>製作した部品の実物写真です。形状・色・販売仕様は変更する場合があります。<br /></>}{isCad ? '販売開始日・在庫と、発送予定の記載がない商品の納期は確認中です。' : '販売開始日・在庫・納期は確認中です。'}購入先は販売開始後にご案内します。</>}</p>
     </section>
   )
 }
@@ -104,6 +116,7 @@ function ProductGallery({ product, assetPath }) {
 export default function GuardFactoryProductPage({ slug, assetPath, basePath, contactUrl }) {
   const product = guardFactoryProducts.find((item) => item.slug === slug)
   const isOutdoor = product.collection === 'outdoor'
+  const hasAmazonOffers = Boolean(product.amazonOffers?.length)
   useEffect(() => {
     const previousTitle = document.title
     document.title = `${product.name}｜Guard Factory｜DUST LINE Parts`
@@ -127,9 +140,10 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
             <h1 id="gf-product-title"><span className="gf-product-model">{product.modelLabel} </span>{product.headingParts.map((term) => <span className="gf-product-term" key={term}>{term}</span>)}</h1>
             <p className="gf-product-copy__summary">{product.summary}</p>
             <p className="gf-price"><strong>{product.priceLabel}</strong><span>{product.priceNote}</span></p>
-            <div className="gf-release"><span className="gf-status">{product.statusLabel || '販売準備中'}</span><p>{product.salesNote || <>{product.shippingEstimate ? <>発送予定：{product.shippingEstimate}<br />製作状況により変更になる場合があります。<br />販売開始日・在庫は確認中です。</> : '販売開始日・在庫・納期は確認中です。'}<br />購入先は販売開始後にご案内します。</>}</p></div>
+            <div className="gf-release"><span className="gf-status">{hasAmazonOffers ? 'Amazonで販売中' : product.statusLabel || '販売準備中'}</span><p>{hasAmazonOffers ? '最新価格・在庫・配送条件はAmazonでご確認ください。' : product.salesNote || <>{product.shippingEstimate ? <>発送予定：{product.shippingEstimate}<br />製作状況により変更になる場合があります。<br />販売開始日・在庫は確認中です。</> : '販売開始日・在庫・納期は確認中です。'}<br />購入先は販売開始後にご案内します。</>}</p></div>
+            <AmazonPurchaseLinks product={product} />
             {canReservePart(product) && <a className="gf-button" href="#gf-reservation">無料で仮予約する <span aria-hidden="true">↓</span></a>}
-            <a className="gf-button" href={contactUrl} target="_blank" rel="noreferrer">{isOutdoor ? '購入について問い合わせる' : '適合・販売について問い合わせる'} <span aria-hidden="true">↗</span><span className="gf-sr-only">（別タブで開きます）</span></a>
+            <a className={hasAmazonOffers ? 'gf-text-link' : 'gf-button'} href={contactUrl} target="_blank" rel="noreferrer">{isOutdoor ? '購入について問い合わせる' : '適合・販売について問い合わせる'} <span aria-hidden="true">↗</span><span className="gf-sr-only">（別タブで開きます）</span></a>
             <a className="gf-text-link" href="#gf-specifications">{product.compactDetails ? '製品情報を見る' : product.development ? '開発情報と確認事項を見る' : '仕様と取付条件を確認する'} <span aria-hidden="true">↓</span></a>
             {product.service && <a className="gf-text-link" href="#gf-fabrication-service">溶接・塗装まで依頼する <span aria-hidden="true">↓</span></a>}
           </div>
@@ -145,8 +159,8 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
           <div><dt>商品構成</dt><dd>{product.configuration}</dd></div>
           <div><dt>同梱品</dt><dd>{product.included}</dd></div>
           <div><dt>重量・寸法</dt><dd>{product.dimensions || '確認中'}</dd></div>
-          <div><dt>在庫・納期</dt><dd>{product.shippingEstimate ? <>在庫：確認中<br />発送予定：{product.shippingEstimate}<small>製作状況により変更になる場合があります。</small></> : '確認中'}</dd></div>
-          <div><dt>保証・返品条件</dt><dd>確認中。販売開始前にご案内します。</dd></div>
+          <div><dt>在庫・納期</dt><dd>{hasAmazonOffers ? 'Amazonの商品ページでご確認ください。' : product.shippingEstimate ? <>在庫：確認中<br />発送予定：{product.shippingEstimate}<small>製作状況により変更になる場合があります。</small></> : '確認中'}</dd></div>
+          <div><dt>保証・返品条件</dt><dd>{hasAmazonOffers ? 'Amazonの商品ページ・注文画面に記載の条件をご確認ください。' : '確認中。販売開始前にご案内します。'}</dd></div>
           </>}
         </dl>
       </section>
