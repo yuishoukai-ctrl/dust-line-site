@@ -24,7 +24,7 @@
   "devDependencies": {
     "@electric-sql/pglite": "0.5.8",
     "stripe": "23.0.0",
-    "wrangler": "4.148.0"
+    "wrangler": "4.156.0"
   },
   "overrides": {
     "sharp": "0.35.5",
