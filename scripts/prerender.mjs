@@ -17,6 +17,20 @@ const modifiedDate = '2026-08-06'
 
 const routes = [
   {
+    path: '/articles/michinoku-adventure-rally/',
+    source: '/?article=michinoku-adventure-rally',
+    title: 'みちのくアドベンチャーラリー｜編集部3人の振り返り対談｜DUST LINE',
+    description: '岩手県八幡平市のダートへ。2026年10月10日のみちのくアドベンチャーラリーを、編集部3人が準備・実走・パンク対応・帰路まで振り返ります。写真12枚と対談全文を掲載。',
+    image: '/images/michinoku-rally/12-1300.webp',
+    imageAlt: '夕暮れのみちのくと編集部の参加車両。撮影：石川',
+    schemaType: 'Article',
+    section: '旅の記録',
+    publishedDate: '2026-11-02',
+    modifiedDate: '2026-11-02',
+    author: { '@type': 'Person', name: '村松' },
+    expectedText: '圧倒的景観',
+  },
+  {
     path: '/shops/',
     source: '/?page=shops',
     title: 'ショップ紹介｜DUST LINE',
@@ -661,7 +675,7 @@ const pageSchema = (route) => {
       dateModified: route.modifiedDate ?? modifiedDate,
       articleSection: route.section,
       inLanguage: 'ja-JP',
-      author: { '@type': 'Organization', name: 'DUST LINE編集部', url: `${siteOrigin}/company/` },
+      author: route.author ?? { '@type': 'Organization', name: 'DUST LINE編集部', url: `${siteOrigin}/company/` },
       publisher: { '@id': `${siteOrigin}/#organization` },
     })
   } else {
