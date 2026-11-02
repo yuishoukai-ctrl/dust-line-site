@@ -1,6 +1,7 @@
 import { StrictMode, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import HokkaidoArticle from './HokkaidoArticle'
+import MichinokuRallyArticle from './MichinokuRallyArticle'
 import Ktm990Article from './Ktm990Article'
 import MachineFileArticle from './MachineFileArticle'
 import PaintPricePage from './PaintPricePage'
@@ -1216,12 +1217,21 @@ function App() {
     ? '/'
     : `${window.location.pathname.replace(/\/+$/, '')}/`
   const routeArticle = {
+    '/articles/michinoku-adventure-rally/': 'michinoku-adventure-rally',
     '/articles/hokkaido-1190/': 'hokkaido-1190',
     '/articles/ktm-990-adv-s/': 'ktm-990-adv-s',
     '/articles/world-trip/': 'world-trip',
     '/articles/machine-file-001/': 'machine-file-001',
   }[pathname]
   const article = routeArticle || new URLSearchParams(window.location.search).get('article')
+  if (article === 'michinoku-adventure-rally') return (
+    <>
+      <a className="skip-link" href="#main">本文へ移動</a>
+      <Header currentPage="travel" />
+      <MichinokuRallyArticle assetPath={assetPath} />
+      <Footer currentPage="travel" />
+    </>
+  )
   if (article === 'hokkaido-1190') return <HokkaidoArticle assetPath={assetPath} />
   if (article === 'ktm-990-adv-s') return <Ktm990Article assetPath={assetPath} />
   if (article === 'world-trip') return <WorldTripArticle assetPath={assetPath} />

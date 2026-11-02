@@ -70,7 +70,7 @@ export default function Issue02ProductPage({
           <h1 id="issue-02-title">DUST LINE <span>ISSUE 02</span></h1>
           <p className="issue-product__lead">
             decheeeeさんとDUCATI DesertXでたどる、ユーラシア大陸横断。
-            日本・韓国・ロシア・モンゴルの旅に、FS650Eのインプレッション、BONSAIMOTOの連載、HOTEL AZの紹介を収録予定です。
+            日本・韓国・ロシア・モンゴルの旅に、みちのくアドベンチャーラリー、FS650Eのインプレッション、BONSAIMOTOの連載、HOTEL AZの紹介を収録予定です。
           </p>
           <a className="issue-product__contents-link" href="#issue-02-contents">収録予定を見る <Arrow /></a>
 
@@ -86,7 +86,7 @@ export default function Issue02ProductPage({
             <a href={productSignupPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>無料会員登録 <Arrow /></a>
           </div>
           <p className="issue-product__purchase-note">
-            現在は注文・決済を受け付けていません。全56ページの校正稿をもとに制作を進めています。収録内容・ページ数・表紙は、最終校正で変更になる場合があります。
+            現在は注文・決済を受け付けていません。校正稿をもとに制作を進めています。収録内容・ページ数・表紙は、最終校正で変更になる場合があります。
           </p>
         </div>
       </section>
@@ -96,9 +96,17 @@ export default function Issue02ProductPage({
         <header className="issue-product__preview-heading reveal">
           <p className="issue-product__kicker">TRAVEL / MACHINE / COLUMN / STAY</p>
           <h2 id="issue-02-editorial-title">旅と、走りと、挑戦と。</h2>
-          <p>第2号でお届けする、4つの収録予定記事をご紹介します。</p>
+          <p>第2号でお届けする、5つの収録予定記事をご紹介します。</p>
         </header>
         <div className="issue-product__features">
+          <article className="reveal">
+            <p className="issue-product__kicker">FIELD REPORT / MICHINOKU</p>
+            <h3>みちのくアドベンチャーラリー</h3>
+            <p className="issue-product__feature-meta">編集部3人が語る、ダート天国みちのく。</p>
+            <p>準備から岩手県八幡平市のダート、パンク対応、タイムアウト後の帰路まで。村松・小池・石川の振り返り対談を、実走写真とともにお届けします。</p>
+            <p className="issue-product__feature-credit">文：村松 / 撮影：石川</p>
+            <a className="issue-product__feature-link" href="/articles/michinoku-adventure-rally/">Web版を読む <Arrow /></a>
+          </article>
           <article className="reveal">
             <p className="issue-product__kicker">TRAVEL / decheeee</p>
             <h3>ユーラシアへ。</h3>

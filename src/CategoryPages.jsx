@@ -19,6 +19,17 @@ const CATEGORY_CONTENT = {
     heroAlt: 'フェリー乗り場で北海道への出発を待つKTM 1190 Adventure',
     cards: [
       {
+        number: '003',
+        kicker: 'FIELD REPORT / MICHINOKU',
+        title: 'みちのくアドベンチャーラリー。',
+        excerpt: '岩手県八幡平市のダートへ。準備、実走、パンク対応、タイムアウト後の帰路まで、編集部3人の対談と写真で振り返る。',
+        image: 'michinoku-rally/12-1300.webp',
+        alt: '夕暮れの山々を背景にした、みちのくアドベンチャーラリーの参加車両',
+        href: '/articles/michinoku-adventure-rally/',
+        linkLabel: 'みちのくの記録を読む',
+        featured: true,
+      },
+      {
         number: '001',
         kicker: 'TRAVEL REPORT / 3,500 KM',
         title: 'KTM 1190で行く、北海道・離島の旅。',
@@ -27,7 +38,7 @@ const CATEGORY_CONTENT = {
         alt: '北海道ツーリングの荷物を積んだKTM 1190 Adventure',
         href: '/articles/hokkaido-1190/',
         linkLabel: '旅の記録を読む',
-        featured: true,
+        featured: false,
       },
       {
         number: '002',
