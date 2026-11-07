@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url'
 import { firstIssue, issues, journal } from '../src/member-content.js'
 import { guardFactoryProducts, guardFactoryProductPath, guardFactoryPhotoPath } from '../src/guard-factory-products.js'
 import { motorradShizuoka, shopPhotoPath, hotelAz, hotelAzPhotoPath } from '../src/shop-profiles.js'
+import { gearGuides, gearGuideDate } from '../src/gear-guides.js'
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = join(projectRoot, 'dist')
@@ -16,6 +17,19 @@ const publishedDate = '2026-07-17'
 const modifiedDate = '2026-08-06'
 
 const routes = [
+  ...gearGuides.map((guide) => ({
+    path: guide.path,
+    source: `/?article=${guide.slug}`,
+    title: `${guide.title}｜DUST LINE`,
+    description: guide.description,
+    image: guide.image ? `/images/${guide.image}` : '/og.png',
+    imageAlt: guide.imageAlt || 'DUST LINEのバイク装備選びガイド',
+    schemaType: 'Article',
+    section: 'ツーリング装備',
+    publishedDate: gearGuideDate,
+    modifiedDate: gearGuideDate,
+    expectedText: guide.title,
+  })),
   {
     path: '/gear/',
     source: '/?page=gear',

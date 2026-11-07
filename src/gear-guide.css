@@ -1,0 +1,86 @@
+body:has(.gear-guide) { min-width: 0; }
+.gear-guide { background: var(--paper); color: var(--ink); padding-top: 124px; padding-bottom: 72px; }
+.gg-wide { width: min(1100px, calc(100% - 96px)); margin-inline: auto; }
+.gg-header { padding-bottom: 42px; }
+.gg-breadcrumb { display: flex; flex-wrap: wrap; gap: 12px; font-size: .78rem; color: #59544c; margin-bottom: 46px; }
+.gg-breadcrumb a:hover, .gg-byline a:hover { text-decoration: underline; }
+.gg-category { color: #9c4120; font-weight: 700; font-size: .85rem; margin: 0 0 18px; }
+.gg-header h1 { max-width: 1000px; margin: 0; font-size: clamp(2.1rem, 3.8vw, 3.45rem); line-height: 1.55; font-weight: 900; overflow-wrap: anywhere; }
+.gg-byline { display: flex; flex-wrap: wrap; gap: 24px; margin: 25px 0; font-size: .78rem; color: #59544c; }
+.gg-lead { max-width: 820px; margin: 0; font-size: 1.05rem; line-height: 2.15; }
+.gg-figure { margin-block: 0 42px; }
+.gg-figure img { max-height: 620px; object-fit: cover; }
+.gg-figure--portrait img { height: 500px; object-fit: contain; background: #dcd5c7; }
+.gg-figure figcaption { margin-top: 10px; font-size: .74rem; line-height: 1.85; color: #5f594f; }
+.gg-body { width: min(740px, calc(100% - 96px)); margin-inline: auto; }
+.gg-disclosure { padding-block: 18px; border-block: 1px solid #b9b1a2; font-size: .76rem; line-height: 1.95; color: #5a534a; }
+.gg-disclosure p { margin: 0; }
+.gg-disclosure p + p { margin-top: 8px; }
+.gg-disclosure strong { color: var(--ink); margin-right: 6px; }
+.gg-contents { margin-block: 38px 52px; }
+.gg-contents > p { margin: 0 0 12px; font-weight: 700; font-size: .86rem; }
+.gg-contents ol { margin: 0; padding-left: 1.6em; }
+.gg-contents li { padding: 7px 0; font-size: .9rem; line-height: 1.85; }
+.gg-contents a { text-decoration: underline; text-decoration-color: #b5a28b; text-underline-offset: 5px; }
+.gg-contents a:hover { color: #a04420; }
+.gg-section { margin-top: 52px; scroll-margin-top: 100px; }
+.gg-section h2, .gg-checklist h2, .gg-products h2 { font-size: 1.6rem; line-height: 1.7; margin: 0 0 22px; font-weight: 900; }
+.gg-section > p { font-size: 1rem; line-height: 2.2; margin: 0 0 24px; }
+.gg-section > .gg-source { font-size: .76rem; color: #5b544b; line-height: 1.9; }
+.gg-source a { text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.gg-source a:hover { color: #9c4120; }
+.gg-comparison { margin-block: 34px; }
+.gg-comparison table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: .88rem; line-height: 1.9; }
+.gg-comparison caption { text-align: left; font-size: 1rem; font-weight: 700; margin-bottom: 14px; }
+.gg-comparison th, .gg-comparison td { padding: 15px 16px; vertical-align: top; border-bottom: 1px solid #b9b1a2; text-align: left; overflow-wrap: anywhere; }
+.gg-comparison thead { background: #dcd4c4; }
+.gg-comparison th:first-child { width: 30%; }
+.gg-comparison tbody th { font-weight: 700; }
+.gg-checklist { margin-top: 50px; padding: 30px; border-left: 3px solid var(--accent); background: #dfd7c7; }
+.gg-checklist h2 { font-size: 1.25rem; margin-bottom: 15px; }
+.gg-checklist ul { padding-left: 1.3em; margin: 0; }
+.gg-checklist li { font-size: .92rem; line-height: 2; padding-block: 5px; }
+.gg-products { margin-top: 48px; }
+.gg-products > p { font-size: .78rem; line-height: 1.95; color: #5a534a; }
+.gg-products ul { list-style: none; padding: 0; margin: 22px 0; border-top: 1px solid #b9b1a2; }
+.gg-products li { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 22px; border-bottom: 1px solid #b9b1a2; }
+.gg-products h3 { margin: 0; font-size: 1rem; line-height: 1.8; }
+.gg-products a { display: inline-flex; flex-shrink: 0; gap: 18px; align-items: center; min-height: 48px; padding: 12px 16px; background: var(--ink); color: var(--paper); font-size: .76rem; font-weight: 700; }
+.gg-products a:hover { background: #9c4120; }
+.gg-report-link, .gg-back { display: flex; justify-content: space-between; align-items: center; gap: 20px; min-height: 56px; padding-block: 18px; border-bottom: 1px solid #a69e8e; font-size: .87rem; font-weight: 700; line-height: 1.9; }
+.gg-report-link { margin-top: 20px; }
+.gg-report-link:hover, .gg-back:hover { color: #9c4120; }
+.gg-more { margin-top: 72px; border-top: 2px solid var(--ink); padding-top: 34px; }
+.gg-more > h2 { font-size: 1.5rem; margin: 0 0 26px; }
+.gg-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; }
+.gg-links > a { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 24px 34px 24px 0; border-bottom: 1px solid #b7b0a2; }
+.gg-links > a > span:first-child { font-size: .74rem; color: #8f3d20; }
+.gg-links strong { font-size: 1.12rem; line-height: 1.85; }
+.gg-links > a > span:last-child { position: absolute; right: 3px; top: 50%; }
+.gg-links > a:hover { color: #9c4120; }
+.gg-back { margin-top: 28px; width: fit-content; gap: 42px; }
+.tg-guides { padding-block: 64px; scroll-margin-top: 90px; }
+.tg-guides h2 { margin: 0 0 16px; font-size: 2.1rem; line-height: 1.5; }
+.tg-guides > p { font-size: .9rem; line-height: 2; margin: 0 0 16px; }
+@media (max-width: 760px) {
+  .gear-guide { padding-top: 96px; padding-bottom: 48px; }
+  .gg-wide, .gg-body { width: calc(100% - 40px); }
+  .gg-header { padding-bottom: 28px; }
+  .gg-breadcrumb { margin-bottom: 30px; font-size: .72rem; }
+  .gg-header h1 { font-size: 2rem; line-height: 1.55; }
+  .gg-lead { font-size: .98rem; line-height: 2.1; }
+  .gg-figure { margin-bottom: 26px; }
+  .gg-figure img { max-height: 380px; }
+  .gg-figure--portrait img { height: 340px; }
+  .gg-section { margin-top: 40px; }
+  .gg-section h2 { font-size: 1.4rem; }
+  .gg-section > p { font-size: .98rem; line-height: 2.15; }
+  .gg-comparison th, .gg-comparison td { padding: 12px 8px; font-size: .8rem; }
+  .gg-comparison th:first-child { width: 32%; }
+  .gg-checklist { padding: 24px 18px; }
+  .gg-products li { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .gg-links { grid-template-columns: minmax(0, 1fr); }
+  .gg-more { margin-top: 52px; }
+  .tg-guides { padding-block: 45px; }
+  .tg-guides h2 { font-size: 1.75rem; }
+}

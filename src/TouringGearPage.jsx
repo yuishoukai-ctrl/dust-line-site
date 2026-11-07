@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { amazonGearSearch, amazonGearProduct, recommendedMirror, repairGear, packingGear, campingGear } from './touring-gear'
+import { GearGuideLinks } from './GearGuideArticle'
 import './touring-gear.css'
 
 function GearList({ items }) {
@@ -39,7 +40,10 @@ export default function TouringGearPage({ assetPath, basePath = '/' }) {
             <p className="tg-kicker">DUST LINE / GEAR GUIDE</p>
             <h1>編集部の<br />ツーリング装備</h1>
             <p className="tg-hero__lead">旅の記事から、次に持っていく道具を。</p>
-            <a className="tg-hero__link" href="#editors-pick">編集部のおすすめを見る<span aria-hidden="true">↓</span></a>
+            <div className="tg-hero__actions">
+              <a className="tg-hero__link" href="#guides">装備の選び方を読む<span aria-hidden="true">↓</span></a>
+              <a className="tg-hero__link" href="#editors-pick">編集部のおすすめを見る<span aria-hidden="true">↓</span></a>
+            </div>
           </div>
         </div>
       </header>
@@ -132,6 +136,12 @@ export default function TouringGearPage({ assetPath, basePath = '/' }) {
             <a className="tg-story-link" href={`${basePath}parts/guard-factory/stainless-fire-pit/`}>仕様・購入相談を見る<span aria-hidden="true">→</span></a>
           </div>
         </aside>
+      </section>
+
+      <section id="guides" className="tg-guides tg-container" aria-labelledby="tg-guides-title">
+        <h2 id="tg-guides-title">装備の選び方</h2>
+        <p>取材で見えた準備の課題と、製品の仕様から。自分の車両と旅に合う道具を考えます。</p>
+        <GearGuideLinks basePath={basePath} />
       </section>
 
       <section className="tg-closing" aria-labelledby="tg-closing-title">
