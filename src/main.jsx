@@ -12,6 +12,7 @@ import WorldTripArticle from './WorldTripArticle'
 import CategoryPage from './CategoryPages'
 import MotorradShizuokaPage, { ShopIndexPage } from './ShopPages'
 import HotelAzPage from './HotelAzPage'
+import TouringGearPage from './TouringGearPage'
 import OffroadMagazinePage from './OffroadMagazinePage'
 import Issue02ProductPage from './Issue02ProductPage'
 import ReleaseDelayNoticePage from './ReleaseDelayNoticePage'
@@ -156,6 +157,7 @@ function Header({ currentPage = null }) {
   const closeMenu = () => { setOpen(false); setExpandedGroup(null) }
   const articleLinks = [
     { href: travelPagePath, label: '旅の記録', page: 'travel' },
+    { href: `${homePath}gear/`, label: 'ツーリング装備', page: 'gear' },
     { href: buildPagePath, label: '車両製作', page: 'build' },
     { href: garagePagePath, label: 'ガレージ記事', page: 'garage' },
   ]
@@ -847,6 +849,7 @@ function PrivacyPage() {
               <div className="legal-block__heading"><span>04</span><h3>外部サービス</h3></div>
               <div className="legal-block__body">
                 <p>会員登録と認証にはSupabaseを、同意いただいた場合のアクセス解析にはGoogle Analytics 4を利用します。また、当サイトにはSUZURI、X、Googleフォームなど外部サービスへのリンクがあります。各サービスで取り扱われる情報には、それぞれの利用規約・プライバシーポリシーが適用されます。</p>
+                <p>当サイトはAmazonアソシエイト・プログラムを利用しています。Amazonへのアフィリエイトリンクには紹介元を識別する情報が含まれ、リンク先でAmazonがCookie等を使用して購入などの成果を計測する場合があります。Amazonでの情報の取り扱いは、<a href="https://www.amazon.co.jp/gp/help/customer/display.html?nodeId=201909010" target="_blank" rel="noopener">Amazon.co.jpプライバシー規約</a>をご確認ください。</p>
                 <p>部品の仮予約情報はSupabaseで管理します。不正送信を防ぐ安全確認にはCloudflare Turnstileを使用し、IPアドレスやブラウザ等の技術情報をCloudflareが処理します。詳しくは<a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noreferrer">Cloudflareプライバシーポリシー</a>をご確認ください。仮予約情報の訂正・取り消しは、受付番号を添えてお問い合わせください。</p>
                 <p>アクセス解析への同意内容はブラウザに保存されます。変更を希望する場合は、ブラウザの当サイト用ストレージを削除すると再設定できます。Googleによる情報の取り扱いは、<a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Googleプライバシーポリシー</a>をご確認ください。</p>
                 <p>外部サイトの内容、商品の購入、決済、配送、アカウント管理等については、各サービス提供者へご確認ください。</p>
@@ -1173,6 +1176,7 @@ function Footer({ currentPage = null }) {
       </div>
       <div className="footer__links">
         <a href={travelPagePath} aria-current={currentPage === 'travel' ? 'page' : undefined}>Travel</a>
+        <a href={`${homePath}gear/`} aria-current={currentPage === 'gear' ? 'page' : undefined}>ツーリング装備</a>
         <a href={buildPagePath} aria-current={currentPage === 'build' ? 'page' : undefined}>Build</a>
         <a href={garagePagePath} aria-current={currentPage === 'garage' ? 'page' : undefined}>Garage</a>
         <a href={partsPagePath} aria-current={currentPage === 'parts' ? 'page' : undefined}>Parts</a>
@@ -1253,6 +1257,7 @@ function App() {
   }
 
   const routePage = {
+    '/gear/': 'gear',
     '/company/': 'company',
     '/goods/': 'goods',
     '/advertise/': 'advertise',
@@ -1283,6 +1288,14 @@ function App() {
   if (page === 'commercial-disclosure') return <CommercialDisclosurePage />
   if (page === 'refund-policy') return <RefundPolicyPage />
   if (page === 'digital-delivery') return <DigitalDeliveryPage />
+  if (page === 'gear') return (
+    <>
+      <a className="skip-link" href="#main">本文へ移動</a>
+      <Header currentPage="gear" />
+      <TouringGearPage assetPath={assetPath} basePath={homePath} />
+      <Footer currentPage="gear" />
+    </>
+  )
   if (page === 'shops' || page === 'shop-motorrad-shizuoka' || page === 'shop-hotel-az') {
     const ShopPage = page === 'shops' ? ShopIndexPage : page === 'shop-hotel-az' ? HotelAzPage : MotorradShizuokaPage
     return (
