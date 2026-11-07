@@ -1,4 +1,12 @@
 import './category-pages.css'
+import { issue01Digests } from './issue01-digests'
+
+function digestCard(slug, number) {
+  const article = issue01Digests.find((item) => item.slug === slug)
+  return { number, kicker: 'DUSTLINE / ISSUE 01 DIGEST', title: article.title,
+    excerpt: article.introduction, image: article.hero.file, alt: article.hero.alt,
+    href: article.path, linkLabel: 'ダイジェストを読む' }
+}
 
 const CATEGORY_NAV = [
   { key: 'travel', label: '旅の記録', sublabel: 'TRAVEL', href: '/travel/' },
@@ -50,6 +58,7 @@ const CATEGORY_CONTENT = {
         href: '/articles/world-trip/',
         linkLabel: '準備の記録を読む',
       },
+      digestCard('adventure-rally-origins', '004'),
     ],
   },
   machines: {
@@ -92,6 +101,7 @@ const CATEGORY_CONTENT = {
         href: '/articles/machine-file-001/',
         linkLabel: 'マシンファイルを見る',
       },
+      digestCard('tiger-800-xcx-partner', '004'),
     ],
   },
   garage: {
@@ -101,7 +111,7 @@ const CATEGORY_CONTENT = {
     title: '溶接・塗装・整備',
     lead: '走るための加工を、現場の手順で。溶接、塗装、研磨、車両整備を、実車で確認した寸法と失敗しないための判断から伝えます。',
     statement: '火花の先に、次の一台がある。',
-    description: 'GARAGEの公開記事は、現在準備中です。サイドスタンド拡張、ワンオフ部品、塗装と下地づくりなど、編集部が実際に手を動かした工程を順次公開します。',
+    description: 'サイドスタンドの接地面を広げ、使ってきた部品を塗り直し、足元のガードを作る。創刊号に記録した加工と塗装を、本文と写真で公開しています。',
     serviceLink: {
       href: '/paint/',
       label: '塗装価格と依頼方法を見る',
@@ -120,12 +130,13 @@ const CATEGORY_CONTENT = {
         linkLabel: '公開中の誌面を見る',
         featured: true,
       },
+      digestCard('powder-coat-pannier-stay', '002'),
+      digestCard('side-stand-widener', '003'),
+      digestCard('djebel-250-guard-development', '004'),
     ],
     upcoming: [
-      ['01', 'SIDE STAND', '型紙から始める、サイドスタンド接地面の拡張。'],
-      ['02', 'WELDING', 'ワンオフ部品をつくる、切断・仮付け・本溶接。'],
-      ['03', 'PAINT', '塗装の仕上がりを変える、研磨と下地づくり。'],
-      ['04', 'MAINTENANCE', '旅の途中で止まらないための、出発前整備。'],
+      ['01', 'WELDING', 'ワンオフ部品をつくる、切断・仮付け・本溶接。'],
+      ['02', 'MAINTENANCE', '旅の途中で止まらないための、出発前整備。'],
     ],
   },
 }

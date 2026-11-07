@@ -15,6 +15,8 @@ import HotelAzPage from './HotelAzPage'
 import TouringGearPage from './TouringGearPage'
 import GearGuideArticle from './GearGuideArticle'
 import { gearGuides } from './gear-guides'
+import Issue01DigestArticle, { Issue01DigestIndex } from './Issue01Digests'
+import { issue01Digests } from './issue01-digests'
 import OffroadMagazinePage from './OffroadMagazinePage'
 import Issue02ProductPage from './Issue02ProductPage'
 import ReleaseDelayNoticePage from './ReleaseDelayNoticePage'
@@ -158,6 +160,7 @@ function Header({ currentPage = null }) {
   const subpage = Boolean(currentPage)
   const closeMenu = () => { setOpen(false); setExpandedGroup(null) }
   const articleLinks = [
+    { href: `${homePath}articles/issue-01/`, label: '創刊号ダイジェスト', page: 'issue-digests' },
     { href: travelPagePath, label: '旅の記録', page: 'travel' },
     { href: `${homePath}gear/`, label: 'ツーリング装備', page: 'gear' },
     { href: buildPagePath, label: '車両製作', page: 'build' },
@@ -1177,6 +1180,7 @@ function Footer({ currentPage = null }) {
         <small>ADVENTURE MOTORCYCLE JOURNAL</small>
       </div>
       <div className="footer__links">
+        <a href={`${homePath}articles/issue-01/`} aria-current={currentPage === 'issue-digests' ? 'page' : undefined}>創刊号ダイジェスト</a>
         <a href={travelPagePath} aria-current={currentPage === 'travel' ? 'page' : undefined}>Travel</a>
         <a href={`${homePath}gear/`} aria-current={currentPage === 'gear' ? 'page' : undefined}>ツーリング装備</a>
         <a href={buildPagePath} aria-current={currentPage === 'build' ? 'page' : undefined}>Build</a>
@@ -1222,6 +1226,18 @@ function App() {
   const pathname = window.location.pathname === '/'
     ? '/'
     : `${window.location.pathname.replace(/\/+$/, '')}/`
+  const issue01Digest = issue01Digests.find((item) => pathname === item.path
+    || (pathname === '/' && new URLSearchParams(window.location.search).get('article') === item.slug))
+  const isDigestIndex = pathname === '/articles/issue-01/'
+    || (pathname === '/' && new URLSearchParams(window.location.search).get('page') === 'issue-01-digests')
+  if (issue01Digest || isDigestIndex) return (
+    <>
+      <a className="skip-link" href="#main">本文へ移動</a>
+      <Header currentPage="issue-digests" />
+      {issue01Digest ? <Issue01DigestArticle article={issue01Digest} assetPath={assetPath} basePath={homePath} /> : <Issue01DigestIndex assetPath={assetPath} basePath={homePath} />}
+      <Footer currentPage="issue-digests" />
+    </>
+  )
   const gearGuide = gearGuides.find((guide) => pathname === guide.path
     || (pathname === '/' && new URLSearchParams(window.location.search).get('article') === guide.slug))
   if (gearGuide) return (
