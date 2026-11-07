@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { amazonGearSearch, repairGear, packingGear, campingGear } from './touring-gear'
+import { amazonGearSearch, amazonGearProduct, recommendedMirror, repairGear, packingGear, campingGear } from './touring-gear'
 import './touring-gear.css'
 
 function GearList({ items }) {
@@ -39,16 +39,33 @@ export default function TouringGearPage({ assetPath, basePath = '/' }) {
             <p className="tg-kicker">DUST LINE / GEAR GUIDE</p>
             <h1>編集部の<br />ツーリング装備</h1>
             <p className="tg-hero__lead">旅の記事から、次に持っていく道具を。</p>
-            <a className="tg-hero__link" href="#repair">装備を見る<span aria-hidden="true">↓</span></a>
+            <a className="tg-hero__link" href="#editors-pick">編集部のおすすめを見る<span aria-hidden="true">↓</span></a>
           </div>
         </div>
       </header>
 
       <div className="tg-disclosure tg-container">
         <p><strong>広告</strong> 本ページはアフィリエイトリンクを含みます。Amazonのアソシエイトとして、DUSTLINEは適格販売により収入を得ています。</p>
-        <p>掲載商品は用途に合わせて選んだ購入候補です。写真は記事での実走・積載例で、紹介商品そのものの写真ではありません。Amazonリンクは商品名での検索結果へ移動します。</p>
+        <p>編集部おすすめのミラーと、用途に合わせた購入候補を紹介します。記事に添えた実走・積載写真は、紹介するミラーや購入候補の商品写真ではありません。</p>
         <p>製品仕様確認：2026年11月7日。価格・在庫・適合は購入先でご確認ください。</p>
       </div>
+
+      <section id="editors-pick" className="tg-pick tg-container" aria-labelledby="tg-pick-title">
+        <div className="tg-pick__heading">
+          <p className="tg-kicker">編集部のおすすめ</p>
+          <h2 id="tg-pick-title">ボールジョイント式<br />バイクミラー</h2>
+          <p className="tg-pick__model">{recommendedMirror.brand}<span aria-hidden="true"> / </span>{recommendedMirror.set}</p>
+        </div>
+        <div className="tg-pick__body">
+          <p>{recommendedMirror.description}</p>
+          <p>{recommendedMirror.mounting}</p>
+          <p className="tg-note">{recommendedMirror.fitNote}</p>
+          <a className="tg-amazon tg-pick__amazon" href={amazonGearProduct(recommendedMirror.asin)} target="_blank" rel="sponsored noopener"
+            aria-label={`${recommendedMirror.brand} ${recommendedMirror.name}をAmazonで見る（新しいタブ）`}>
+            このミラーをAmazonで見る<span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </section>
 
       <nav className="tg-jump tg-container" aria-label="用途から装備を選ぶ">
         <a href="#repair"><span>01</span>パンクに備える<span aria-hidden="true">↓</span></a>

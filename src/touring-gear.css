@@ -18,6 +18,12 @@ body:has(.touring-gear) { min-width: 0; }
 .tg-disclosure { padding-block: 25px; color: #514e47; font-size: .75rem; line-height: 1.9; }
 .tg-disclosure p { margin: 0; }
 .tg-disclosure strong { display: inline-block; margin-right: 8px; color: var(--ink); }
+.tg-pick { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; padding-block: 48px; margin-bottom: 44px; border-top: 3px solid var(--accent); border-bottom: 1px solid #b7b0a2; scroll-margin-top: 86px; }
+.tg-pick h2 { margin: 0; font-size: 2.25rem; line-height: 1.55; font-weight: 900; }
+.tg-pick__model { margin: 18px 0 0; font-size: .85rem; font-weight: 700; }
+.tg-pick__body > p { margin: 0 0 16px; font-size: .9rem; line-height: 2; }
+.tg-pick__body > .tg-note { font-size: .78rem; }
+.tg-pick__amazon { margin-top: 8px; min-height: 50px; }
 .tg-jump { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid #b7b0a2; }
 .tg-jump a { display: flex; gap: 15px; align-items: center; min-height: 76px; padding: 16px 22px; font-size: .9rem; font-weight: 700; }
 .tg-jump a + a { border-left: 1px solid #b7b0a2; }
@@ -74,6 +80,8 @@ body:has(.touring-gear) { min-width: 0; }
 @media (max-width: 1000px) {
   .tg-container { width: calc(100% - 56px); }
   .tg-repair-grid, .tg-packing-top, .tg-own-product { gap: 32px; }
+  .tg-pick { gap: 32px; }
+  .tg-pick h2 { font-size: 2rem; }
   .tg-hero h1 { font-size: 3.25rem; }
   .tg-repair-grid .tg-products li { grid-template-columns: minmax(0, 1fr); gap: 15px; }
   .tg-repair-grid .tg-amazon { justify-self: start; }
@@ -90,6 +98,8 @@ body:has(.touring-gear) { min-width: 0; }
   .tg-kicker { font-size: .66rem; margin-bottom: 14px; }
   .tg-disclosure { padding-block: 20px; font-size: .7rem; }
   .tg-disclosure p + p { margin-top: 8px; }
+  .tg-pick { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 32px; margin-bottom: 32px; }
+  .tg-pick h2 { font-size: 1.8rem; }
   .tg-jump { grid-template-columns: 1fr; }
   .tg-jump a { padding: 14px 4px; min-height: 54px; font-size: .9rem; }
   .tg-jump a + a { border-left: 0; border-top: 1px solid #b7b0a2; }
