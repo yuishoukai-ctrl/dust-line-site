@@ -17,6 +17,17 @@ const modifiedDate = '2026-08-06'
 
 const routes = [
   {
+    path: '/gear/',
+    source: '/?page=gear',
+    title: '編集部のツーリング装備｜旅の記事から選ぶ道具｜DUST LINE',
+    description: 'みちのくラリーのパンク対応、北海道ツーリングの積載、ソロキャンプから考える装備ガイド。用品選びのポイントと関連する旅の記事を紹介します。',
+    image: '/images/camp-sunset.jpg',
+    imageAlt: '夕暮れのキャンプ場と荷物を積んだアドベンチャーバイク',
+    schemaType: 'CollectionPage',
+    modifiedDate: '2026-11-07',
+    expectedText: 'ツーリング装備',
+  },
+  {
     path: '/articles/michinoku-adventure-rally/',
     source: '/?article=michinoku-adventure-rally',
     title: 'みちのくアドベンチャーラリー｜編集部3人の振り返り対談｜DUST LINE',
