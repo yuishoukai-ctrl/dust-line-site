@@ -2,11 +2,30 @@
 // Vite's environment configuration can override it for another approved site.
 const associateTag = (import.meta.env.VITE_AMAZON_ASSOCIATE_TAG || 'dustline1941-22').trim()
 
+function taggedAmazonUrl(url) {
+  if (/^[a-zA-Z0-9_-]+-22$/.test(associateTag)) url.searchParams.set('tag', associateTag)
+  return url.toString()
+}
+
 export function amazonGearSearch(query) {
   const url = new URL('https://www.amazon.co.jp/s')
   url.searchParams.set('k', query)
-  if (/^[a-zA-Z0-9_-]+-22$/.test(associateTag)) url.searchParams.set('tag', associateTag)
-  return url.toString()
+  return taggedAmazonUrl(url)
+}
+
+export function amazonGearProduct(asin) {
+  return taggedAmazonUrl(new URL(`https://www.amazon.co.jp/dp/${encodeURIComponent(asin)}`))
+}
+
+// Selected by the editorial team; no firsthand usage comments were supplied.
+export const recommendedMirror = {
+  name: 'ボールジョイント式バイクミラー',
+  brand: 'Tewgug',
+  asin: 'B0CNSZ3CBD',
+  set: '左右セット',
+  description: 'ミラー位置を調整できるボールジョイントを備え、左右2個のミラーと取り付け用部品がセットになっています。',
+  mounting: '商品説明では、8mm／10mmの正ネジ用部品と、7/8インチのハンドルバー用クランプが案内されています。',
+  fitNote: '購入前に、車両側のネジ径・ネジ方向・ピッチ、必要なアダプターをご確認ください。',
 }
 
 export const repairGear = [
