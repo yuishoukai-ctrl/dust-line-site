@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { amazonGearSearch, amazonGearProduct, recommendedMirror, repairGear, packingGear, campingGear } from './touring-gear'
+import { amazonGearSearch, amazonGearProduct, recommendedMirror, recommendedRepairGear, repairGear, packingGear, campingGear } from './touring-gear'
 import { GearGuideLinks } from './GearGuideArticle'
 import './touring-gear.css'
 
@@ -8,10 +8,10 @@ function GearList({ items }) {
     <ul className="tg-products">
       {items.map((item) => (
         <li key={item.name}>
-          <div><h3>{item.name}</h3><p>{item.detail}</p><a className="tg-spec-link" href={item.source} target="_blank" rel="noopener">メーカーの仕様<span aria-hidden="true">↗</span></a></div>
-          <a className="tg-amazon" href={amazonGearSearch(item.query)} target="_blank" rel="sponsored noopener"
-            aria-label={`${item.name}をAmazonで探す（新しいタブ）`}>
-            Amazonで探す<span aria-hidden="true">↗</span>
+          <div><h3>{item.name}</h3><p>{item.detail}</p>{item.fitNote && <p>{item.fitNote}</p>}<a className="tg-spec-link" href={item.source} target="_blank" rel="noopener">メーカーの仕様<span aria-hidden="true">↗</span></a></div>
+          <a className="tg-amazon" href={item.asin ? amazonGearProduct(item.asin) : amazonGearSearch(item.query)} target="_blank" rel="sponsored noopener"
+            aria-label={`${item.name}をAmazonで${item.asin ? '見る' : '探す'}（新しいタブ）`}>
+            {item.asin ? 'Amazonで商品を見る' : 'Amazonで探す'}<span aria-hidden="true">↗</span>
           </a>
         </li>
       ))}
@@ -50,14 +50,14 @@ export default function TouringGearPage({ assetPath, basePath = '/' }) {
 
       <div className="tg-disclosure tg-container">
         <p><strong>広告</strong> 本ページはアフィリエイトリンクを含みます。Amazonのアソシエイトとして、DUSTLINEは適格販売により収入を得ています。</p>
-        <p>編集部おすすめのミラーと、用途に合わせた購入候補を紹介します。記事に添えた実走・積載写真は、紹介するミラーや購入候補の商品写真ではありません。</p>
+        <p>編集部メンバーおすすめのミラー・修理用ツールと、用途に合わせた購入候補を紹介します。記事に添えた実走・積載写真は、紹介する商品の写真ではありません。</p>
         <p>製品仕様確認：2026年11月7日。価格・在庫・適合は購入先でご確認ください。</p>
       </div>
 
       <section id="editors-pick" className="tg-pick tg-container" aria-labelledby="tg-pick-title">
         <div className="tg-pick__heading">
-          <p className="tg-kicker">編集部のおすすめ</p>
-          <h2 id="tg-pick-title">ボールジョイント式<br />バイクミラー</h2>
+          <h2 id="tg-pick-title" className="tg-kicker">編集部メンバーのおすすめ</h2>
+          <h3>ボールジョイント式<br />バイクミラー</h3>
           <p className="tg-pick__model">{recommendedMirror.brand}<span aria-hidden="true"> / </span>{recommendedMirror.set}</p>
         </div>
         <div className="tg-pick__body">
@@ -68,6 +68,9 @@ export default function TouringGearPage({ assetPath, basePath = '/' }) {
             aria-label={`${recommendedMirror.brand} ${recommendedMirror.name}をAmazonで見る（新しいタブ）`}>
             このミラーをAmazonで見る<span aria-hidden="true">↗</span>
           </a>
+        </div>
+        <div className="tg-pick__tools">
+          <GearList items={recommendedRepairGear} />
         </div>
       </section>
 

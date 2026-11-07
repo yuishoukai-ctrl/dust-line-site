@@ -28,6 +28,24 @@ export const recommendedMirror = {
   fitNote: '購入前に、車両側のネジ径・ネジ方向・ピッチ、必要なアダプターをご確認ください。',
 }
 
+// Selected by editorial members; descriptions summarize the manufacturers' specifications.
+export const recommendedRepairGear = [
+  {
+    name: 'UNIT エマージェンシーサイドスタンド C5010',
+    asin: 'B075X3JKQQ',
+    detail: 'サイドスタンドと併用する携帯用の補助スタンド。ツーリング中のパンク修理に備える道具です。高さは290〜450mmに調整でき、最小サイズは幅50×高さ305mm、重量は453g。',
+    fitNote: '単体で車両を支える製品ではありません。支持位置や接地面を確認し、滑りやすい床面での使用にご注意ください。',
+    source: 'https://www.dirtfreak.co.jp/products/detail/4547836253546/',
+  },
+  {
+    name: 'MOTION PRO ビードバーディー2',
+    asin: 'B0035UDHZ2',
+    detail: 'オフロード用スポークホイールのタイヤ交換を助ける工具。スポークに掛け、タイヤレバーと反対側のビードをリム中央の溝へ押さえる仕組みです。メーカー品番は08-0471。',
+    fitNote: 'タイヤレバーと併用する補助工具です。購入前にホイール形状と使用条件をご確認ください。',
+    source: 'https://www.motionpro.com/product/08-0471',
+  },
+]
+
 export const repairGear = [
   {
     name: 'DRC PROタイヤレバー 260mm',
