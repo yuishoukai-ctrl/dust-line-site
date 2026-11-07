@@ -9,6 +9,7 @@ import { firstIssue, issues, journal } from '../src/member-content.js'
 import { guardFactoryProducts, guardFactoryProductPath, guardFactoryPhotoPath } from '../src/guard-factory-products.js'
 import { motorradShizuoka, shopPhotoPath, hotelAz, hotelAzPhotoPath } from '../src/shop-profiles.js'
 import { gearGuides, gearGuideDate } from '../src/gear-guides.js'
+import { issue01Digests, issue01DigestDate } from '../src/issue01-digests.js'
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = join(projectRoot, 'dist')
@@ -17,6 +18,31 @@ const publishedDate = '2026-07-17'
 const modifiedDate = '2026-08-06'
 
 const routes = [
+  {
+    path: '/articles/issue-01/',
+    source: '/?page=issue-01-digests',
+    title: '創刊号ダイジェスト｜DUSTLINEの旅・車両・ガレージ記事',
+    description: 'DUSTLINE創刊号から6記事を公開。Tiger 800 XCX、アドベンチャーラリー、BONSAIMOTO、パウダーコート、サイドスタンド、ジェベル用ガードの本文と写真を抜粋。',
+    image: '/images/issue01-digests/tiger-800-xcx-hero.webp',
+    imageAlt: 'Tiger 800 XCXと仲間のバイク',
+    schemaType: 'CollectionPage',
+    modifiedDate: issue01DigestDate,
+    expectedText: '創刊号ダイジェスト',
+  },
+  ...issue01Digests.map((article) => ({
+    path: article.path,
+    source: `/?article=${article.slug}`,
+    title: `${article.title}｜創刊号ダイジェスト｜DUST LINE`,
+    description: article.description,
+    image: `/images/${article.hero.file}`,
+    imageAlt: article.hero.alt,
+    schemaType: 'Article',
+    section: article.category,
+    publishedDate: issue01DigestDate,
+    modifiedDate: issue01DigestDate,
+    ...(article.author ? { author: article.author } : {}),
+    expectedText: article.title,
+  })),
   ...gearGuides.map((guide) => ({
     path: guide.path,
     source: `/?article=${guide.slug}`,
