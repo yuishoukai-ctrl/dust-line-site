@@ -60,7 +60,7 @@ const routes = [
     path: '/gear/',
     source: '/?page=gear',
     title: '編集部のツーリング装備｜旅の記事から選ぶ道具｜DUST LINE',
-    description: '編集部おすすめのボールジョイント式バイクミラーを紹介。みちのくラリーのパンク対応、北海道ツーリングの積載、ソロキャンプから考える購入候補と、Amazonの商品リンクを掲載します。',
+    description: '編集部メンバーおすすめのミラー、UNITエマージェンシーサイドスタンド、MOTION PROビードバーディー2を紹介。ツーリングの修理・積載・キャンプに備える道具と、Amazonの商品リンクを掲載します。',
     image: '/images/camp-sunset.jpg',
     imageAlt: '夕暮れのキャンプ場と荷物を積んだアドベンチャーバイク',
     schemaType: 'CollectionPage',
