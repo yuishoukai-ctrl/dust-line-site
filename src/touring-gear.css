@@ -15,6 +15,7 @@ body:has(.touring-gear) { min-width: 0; }
 .tg-hero__lead { margin: 24px 0; font-size: 1.05rem; line-height: 1.9; }
 .tg-hero__link { display: inline-flex; min-height: 48px; align-items: center; justify-content: space-between; gap: 56px; border-bottom: 1px solid #c9a66b; font-size: .85rem; font-weight: 700; }
 .tg-hero__link:hover { color: #efac7d; }
+.tg-hero__actions { display: flex; flex-wrap: wrap; gap: 10px 30px; }
 .tg-disclosure { padding-block: 25px; color: #514e47; font-size: .75rem; line-height: 1.9; }
 .tg-disclosure p { margin: 0; }
 .tg-disclosure strong { display: inline-block; margin-right: 8px; color: var(--ink); }

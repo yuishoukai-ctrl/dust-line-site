@@ -13,6 +13,8 @@ import CategoryPage from './CategoryPages'
 import MotorradShizuokaPage, { ShopIndexPage } from './ShopPages'
 import HotelAzPage from './HotelAzPage'
 import TouringGearPage from './TouringGearPage'
+import GearGuideArticle from './GearGuideArticle'
+import { gearGuides } from './gear-guides'
 import OffroadMagazinePage from './OffroadMagazinePage'
 import Issue02ProductPage from './Issue02ProductPage'
 import ReleaseDelayNoticePage from './ReleaseDelayNoticePage'
@@ -1220,6 +1222,16 @@ function App() {
   const pathname = window.location.pathname === '/'
     ? '/'
     : `${window.location.pathname.replace(/\/+$/, '')}/`
+  const gearGuide = gearGuides.find((guide) => pathname === guide.path
+    || (pathname === '/' && new URLSearchParams(window.location.search).get('article') === guide.slug))
+  if (gearGuide) return (
+    <>
+      <a className="skip-link" href="#main">本文へ移動</a>
+      <Header currentPage="gear" />
+      <GearGuideArticle guide={gearGuide} assetPath={assetPath} basePath={homePath} />
+      <Footer currentPage="gear" />
+    </>
+  )
   const routeArticle = {
     '/articles/michinoku-adventure-rally/': 'michinoku-adventure-rally',
     '/articles/hokkaido-1190/': 'hokkaido-1190',
