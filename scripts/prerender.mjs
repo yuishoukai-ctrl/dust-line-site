@@ -145,6 +145,7 @@ const routes = [
     source: '/?page=privacy',
     title: 'プライバシー・免責事項｜DUST LINE',
     description: 'DUST LINE公式サイトのプライバシーポリシー、免責事項、広告掲載に関する方針をご案内します。',
+    modifiedDate: '2026-11-07',
     image: '/og.png',
     imageAlt: 'DUST LINE公式サイト',
     schemaType: 'WebPage',
