@@ -12,6 +12,9 @@ html[lang^="en"] .hero h1 span { white-space: normal; overflow-wrap: anywhere; }
 html[lang^="en"] .article-page h1 { max-width: 18ch; font-size: clamp(2.2rem, 6vw, 6rem); line-height: 1.08; letter-spacing: -.03em; }
 html[lang^="en"] .hokkaido-stats > div { min-width: 0; }
 html[lang^="en"] .hokkaido-stats dd { flex-wrap: wrap; overflow-wrap: anywhere; font-size: clamp(1.25rem, 3.5vw, 3rem); line-height: 1.2; }
+@media (max-width: 1100px) {
+  html[data-translation-toolbar] .site-header .nav { max-height: calc(100dvh - 66px - var(--translation-toolbar-offset, 0px)); }
+}
 @media (min-width: 1101px) and (max-width: 1400px) {
   html[lang^="en"] .site-header .nav { gap: 12px; font-size: .75rem; }
 }
