@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import publishedPriceSnapshot from '../public/content/paint-prices.json'
 import './paint-price-page.css'
 
 const CATEGORY_META = {
@@ -120,7 +121,9 @@ function PriceGroup({ category, items }) {
 }
 
 export default function PaintPricePage({ formUrl }) {
-  const [document, setDocument] = useState(null)
+  // Render the published list immediately so website translation can see it on its first pass.
+  // The request below still refreshes it from the current public price document.
+  const [document, setDocument] = useState(publishedPriceSnapshot)
   const [error, setError] = useState(false)
   const [reloadKey, setReloadKey] = useState(0)
 
