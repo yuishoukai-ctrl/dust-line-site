@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { publicTranslationPath, englishTranslationUrl } from '../src/lib/english-translation.js'
+import { publicTranslationPath, englishTranslationUrl, translatedNavigationTarget } from '../src/lib/english-translation.js'
 import { guardFactoryProducts } from '../src/guard-factory-products.js'
 import { gearGuides } from '../src/gear-guides.js'
 import { issue01Digests } from '../src/issue01-digests.js'
@@ -47,4 +47,42 @@ test('normalizes trailing slashes while keeping every supported public entry poi
     const target = new URL(englishTranslationUrl({ pathname })).searchParams.get('u')
     assert.equal(target, `https://dustline.jp${pathname === '/' ? '/' : pathname.replace(/\/+$/, '')+'/'}`)
   }
+})
+
+const sourceUrl = 'https://dustline.jp/shops/hotel-az/'
+const proxyUrl = 'https://dustline-jp.translate.goog/shops/hotel-az/?_x_tr_sl=ja&_x_tr_tl=en&_x_tr_hl=en'
+
+test('an explicit HTTPS preview origin works without changing production defaults', () => {
+  assert.equal(new URL(englishTranslationUrl({ pathname: '/parts/' }, 'https://preview.example.workers.dev')).searchParams.get('u'), 'https://preview.example.workers.dev/parts/')
+  for (const origin of ['http://example.com', 'javascript:alert(1)', 'https://u:secret@example.com/', 'https://example.com/?token=secret', 'https://example.com/not-an-origin']) assert.equal(englishTranslationUrl({}, origin), null)
+})
+
+test('translated public navigation stays in English and drops unrelated query data', () => {
+  const result = translatedNavigationTarget({ href: '/parts/?email=secret#products', sourceUrl, proxyUrl: `${proxyUrl}&access_token=secret` })
+  const url = new URL(result.href)
+  assert.equal(result.native, false)
+  assert.equal(url.origin, 'https://dustline-jp.translate.goog')
+  assert.equal(url.pathname, '/parts/')
+  assert.equal(url.hash, '#products')
+  assert.equal(url.searchParams.get('_x_tr_tl'), 'en')
+  assert.doesNotMatch(result.href, /secret|email|access_token/)
+})
+
+test('translated anchors and legacy article links retain the proper public page', () => {
+  const anchor = translatedNavigationTarget({ href: '#hotel-price', sourceUrl, proxyUrl })
+  assert.equal(anchor.href, `${proxyUrl}#hotel-price`)
+  const article = translatedNavigationTarget({ href: '/?article=ktm-990-adv-s', sourceUrl, proxyUrl })
+  assert.equal(new URL(article.href).pathname, '/articles/ktm-990-adv-s/')
+  const encoded = translatedNavigationTarget({ href: '/parts/', sourceUrl: 'https://preview.example.workers.dev/', proxyUrl: 'https://1-preview-example-workers-dev.translate.goog/?_x_tr_enc=1&_x_tr_sl=ja&_x_tr_tl=en&_x_tr_hl=en' })
+  assert.equal(new URL(encoded.href).searchParams.get('_x_tr_enc'), '1')
+})
+
+test('member links and the Japanese switch leave the translation proxy', () => {
+  assert.deepEqual(translatedNavigationTarget({ href: '/account/login/?next=%2Flibrary%2F', sourceUrl, proxyUrl }), { href: 'https://dustline.jp/account/login/?next=%2Flibrary%2F', native: true })
+  assert.deepEqual(translatedNavigationTarget({ href: sourceUrl, sourceUrl, proxyUrl, originalLanguage: true }), { href: sourceUrl, native: true })
+})
+
+test('unrelated or unsafe URLs are not rewritten', () => {
+  for (const href of ['https://www.amazon.co.jp/dp/example', 'https://dustline.jp.evil.test/parts/', 'javascript:alert(1)', '/unknown-page/']) assert.equal(translatedNavigationTarget({ href, sourceUrl, proxyUrl }), null)
+  assert.equal(translatedNavigationTarget({ href: '/parts/', sourceUrl, proxyUrl: 'https://dustline.jp/' }), null)
 })

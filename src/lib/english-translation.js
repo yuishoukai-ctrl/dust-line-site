@@ -35,10 +35,45 @@ export function publicTranslationPath({ pathname = '/', search = '' } = {}) {
   return '/'
 }
 
-export function englishTranslationUrl(location) {
+export function englishTranslationUrl(location, siteOrigin = officialSiteOrigin) {
   const path = publicTranslationPath(location)
   if (!path) return null
+  let origin
+  try {
+    const configured = new URL(siteOrigin)
+    if (configured.protocol !== 'https:' || configured.username || configured.password || configured.search || configured.hash || configured.pathname !== '/') return null
+    origin = configured.origin
+  } catch { return null }
   const url = new URL('https://translate.google.com/translate')
-  url.search = new URLSearchParams({ sl: 'ja', tl: 'en', hl: 'en', u: `${officialSiteOrigin}${path}` }).toString()
+  url.search = new URLSearchParams({ sl: 'ja', tl: 'en', hl: 'en', u: `${origin}${path}` }).toString()
   return url.href
+}
+
+/** React recreates relative links after Google has rewritten the server HTML. Keep public navigation on the translated origin. */
+export function translatedNavigationTarget({ href, sourceUrl, proxyUrl, originalLanguage = false }) {
+  let source, proxy, target
+  try {
+    source = new URL(sourceUrl)
+    proxy = new URL(proxyUrl)
+    target = new URL(href, source)
+  } catch { return null }
+  if (source.protocol !== 'https:' || proxy.protocol !== 'https:' || !proxy.hostname.endsWith('.translate.goog')) return null
+  if (![source.origin, proxy.origin].includes(target.origin) || target.username || target.password) return null
+  if (originalLanguage || /^\/(?:account|library|issues)(?:\/|$)/.test(target.pathname)) {
+    return { href: new URL(`${target.pathname}${target.search}${target.hash}`, source.origin).href, native: true }
+  }
+  const path = publicTranslationPath({ pathname: target.pathname, search: target.search })
+  if (!path) return null
+  const translated = new URL(path, proxy.origin)
+  const params = new URLSearchParams(proxy.search)
+  for (const key of [...params.keys()]) {
+    if (!['_x_tr_sl', '_x_tr_tl', '_x_tr_hl', '_x_tr_enc'].includes(key)) params.delete(key)
+  }
+  params.set('_x_tr_sl', 'ja')
+  params.set('_x_tr_tl', 'en')
+  params.set('_x_tr_hl', 'en')
+  if (params.get('_x_tr_enc') !== '1') params.delete('_x_tr_enc')
+  translated.search = params.toString()
+  if (/^#[a-z][a-z0-9_-]*$/i.test(target.hash)) translated.hash = target.hash
+  return { href: translated.href, native: false }
 }
