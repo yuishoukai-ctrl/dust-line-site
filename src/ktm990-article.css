@@ -205,7 +205,7 @@
   .ktm990-digest .article-header { width: 100vw; max-width: 100vw; padding: 0 16px; }
   .ktm990-digest .article-header__brand,
   .ktm990-digest .article-header__back { flex: 0 0 auto; }
-  .ktm990-digest .article-header__back { position: absolute; top: 50%; right: auto; left: calc(100vw - 16px); margin-left: 14px; white-space: nowrap; font-size: .58rem; letter-spacing: .12em; color: rgba(242, 237, 225, .76); transform: translate(-100%, -50%); }
+  .ktm990-digest .article-header__back { position: static; margin-left: 0; white-space: nowrap; letter-spacing: .12em; color: rgba(242, 237, 225, .76); transform: none; }
   .ktm990-back-label--desktop { display: none; }
   .ktm990-back-label--mobile { display: inline; }
   .ktm990-hero { min-height: auto; }

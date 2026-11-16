@@ -24,6 +24,7 @@ import MemberPage from './MemberPages'
 import { firstIssue, getIssueSlug } from './member-content'
 import AnalyticsConsent from './AnalyticsConsent'
 import LineCommunity from './LineCommunity'
+import EnglishLink from './EnglishLink'
 import { trackAnalyticsEvent } from './lib/analytics'
 import { prepareVerificationEmail } from './lib/verificationEmail'
 import './styles.css'
@@ -229,6 +230,7 @@ function Header({ currentPage = null }) {
         <span>DUST LINE</span>
         <small>ADVENTURE JOURNAL</small>
       </a>
+      <EnglishLink className="site-language" onClick={closeMenu} />
       <button
         ref={menuRef}
         className="menu-button"
@@ -854,6 +856,7 @@ function PrivacyPage() {
               <div className="legal-block__heading"><span>04</span><h3>外部サービス</h3></div>
               <div className="legal-block__body">
                 <p>会員登録と認証にはSupabaseを、同意いただいた場合のアクセス解析にはGoogle Analytics 4を利用します。また、当サイトにはSUZURI、X、Googleフォームなど外部サービスへのリンクがあります。各サービスで取り扱われる情報には、それぞれの利用規約・プライバシーポリシーが適用されます。</p>
+                <p>「English」はGoogle翻訳による公開Webページの自動翻訳を別タブで開きます。選択した公開ページのURLがGoogleに送られます。会員ページ・認証用URLや、URLのクエリ・フラグメントに含まれる情報は翻訳リンクに含めません。翻訳には誤りが生じる場合があり、正式な内容は日本語の原文をご確認ください。画像内の文字や雑誌PDFの誌面は、この機能では翻訳されません。</p>
                 <p>当サイトはAmazonアソシエイト・プログラムを利用しています。Amazonへのアフィリエイトリンクには紹介元を識別する情報が含まれ、リンク先でAmazonがCookie等を使用して購入などの成果を計測する場合があります。Amazonでの情報の取り扱いは、<a href="https://www.amazon.co.jp/gp/help/customer/display.html?nodeId=201909010" target="_blank" rel="noopener">Amazon.co.jpプライバシー規約</a>をご確認ください。</p>
                 <p>部品の仮予約情報はSupabaseで管理します。不正送信を防ぐ安全確認にはCloudflare Turnstileを使用し、IPアドレスやブラウザ等の技術情報をCloudflareが処理します。詳しくは<a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noreferrer">Cloudflareプライバシーポリシー</a>をご確認ください。仮予約情報の訂正・取り消しは、受付番号を添えてお問い合わせください。</p>
                 <p>アクセス解析への同意内容はブラウザに保存されます。変更を希望する場合は、ブラウザの当サイト用ストレージを削除すると再設定できます。Googleによる情報の取り扱いは、<a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Googleプライバシーポリシー</a>をご確認ください。</p>

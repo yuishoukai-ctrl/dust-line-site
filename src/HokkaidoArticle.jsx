@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import EnglishLink from './EnglishLink'
 import './world-trip.css'
 import './hokkaido-article.css'
 
@@ -47,7 +48,8 @@ export default function HokkaidoArticle({ assetPath }) {
     <div className="article-page hokkaido-page">
       <header className="article-header">
         <a className="article-header__brand" href={root}>DUST LINE</a>
-        <a className="article-header__back" href={root}><BackArrow /> BACK TO JOURNAL</a>
+        <EnglishLink />
+        <a className="article-header__back" href={root} aria-label="DUST LINE ホームへ戻る"><BackArrow /> BACK TO JOURNAL</a>
       </header>
 
       <main>
