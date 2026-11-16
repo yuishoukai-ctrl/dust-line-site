@@ -4,6 +4,7 @@
 .english-link:hover { color: #c9a66b; }
 .english-link:focus-visible { outline: 2px solid #c9a66b; outline-offset: 4px; }
 .article-header .english-link, .machine-reader__header .english-link { margin-left: auto; margin-right: 22px; }
+html[data-translation-toolbar] { scroll-padding-top: var(--translation-toolbar-offset, 0px); }
 html[data-translation-toolbar] .site-header, html[data-translation-toolbar] .article-header, html[data-translation-toolbar] .machine-reader__header { top: var(--translation-toolbar-offset, 0px); }
 html[lang^="en"] h1, html[lang^="en"] h2, html[lang^="en"] h3 { overflow-wrap: anywhere; }
 html[lang^="en"] .hero { padding-top: 100px; }
