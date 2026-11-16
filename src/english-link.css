@@ -1,0 +1,27 @@
+.english-link { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; gap: 6px; min-height: 44px; color: #f0ecdf; font: 700 12px/1.2 Arial, sans-serif; letter-spacing: .02em; white-space: nowrap; }
+.english-link svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.english-link__external { color: #c9a66b; font-size: 13px; }
+.english-link:hover { color: #c9a66b; }
+.english-link:focus-visible { outline: 2px solid #c9a66b; outline-offset: 4px; }
+.article-header .english-link, .machine-reader__header .english-link { margin-left: auto; margin-right: 22px; }
+html[data-translation-toolbar] { scroll-padding-top: var(--translation-toolbar-offset, 0px); }
+html[data-translation-toolbar] .site-header, html[data-translation-toolbar] .article-header, html[data-translation-toolbar] .machine-reader__header { top: var(--translation-toolbar-offset, 0px); }
+html[lang^="en"] h1, html[lang^="en"] h2, html[lang^="en"] h3 { overflow-wrap: anywhere; }
+html[lang^="en"] .hero { padding-top: 100px; }
+html[lang^="en"] .hero h1 { font-size: clamp(2.2rem, 5vw, 4.8rem); line-height: 1.08; letter-spacing: 0; }
+html[lang^="en"] .hero h1 span { white-space: normal; overflow-wrap: anywhere; }
+html[lang^="en"] .article-page h1 { max-width: 18ch; font-size: clamp(2.2rem, 6vw, 6rem); line-height: 1.08; letter-spacing: -.03em; }
+html[lang^="en"] .hokkaido-stats > div { min-width: 0; }
+html[lang^="en"] .hokkaido-stats dd { flex-wrap: wrap; overflow-wrap: anywhere; font-size: clamp(1.25rem, 3.5vw, 3rem); line-height: 1.2; }
+@media (max-width: 1100px) {
+  html[data-translation-toolbar] .site-header .nav { max-height: calc(100dvh - 66px - var(--translation-toolbar-offset, 0px)); }
+}
+@media (min-width: 1101px) and (max-width: 1400px) {
+  html[lang^="en"] .site-header .nav { gap: 12px; font-size: .75rem; }
+}
+@media (max-width: 480px) {
+  .article-header .english-link, .machine-reader__header .english-link { margin-right: 10px; }
+  .article-header .article-header__back, .machine-reader__header .machine-reader__back { display: inline-flex; flex: 0 0 44px; align-items: center; justify-content: center; width: 44px; min-height: 44px; gap: 0; font-size: 0; }
+  .article-header .article-header__back > span { display: none; }
+  .article-header .article-header__back svg, .machine-reader__header .machine-reader__back svg { width: 20px; height: 20px; }
+}

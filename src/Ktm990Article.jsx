@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import EnglishLink from './EnglishLink'
 import './world-trip.css'
 import './ktm990-article.css'
 
@@ -68,6 +69,7 @@ export default function Ktm990Article({ assetPath }) {
     <div className="article-page ktm990-digest">
       <header className="article-header">
         <a className="article-header__brand" href={root}>DUST LINE</a>
+        <EnglishLink />
         <a className="article-header__back" href="/build/" aria-label="車両記事の一覧へ">
           <ArticleArrow />
           <span className="ktm990-back-label--desktop">車両記事へ</span>

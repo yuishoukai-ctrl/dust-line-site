@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import EnglishLink from './EnglishLink'
 import './world-trip.css'
 
 function ArticleArrow() {
@@ -50,7 +51,8 @@ export default function WorldTripArticle({ assetPath }) {
     <div className="article-page world-digest">
       <header className="article-header">
         <a className="article-header__brand" href={root}>DUST LINE</a>
-        <a className="article-header__back" href={root}><ArticleArrow /> 記事一覧へ</a>
+        <EnglishLink />
+        <a className="article-header__back" href={root} aria-label="DUST LINE ホームへ戻る"><ArticleArrow /> 記事一覧へ</a>
       </header>
 
       <main>

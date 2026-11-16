@@ -1,3 +1,9 @@
+/assets/*
+  Access-Control-Allow-Origin: *
+
+/content/paint-prices.json
+  Access-Control-Allow-Origin: *
+
 /account/*
   Cache-Control: no-store
 

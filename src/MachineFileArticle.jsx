@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import EnglishLink from './EnglishLink'
 import './machine-file.css'
 
 function BackArrow() {
@@ -25,7 +26,8 @@ export default function MachineFileArticle({ assetPath }) {
     <div className="machine-reader">
       <header className="machine-reader__header">
         <a className="machine-reader__brand" href={root}>DUST LINE</a>
-        <a className="machine-reader__back" href={root}><BackArrow /> BACK TO JOURNAL</a>
+        <EnglishLink />
+        <a className="machine-reader__back" href={root} aria-label="DUST LINE ホームへ戻る"><BackArrow /> BACK TO JOURNAL</a>
       </header>
 
       <main>
