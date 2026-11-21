@@ -65,7 +65,7 @@ export default function Issue02ProductPage({
         </figure>
 
         <div className="issue-product__summary reveal">
-          <div className="issue-product__status"><span aria-hidden="true" />第2号予告 / 制作・校正中</div>
+          <div className="issue-product__status"><span aria-hidden="true" />第2号予告 / 発売日決定</div>
           <p className="issue-product__eyebrow">ISSUE 02 / DIGITAL QUARTERLY</p>
           <h1 id="issue-02-title">DUST LINE <span>ISSUE 02</span></h1>
           <p className="issue-product__lead">
@@ -77,7 +77,7 @@ export default function Issue02ProductPage({
           <dl className="issue-product__facts">
             <div><dt>販売価格</dt><dd><strong>1,480円</strong><span>税込・日本円</span></dd></div>
             <div><dt>販売方式</dt><dd>各号単品<span>自動更新なし</span></dd></div>
-            <div><dt>発行目標</dt><dd>2026年クリスマス頃<span>正式な公開日は確定後に案内</span></dd></div>
+            <div><dt>発売日</dt><dd><time dateTime="2026-12-25">2026年12月25日</time></dd></div>
             <div><dt>提供形式</dt><dd>デジタル雑誌<span>Webブラウザで閲覧</span></dd></div>
           </dl>
 

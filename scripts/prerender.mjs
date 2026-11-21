@@ -225,7 +225,7 @@ const routes = [
     path: '/magazine/issue-02/',
     source: '/?page=issue-02-product',
     title: 'DUST LINE 第2号予告｜DesertX・ユーラシア大陸横断',
-    description: 'DUST LINE第2号は2026年クリスマス頃の発行を目標に制作中。decheeeeのDesertXによるユーラシア大陸横断、フサベルFS650E、BONSAIMOTO、HOTEL AZを収録予定。税込1,480円・各号単品販売。正式な公開日は確定後に案内します。',
+    description: 'DUST LINE第2号の電子版は2026年12月25日発売、税込1,480円。decheeeeのDesertXによるユーラシア大陸横断、フサベルFS650E、BONSAIMOTO、HOTEL AZを収録予定。各号単品販売。',
     image: '/images/magazine/issue-02/desertx-cover-960.webp',
     imageAlt: 'decheeeeとDUCATI DesertXを表紙にしたDUST LINE第2号の制作中の表紙',
     schemaType: 'WebPage',
