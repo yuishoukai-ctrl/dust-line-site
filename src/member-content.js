@@ -42,6 +42,12 @@ export const issues = Object.freeze([
 
 export const firstIssue = issues[0]
 
+export const issue02Announcement = Object.freeze({
+  releaseDate: '2026-12-25',
+  releaseDateLabel: '2026年12月25日',
+  priceLabel: '1,480円',
+})
+
 export function getIssue(slug, catalog = issues) {
   return catalog.find((issue) => issue.slug === slug) ?? null
 }

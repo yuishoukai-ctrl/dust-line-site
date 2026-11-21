@@ -21,7 +21,7 @@ import OffroadMagazinePage from './OffroadMagazinePage'
 import Issue02ProductPage from './Issue02ProductPage'
 import ReleaseDelayNoticePage from './ReleaseDelayNoticePage'
 import MemberPage from './MemberPages'
-import { firstIssue, getIssueSlug } from './member-content'
+import { firstIssue, getIssueSlug, issue02Announcement } from './member-content'
 import AnalyticsConsent from './AnalyticsConsent'
 import LineCommunity from './LineCommunity'
 import EnglishLink from './EnglishLink'
@@ -278,6 +278,46 @@ function Hero() {
         <span>DL</span><span>001</span><span>JPN</span>
       </div>
       <div className="scroll-cue" aria-hidden="true"><span />SCROLL</div>
+    </section>
+  )
+}
+
+function Issue02Announcement() {
+  return (
+    <section className="issue-announcement section" id="issue-02-preview" aria-labelledby="issue-announcement-title">
+      <div className="issue-announcement__inner">
+        <div className="issue-announcement__copy">
+          <p className="issue-announcement__label">DUST LINE 第2号予告</p>
+          <h2 id="issue-announcement-title"><span>ユーラシア</span><span>大陸横断。</span></h2>
+          <p className="issue-announcement__lead">
+            decheeeeさんがDUCATI DesertXでたどった、日本・韓国・ロシア・モンゴルの旅。
+          </p>
+          <dl className="issue-announcement__facts">
+            <div>
+              <dt>発売日</dt>
+              <dd><time dateTime={issue02Announcement.releaseDate}>{issue02Announcement.releaseDateLabel}</time></dd>
+            </div>
+            <div>
+              <dt>電子版価格</dt>
+              <dd>{issue02Announcement.priceLabel}<small>（税込）</small></dd>
+            </div>
+          </dl>
+          <a className="button issue-announcement__link" href={issue02ProductPagePath}>第2号の詳細を見る <ArrowIcon /></a>
+        </div>
+        <figure className="issue-announcement__cover">
+          <img
+            src={assetPath('magazine/issue-02/desertx-cover-480.webp')}
+            srcSet={`${assetPath('magazine/issue-02/desertx-cover-480.webp')} 480w, ${assetPath('magazine/issue-02/desertx-cover-960.webp')} 960w`}
+            sizes="(max-width: 760px) 232px, 280px"
+            width="480"
+            height="678"
+            alt="decheeeeさんとDUCATI DesertXを写したDUST LINE第2号の制作中の表紙"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>制作中の表紙　写真：decheeee</figcaption>
+        </figure>
+      </div>
     </section>
   )
 }
@@ -1445,6 +1485,7 @@ function App() {
       <Header />
       <main id="main" className="home-page">
         <Hero />
+        <Issue02Announcement />
         <Manifesto />
         <FeaturedStory />
         <StoryGrid />
