@@ -12,6 +12,20 @@ function Arrow() {
   )
 }
 
+function FeaturePhoto({ src, alt }) {
+  return (
+    <img
+      className="issue-product__feature-photo"
+      src={src}
+      alt={alt}
+      width="1200"
+      height="800"
+      loading="lazy"
+      decoding="async"
+    />
+  )
+}
+
 const purchaseSteps = [
   {
     number: '01',
@@ -44,7 +58,7 @@ export default function Issue02ProductPage({
   useEffect(() => {
     const previousTitle = document.title
     document.title = 'DUST LINE 第2号予告｜DesertX・ユーラシア大陸横断'
-    window.scrollTo(0, 0)
+    if (!window.location.hash) window.scrollTo(0, 0)
     return () => { document.title = previousTitle }
   }, [])
 
@@ -70,7 +84,7 @@ export default function Issue02ProductPage({
           <h1 id="issue-02-title">DUST LINE <span>ISSUE 02</span></h1>
           <p className="issue-product__lead">
             decheeeeさんとDUCATI DesertXでたどる、ユーラシア大陸横断。
-            日本・韓国・ロシア・モンゴルの旅に、みちのくアドベンチャーラリー、FS650Eのインプレッション、BONSAIMOTOの連載、HOTEL AZの紹介を収録予定です。
+            日本・韓国・ロシア・モンゴルの旅に加え、みちのくアドベンチャーラリーや「国を護るオートバイ」などを収録予定です。
           </p>
           <a className="issue-product__contents-link" href="#issue-02-contents">収録予定を見る <Arrow /></a>
 
@@ -96,10 +110,14 @@ export default function Issue02ProductPage({
         <header className="issue-product__preview-heading reveal">
           <p className="issue-product__kicker">TRAVEL / MACHINE / COLUMN / STAY</p>
           <h2 id="issue-02-editorial-title">旅と、走りと、挑戦と。</h2>
-          <p>第2号でお届けする、5つの収録予定記事をご紹介します。</p>
+          <p>第2号の主な収録予定記事をご紹介します。</p>
         </header>
         <div className="issue-product__features">
           <article className="reveal">
+            <FeaturePhoto
+              src={assetPath('michinoku-rally/03-1300.webp')}
+              alt="みちのくアドベンチャーラリーの会場に並ぶバイク"
+            />
             <p className="issue-product__kicker">FIELD REPORT / MICHINOKU</p>
             <h3>みちのくアドベンチャーラリー</h3>
             <p className="issue-product__feature-meta">編集部3人が語る、ダート天国みちのく。</p>
@@ -108,6 +126,10 @@ export default function Issue02ProductPage({
             <a className="issue-product__feature-link" href="/articles/michinoku-adventure-rally/">Web版を読む <Arrow /></a>
           </article>
           <article className="reveal">
+            <FeaturePhoto
+              src={assetPath('magazine/issue-02/desertx-eurasia.webp')}
+              alt="広い荒野で足を止めたdecheeeeさんとDUCATI DesertX"
+            />
             <p className="issue-product__kicker">TRAVEL / decheeee</p>
             <h3>ユーラシアへ。</h3>
             <p className="issue-product__feature-meta">日本・韓国・ロシア・モンゴル</p>
@@ -116,12 +138,20 @@ export default function Issue02ProductPage({
             <p className="issue-product__feature-note">ゴビ砂漠からノルウェー・ノールカップへの続きは、第3号に掲載予定です。</p>
           </article>
           <article className="reveal">
+            <FeaturePhoto
+              src={assetPath('magazine/issue-02/husaberg-fs650e.webp')}
+              alt="ガレージに停まる青と黄色のフサベル FS650E"
+            />
             <p className="issue-product__kicker">MACHINE / OWNER IMPRESSION</p>
             <h3>フサベル FS650E</h3>
             <p className="issue-product__feature-meta">伝説級のモタード。</p>
             <p>2005年頃のFS650Eと過ごした記憶。強烈な走り、ブレーキの感触、熱との付き合い、整備まで。所有して走らせた実感を振り返ります。</p>
           </article>
           <article className="reveal">
+            <FeaturePhoto
+              src={assetPath('magazine/issue-02/bonsaimoto-taizhou.webp')}
+              alt="中国・台州で臨時免許の手続きに訪れた施設"
+            />
             <p className="issue-product__kicker">BONSAIMOTO / COLUMN 02</p>
             <h3>「前例がない」なら、<br />作ってしまえ！</h3>
             <p className="issue-product__feature-meta">中国でバイクの臨時免許取得に挑む。</p>
@@ -129,11 +159,26 @@ export default function Issue02ProductPage({
             <p className="issue-product__feature-credit">文：多川 / 写真提供：BONSAIMOTO</p>
           </article>
           <article className="reveal">
+            <FeaturePhoto
+              src={assetPath('shops/hotel-az/wajiro-1280.webp')}
+              alt="HOTEL AZ 福岡和白店の外観"
+            />
             <p className="issue-product__kicker">STAY / HOTEL AZ</p>
             <h3>旅の拠点に、HOTEL AZ。</h3>
             <p className="issue-product__feature-meta">5ページで紹介する、旅を支えるホテル。</p>
             <p>客室、朝食やレストラン、料金条件と各地の店舗。提供写真と日本地図でホテルの特徴を紹介し、公式サイトへアクセスできるQRコードも掲載します。</p>
             <a className="issue-product__feature-link" href={hotelAzPath}>HOTEL AZのWeb紹介を読む <Arrow /></a>
+          </article>
+          <article className="reveal">
+            <FeaturePhoto
+              src={assetPath('magazine/issue-02/jsdf-klx250.webp')}
+              alt="取材時に撮影した陸上自衛隊のKLX250の全景"
+            />
+            <p className="issue-product__kicker">INTERVIEW / JSDF MOTORCYCLES</p>
+            <h3>国を護るオートバイ</h3>
+            <p className="issue-product__feature-meta">陸上自衛隊・駒門駐屯地で取材。</p>
+            <p>隊員が普段使うKLX250を撮影し、日頃の車両点検や安全への意識、不整地を走る技術について聞きました。</p>
+            <p className="issue-product__feature-credit">撮影：石川大貴</p>
           </article>
         </div>
         <p className="issue-product__preview-note">このほか、店舗広告・紹介記事の募集ページも掲載予定です。初回掲載は無料、2回目以降は有料となります。詳細は編集部へお問い合わせください。</p>
@@ -156,12 +201,8 @@ export default function Issue02ProductPage({
       </section>
 
       <section className="issue-product__terms" aria-labelledby="issue-02-terms-title">
-        <div className="issue-product__section-label reveal"><span>03</span><span>PRODUCT TERMS</span></div>
-        <div className="issue-product__terms-grid">
-          <header className="reveal">
-            <p className="issue-product__kicker">ONE ISSUE / NO AUTO-RENEWAL</p>
-            <h2 id="issue-02-terms-title">購入前に確認できる、<br />提供条件。</h2>
-          </header>
+        <div className="issue-product__terms-inner">
+          <h2 className="reveal" id="issue-02-terms-title">提供条件</h2>
           <dl className="issue-product__term-list reveal">
             <div><dt>商品</dt><dd>DUST LINE ISSUE 02／季刊デジタル雑誌</dd></div>
             <div><dt>価格</dt><dd>1,480円（税込・日本円）</dd></div>
@@ -171,12 +212,12 @@ export default function Issue02ProductPage({
             <div><dt>閲覧環境</dt><dd>インターネット接続と、更新が提供されている一般的なWebブラウザが必要です。</dd></div>
             <div><dt>保存</dt><dd>ダウンロードやオフライン閲覧は、販売開始時に提供する場合だけ本ページへ明記します。</dd></div>
           </dl>
+          <nav className="issue-product__policy-links reveal" aria-label="販売条件に関するページ">
+            <a href={commercialDisclosurePath}>特定商取引法に基づく表記 <Arrow /></a>
+            <a href={refundPolicyPath}>返金・キャンセルポリシー <Arrow /></a>
+            <a href={digitalDeliveryPath}>デジタル商品の提供条件 <Arrow /></a>
+          </nav>
         </div>
-        <nav className="issue-product__policy-links reveal" aria-label="販売条件に関するページ">
-          <a href={commercialDisclosurePath}>特定商取引法に基づく表記 <Arrow /></a>
-          <a href={refundPolicyPath}>返金・キャンセルポリシー <Arrow /></a>
-          <a href={digitalDeliveryPath}>デジタル商品の提供条件 <Arrow /></a>
-        </nav>
       </section>
 
       <section className="issue-product__closing" aria-labelledby="issue-02-closing-title">
