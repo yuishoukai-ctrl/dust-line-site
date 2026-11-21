@@ -236,17 +236,18 @@
   color: rgba(240, 236, 223, .58);
 }
 
-.issue-product__terms-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr);
-  gap: clamp(54px, 10vw, 150px);
-  max-width: 1380px;
+.issue-product__terms-inner {
+  max-width: 1040px;
   margin: 0 auto;
+}
+
+.issue-product__terms h2 {
+  margin: 0 0 24px;
+  font: 800 clamp(1.35rem, 2.4vw, 1.9rem)/1.3 var(--display);
 }
 
 .issue-product__editorial h2,
 .issue-product__delivery h2,
-.issue-product__terms h2,
 .issue-product__closing h2 {
   margin: 0;
   font: 900 clamp(2.6rem, 5.3vw, 5.7rem)/.98 var(--display);
@@ -278,6 +279,15 @@
   min-width: 0;
   padding: 34px 0;
   border-top: 1px solid rgba(21, 23, 25, .25);
+}
+
+.issue-product__feature-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  margin-bottom: clamp(20px, 3vw, 32px);
 }
 
 .issue-product__features h3 {
@@ -392,33 +402,28 @@
 
 .issue-product__term-list > div {
   display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 22px;
+  grid-template-columns: minmax(90px, 17%) minmax(0, 1fr);
+  gap: clamp(14px, 3vw, 36px);
   padding: 20px 0;
   border-bottom: 1px solid rgba(21, 23, 25, .18);
 }
 
 .issue-product__term-list dt {
-  font: 800 .64rem/1.7 var(--display);
-  letter-spacing: .1em;
-  color: var(--accent);
+  font: 800 .94rem/1.7 var(--display);
+  color: var(--ink);
 }
 
 .issue-product__term-list dd {
   margin: 0;
-  font-size: .82rem;
-  line-height: 1.85;
-  color: rgba(21, 23, 25, .72);
+  font-size: clamp(1rem, 1.35vw, 1.15rem);
+  line-height: 1.75;
 }
 
 .issue-product__policy-links {
   display: flex;
   flex-wrap: wrap;
   gap: 16px 34px;
-  max-width: 1380px;
-  margin: clamp(54px, 7vw, 92px) auto 0;
-  padding-top: 26px;
-  border-top: 1px solid rgba(21, 23, 25, .24);
+  margin-top: 26px;
 }
 
 .issue-product__policy-links a,
@@ -478,7 +483,6 @@
 @media (max-width: 780px) {
   .issue-product__hero,
   .issue-product__features,
-  .issue-product__terms-grid,
   .issue-product__closing {
     grid-template-columns: 1fr;
   }
@@ -552,7 +556,6 @@
 
   .issue-product__editorial h2,
   .issue-product__delivery h2,
-  .issue-product__terms h2,
   .issue-product__closing h2 {
     font-size: clamp(2.4rem, 12vw, 3.6rem);
   }
