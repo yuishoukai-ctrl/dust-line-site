@@ -3,6 +3,7 @@ import { trackAnalyticsEvent } from './lib/analytics'
 import './issue-product.css'
 import IssueCheckout from './IssueCheckout'
 import { authPath } from './lib/member-navigation'
+import { issue02Announcement } from './member-content'
 
 function Arrow() {
   return (
@@ -89,9 +90,9 @@ export default function Issue02ProductPage({
           <a className="issue-product__contents-link" href="#issue-02-contents">収録予定を見る <Arrow /></a>
 
           <dl className="issue-product__facts">
-            <div><dt>販売価格</dt><dd><strong>1,480円</strong><span>税込・日本円</span></dd></div>
+            <div><dt>販売価格</dt><dd><strong>{issue02Announcement.priceLabel}</strong><span>税込・日本円</span></dd></div>
             <div><dt>販売方式</dt><dd>各号単品<span>自動更新なし</span></dd></div>
-            <div><dt>発売日</dt><dd><time dateTime="2026-12-25">2026年12月25日</time></dd></div>
+            <div><dt>発売日</dt><dd><time dateTime={issue02Announcement.releaseDate}>{issue02Announcement.releaseDateLabel}</time></dd></div>
             <div><dt>提供形式</dt><dd>デジタル雑誌<span>Webブラウザで閲覧</span></dd></div>
           </dl>
 
@@ -205,7 +206,7 @@ export default function Issue02ProductPage({
           <h2 className="reveal" id="issue-02-terms-title">提供条件</h2>
           <dl className="issue-product__term-list reveal">
             <div><dt>商品</dt><dd>DUST LINE ISSUE 02／季刊デジタル雑誌</dd></div>
-            <div><dt>価格</dt><dd>1,480円（税込・日本円）</dd></div>
+            <div><dt>価格</dt><dd>{issue02Announcement.priceLabel}（税込・日本円）</dd></div>
             <div><dt>課金</dt><dd>1号ごとの単品購入。自動更新や定期課金はありません。</dd></div>
             <div><dt>提供</dt><dd>販売中の号は、決済完了後に会員アカウントへ閲覧権限を付与します。</dd></div>
             <div><dt>閲覧期間</dt><dd>購入した号は、原則として閲覧期限を設けず、無期限で閲覧できます。</dd></div>

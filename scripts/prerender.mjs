@@ -5,7 +5,7 @@ import { constants, existsSync } from 'node:fs'
 import { dirname, extname, join, resolve } from 'node:path'
 import { tmpdir } from 'node:os'
 import { fileURLToPath } from 'node:url'
-import { firstIssue, issues, journal } from '../src/member-content.js'
+import { firstIssue, issue02Announcement, issues, journal } from '../src/member-content.js'
 import { guardFactoryProducts, guardFactoryProductPath, guardFactoryPhotoPath } from '../src/guard-factory-products.js'
 import { motorradShizuoka, shopPhotoPath, hotelAz, hotelAzPhotoPath } from '../src/shop-profiles.js'
 import { gearGuides, gearGuideDate } from '../src/gear-guides.js'
@@ -225,7 +225,7 @@ const routes = [
     path: '/magazine/issue-02/',
     source: '/?page=issue-02-product',
     title: 'DUST LINE 第2号予告｜DesertX・ユーラシア大陸横断',
-    description: 'DUST LINE第2号の電子版は2026年12月25日発売、税込1,480円。decheeeeのDesertXによるユーラシア大陸横断、フサベルFS650E、BONSAIMOTO、HOTEL AZを収録予定。各号単品販売。',
+    description: `DUST LINE第2号の電子版は${issue02Announcement.releaseDateLabel}発売、税込${issue02Announcement.priceLabel}。decheeeeのDesertXによるユーラシア大陸横断、フサベルFS650E、BONSAIMOTO、HOTEL AZを収録予定。各号単品販売。`,
     image: '/images/magazine/issue-02/desertx-cover-960.webp',
     imageAlt: 'decheeeeとDUCATI DesertXを表紙にしたDUST LINE第2号の制作中の表紙',
     schemaType: 'WebPage',
