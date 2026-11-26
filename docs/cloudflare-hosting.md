@@ -4,7 +4,9 @@
 
 Cloudflare Workers Static Assets serves the existing React/Vite build. GitHub continues to hold source and change history. Supabase continues to provide authentication, private magazine storage and purchase rights. Stripe Checkout and its existing Supabase webhook remain unchanged. New issue sales stay disabled.
 
-`wrangler.json` contains no Worker script, custom domains, routes, database bindings or server credentials. Deploying it creates/updates `dust-line-site` on `workers.dev`; it does not switch `dustline.jp`.
+`wrangler.json` runs the Worker for `/api/contact`, and serves the site from the existing assets binding. Custom domains are managed outside this config. It contains no credentials or database bindings.
+
+The inquiry form uses the Cloudflare Email Sending binding. Enable Email Sending for `contact-mail.dustline.jp` and verify `dustlineadv@gmail.com` as a destination address in the same Cloudflare account before deploying. Sending DNS records belong to the dedicated subdomain. Keep the existing Zoho MX records. The sender is `contact-form@contact-mail.dustline.jp` and replies go to the submitted address. Verify end-to-end with one inquiry and confirm receipt in Gmail. A successful local request exercises the binding simulator only.
 
 ## Build and verify
 

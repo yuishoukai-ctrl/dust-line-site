@@ -102,7 +102,7 @@ export default function PartsPage({ assetPath, basePath, contactUrl, officialXUr
             DUST LINEはBMW MotorradおよびBMW AGとは関係のない独立した編集・製作チームです。
           </p>
           <div className="parts-notice__actions">
-            <a className="parts-button parts-button--accent" href={contactUrl} target="_blank" rel="noreferrer">部品について問い合わせる <PartsArrow /></a>
+            <a className="parts-button parts-button--accent" href={contactUrl}>部品について問い合わせる <PartsArrow /></a>
             <a className="parts-text-link" href={officialXUrl} target="_blank" rel="noreferrer">開発情報を公式Xで見る <PartsArrow /></a>
           </div>
         </div>

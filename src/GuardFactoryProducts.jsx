@@ -143,7 +143,7 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
             <div className="gf-release"><span className="gf-status">{hasAmazonOffers ? 'Amazonで販売中' : product.statusLabel || '販売準備中'}</span><p>{hasAmazonOffers ? '最新価格・在庫・配送条件はAmazonでご確認ください。' : product.salesNote || <>{product.shippingEstimate ? <>発送予定：{product.shippingEstimate}<br />製作状況により変更になる場合があります。<br />販売開始日・在庫は確認中です。</> : '販売開始日・在庫・納期は確認中です。'}<br />購入先は販売開始後にご案内します。</>}</p></div>
             <AmazonPurchaseLinks product={product} />
             {canReservePart(product) && <a className="gf-button" href="#gf-reservation">無料で仮予約する <span aria-hidden="true">↓</span></a>}
-            <a className={hasAmazonOffers ? 'gf-text-link' : 'gf-button'} href={contactUrl} target="_blank" rel="noreferrer">{isOutdoor ? '購入について問い合わせる' : '適合・販売について問い合わせる'} <span aria-hidden="true">↗</span><span className="gf-sr-only">（別タブで開きます）</span></a>
+            <a className={hasAmazonOffers ? 'gf-text-link' : 'gf-button'} href={contactUrl}>{isOutdoor ? '購入について問い合わせる' : '適合・販売について問い合わせる'} <span aria-hidden="true">→</span></a>
             <a className="gf-text-link" href="#gf-specifications">{product.compactDetails ? '製品情報を見る' : product.development ? '開発情報と確認事項を見る' : '仕様と取付条件を確認する'} <span aria-hidden="true">↓</span></a>
             {product.service && <a className="gf-text-link" href="#gf-fabrication-service">溶接・塗装まで依頼する <span aria-hidden="true">↓</span></a>}
           </div>
@@ -167,7 +167,7 @@ export default function GuardFactoryProductPage({ slug, assetPath, basePath, con
       <PartsReservationForm key={product.slug} product={product} basePath={basePath} contactUrl={contactUrl} />
       {product.service && <section className="gf-fabrication-service" id="gf-fabrication-service" aria-labelledby="gf-service-title">
         <div><p className="gf-eyebrow">DUST LINE GARAGE / WIDE STEP SERVICE</p><h2 id="gf-service-title">溶接から塗装まで、<br />加工を依頼する。</h2><p>{product.service.description}</p></div>
-        <div><p className="gf-price"><strong>{product.service.priceLabel}</strong></p><p>{product.service.includes}</p><p>プレート単品の販売価格とは別の、左右の加工サービス料金です。</p><a className="gf-button" href={contactUrl} target="_blank" rel="noreferrer">ワイドステップ加工を相談する <span aria-hidden="true">↗</span><span className="gf-sr-only">（お問い合わせフォームを別タブで開きます）</span></a></div>
+        <div><p className="gf-price"><strong>{product.service.priceLabel}</strong></p><p>{product.service.includes}</p><p>プレート単品の販売価格とは別の、左右の加工サービス料金です。</p><a className="gf-button" href={contactUrl}>ワイドステップ加工を相談する <span aria-hidden="true">→</span></a></div>
       </section>}
       <aside className="gf-related" aria-labelledby="gf-related-title"><div><p className="gf-eyebrow">ALSO FROM GUARD FACTORY</p><h2 id="gf-related-title">{product.development ? 'F 450 GSのガード。' : product.collection === 'fabrication' || isOutdoor ? 'Guard Factoryの製品。' : 'ジェベル250のガード。'}</h2><ul>{relatedProducts.map((related) => <li key={related.slug}><a className="gf-text-link" href={guardFactoryProductPath(related.slug, basePath)}>{related.name} <span aria-hidden="true">→</span></a></li>)}</ul></div><a className="gf-text-link" href={`${basePath}parts/#${isOutdoor ? 'outdoor' : product.development ? 'lineup' : product.collection === 'fabrication' ? 'fabrication' : 'guard-factory'}`}>Partsの製品一覧へ戻る <span aria-hidden="true">→</span></a></aside>
     </main>
