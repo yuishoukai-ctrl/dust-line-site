@@ -120,7 +120,7 @@ function PriceGroup({ category, items }) {
   )
 }
 
-export default function PaintPricePage({ formUrl }) {
+export default function PaintPricePage({ contactUrl }) {
   // Render the published list immediately so website translation can see it on its first pass.
   // The request below still refreshes it from the current public price document.
   const [document, setDocument] = useState(publishedPriceSnapshot)
@@ -175,8 +175,8 @@ export default function PaintPricePage({ formUrl }) {
             パウダーコート、ガンコート、セラコート。
             部品の用途と状態から、必要な仕上げを選びます。
           </p>
-          <a className="paint-price__hero-cta" href={formUrl} target="_blank" rel="noreferrer">
-            写真で見積を依頼する <span aria-hidden="true">→</span>
+          <a className="paint-price__hero-cta" href={contactUrl}>
+            塗装の見積もりを相談する <span aria-hidden="true">→</span>
           </a>
           <nav className="paint-price__jump-links" aria-label="塗装サービスのページ内案内">
             <a href="#paint-catalog-title">参考価格 <span aria-hidden="true">↓</span></a>
@@ -271,13 +271,13 @@ export default function PaintPricePage({ formUrl }) {
         <div className="paint-price__section-label paint-price__section-label--light"><span>01</span><span>BEFORE REQUEST</span></div>
         <div className="paint-price__conditions-grid">
           <div>
-            <h2 id="paint-conditions-title">写真で分かること。<br />実物で決めること。</h2>
+            <h2 id="paint-conditions-title">見積もりの流れ</h2>
           </div>
           <div>
             <ol>
-              <li><span>01</span><p><strong>全体を撮る</strong>部品の大きさと形状が分かるよう、正面と裏面を撮影してください。</p></li>
-              <li><span>02</span><p><strong>傷みを寄って撮る</strong>錆、傷、亀裂、油汚れ、旧塗膜の浮きを近くから撮影してください。</p></li>
-              <li><span>03</span><p><strong>材質と希望を書く</strong>車種、部品名、材質、希望色、希望納期を分かる範囲で送ってください。</p></li>
+              <li><span>01</span><p><strong>フォームで相談する</strong>車種、部品名、材質、希望色、希望納期を、分かる範囲でお書きください。</p></li>
+              <li><span>02</span><p><strong>部品の写真をメールで送る</strong>DUST LINEから返信が届いたら、そのメールに部品の表裏と、錆や傷などが分かる写真を添付してください。</p></li>
+              <li><span>03</span><p><strong>見積もりを受け取る</strong>部品の状態を確認し、料金や部品の送付方法をメールでご案内します。</p></li>
             </ol>
           </div>
         </div>
@@ -285,8 +285,8 @@ export default function PaintPricePage({ formUrl }) {
           {(document?.notes_ja || []).map((note) => <p key={note}>・{note}</p>)}
           <p>・セラコートは用途に応じて塗料シリーズを選定します。すべてのシリーズが同じ耐熱温度ではありません。</p>
         </div>
-        <a className="paint-price__final-cta" href={formUrl} target="_blank" rel="noreferrer">
-          <span>写真見積フォームへ</span>
+        <a className="paint-price__final-cta" href={contactUrl}>
+          <span>お問い合わせフォームへ</span>
           <strong>部品を送る前に、まず相談する。</strong>
           <i aria-hidden="true">→</i>
         </a>

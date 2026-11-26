@@ -424,7 +424,7 @@ const routes = [
     path: '/paint/',
     source: '/?page=paint',
     title: 'バイク部品の塗装価格・見積依頼｜DUST LINE GARAGE',
-    description: 'パウダーコート、ガンコート、セラコートの参考価格を掲載。バイク部品の写真を送って見積を依頼できます。',
+    description: 'パウダーコート、ガンコート、セラコートの参考価格を掲載。サイト内のフォームで相談し、部品写真は返信メールで送れます。',
     image: '/og.png',
     imageAlt: 'DUST LINE GARAGEのバイク部品塗装サービス',
     schemaType: 'Service',

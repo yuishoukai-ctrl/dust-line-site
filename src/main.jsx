@@ -57,7 +57,6 @@ const contactFormUrl = `${homePath}contact/`
 const advertiseContactUrl = `${contactFormUrl}?topic=advertising`
 const partsContactUrl = `${contactFormUrl}?topic=parts`
 const magazineContactUrl = `${contactFormUrl}?topic=magazine`
-const paintFormUrl = 'https://forms.gle/GxxkzYxkqjCHdfm46'
 const suzuriShopUrl = 'https://suzuri.jp/dustline'
 const officialXUrl = 'https://x.com/DUSTLINE_ADV'
 const supportEmail = contactRecipient
@@ -782,7 +781,7 @@ function PaintServiceBanner() {
           </h2>
           <span>
             パウダーコート、ガンコート、セラコート。施工内容と参考価格を確認し、
-            写真を添えて見積もりを依頼できます。
+            公式サイトのフォームから見積もりを相談できます。
           </span>
           <a className="button button--accent" href={paintPagePath}>
             塗装依頼・価格表を見る <ArrowIcon />
@@ -897,7 +896,7 @@ function PrivacyPage() {
             <section className="legal-block reveal">
               <div className="legal-block__heading"><span>04</span><h3>外部サービス</h3></div>
               <div className="legal-block__body">
-                <p>会員登録と認証にはSupabaseを、同意いただいた場合のアクセス解析にはGoogle Analytics 4を利用します。また、当サイトにはSUZURI、X、Googleフォームなど外部サービスへのリンクがあります。各サービスで取り扱われる情報には、それぞれの利用規約・プライバシーポリシーが適用されます。</p>
+                <p>会員登録と認証にはSupabaseを、同意いただいた場合のアクセス解析にはGoogle Analytics 4を利用します。また、当サイトにはSUZURIやXなど外部サービスへのリンクがあります。各サービスで取り扱われる情報には、それぞれの利用規約・プライバシーポリシーが適用されます。</p>
                 <p>「English」はGoogle翻訳による公開Webページの自動翻訳を別タブで開きます。選択した公開ページのURLがGoogleに送られます。会員ページ・認証用URLや、URLのクエリ・フラグメントに含まれる情報は翻訳リンクに含めません。翻訳には誤りが生じる場合があり、正式な内容は日本語の原文をご確認ください。画像内の文字や雑誌PDFの誌面は、この機能では翻訳されません。</p>
                 <p>当サイトはAmazonアソシエイト・プログラムを利用しています。Amazonへのアフィリエイトリンクには紹介元を識別する情報が含まれ、リンク先でAmazonがCookie等を使用して購入などの成果を計測する場合があります。Amazonでの情報の取り扱いは、<a href="https://www.amazon.co.jp/gp/help/customer/display.html?nodeId=201909010" target="_blank" rel="noopener">Amazon.co.jpプライバシー規約</a>をご確認ください。</p>
                 <p>部品の仮予約情報はSupabaseで管理します。不正送信を防ぐ安全確認にはCloudflare Turnstileを使用し、IPアドレスやブラウザ等の技術情報をCloudflareが処理します。詳しくは<a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noreferrer">Cloudflareプライバシーポリシー</a>をご確認ください。仮予約情報の訂正・取り消しは、受付番号を添えてお問い合わせください。</p>
@@ -1468,7 +1467,7 @@ function App() {
       <>
         <a className="skip-link" href="#main">本文へ移動</a>
         <Header currentPage="paint" />
-        <PaintPricePage formUrl={paintFormUrl} />
+        <PaintPricePage contactUrl={partsContactUrl} />
         <Footer currentPage="paint" />
       </>
     )
