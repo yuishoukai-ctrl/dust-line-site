@@ -68,7 +68,7 @@ export default function PartsReservationForm({ product, contactUrl, basePath = '
         <p>代金は発生していません。販売条件と発送時期が決まり次第、メールでご案内します。</p>
         <p>受付番号を控えておいてください。</p><code>{receipt}</code>
         <p>受付完了メールは自動送信していません。数量変更・取り消し・メールアドレスの訂正は、受付番号を添えてご連絡ください。</p>
-        <a className="gf-text-link" href={contactUrl} target="_blank" rel="noreferrer">仮予約について問い合わせる <span aria-hidden="true">↗</span><span className="gf-sr-only">（別タブで開きます）</span></a>
+        <a className="gf-text-link" href={contactUrl}>仮予約について問い合わせる <span aria-hidden="true">→</span></a>
       </div> : <form className="gf-reservation__form" onSubmit={handleSubmit} aria-describedby="gf-reservation-conditions" aria-busy={pending}>
         <fieldset disabled={pending}>
           <label>希望数量<select value={quantity} onChange={event => setQuantity(event.target.value)} name="quantity">{Array.from({ length: 10 }, (_, i) => <option value={i + 1} key={i}>{i + 1}個</option>)}</select></label>

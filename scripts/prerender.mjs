@@ -19,6 +19,17 @@ const modifiedDate = '2026-08-06'
 
 const routes = [
   {
+    path: '/contact/',
+    source: '/?page=contact',
+    title: 'お問い合わせ｜DUST LINE',
+    description: 'DUST LINEへのお問い合わせ。雑誌の購入・閲覧、広告・掲載、パーツ・塗装についてご相談いただけます。',
+    image: '/og.png',
+    imageAlt: 'DUST LINE',
+    schemaType: 'ContactPage',
+    modifiedDate: '2026-11-26',
+    expectedText: 'お問い合わせ',
+  },
+  {
     path: '/articles/issue-01/',
     source: '/?page=issue-01-digests',
     title: '創刊号ダイジェスト｜DUSTLINEの旅・車両・ガレージ記事',

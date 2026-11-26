@@ -25,6 +25,8 @@ import { firstIssue, getIssueSlug, issue02Announcement } from './member-content'
 import AnalyticsConsent from './AnalyticsConsent'
 import LineCommunity from './LineCommunity'
 import EnglishLink from './EnglishLink'
+import ContactPage from './ContactPage'
+import { contactRecipient } from './lib/contact'
 import { trackAnalyticsEvent } from './lib/analytics'
 import { prepareVerificationEmail } from './lib/verificationEmail'
 import './styles.css'
@@ -51,11 +53,14 @@ const issue02ProductPagePath = `${homePath}magazine/issue-02/`
 const issue01DelayNoticePath = `${homePath}news/issue-01-release-delay/`
 const signupPagePath = `${homePath}account/signup/`
 const libraryPagePath = `${homePath}library/`
-const contactFormUrl = 'https://forms.gle/JHvhHTEuxrDbtW6R6'
+const contactFormUrl = `${homePath}contact/`
+const advertiseContactUrl = `${contactFormUrl}?topic=advertising`
+const partsContactUrl = `${contactFormUrl}?topic=parts`
+const magazineContactUrl = `${contactFormUrl}?topic=magazine`
 const paintFormUrl = 'https://forms.gle/GxxkzYxkqjCHdfm46'
 const suzuriShopUrl = 'https://suzuri.jp/dustline'
 const officialXUrl = 'https://x.com/DUSTLINE_ADV'
-const supportEmail = 'dustlineadv@gmail.com'
+const supportEmail = contactRecipient
 
 const stories = [
   {
@@ -171,6 +176,7 @@ function Header({ currentPage = null }) {
     { href: companyPagePath, label: 'DUST LINEについて', page: 'company' },
     { href: goodsPagePath, label: '公式グッズ', page: 'goods' },
     { href: advertisePagePath, label: '広告・掲載のご相談', page: 'advertise' },
+    { href: contactFormUrl, label: 'お問い合わせ', page: 'contact' },
     { href: suzuriShopUrl, label: 'グッズを購入（SUZURI）', external: true },
     { href: officialXUrl, label: '公式X', external: true },
   ]
@@ -494,12 +500,7 @@ function CompanyPage() {
                 <dd>
                   <a href={`mailto:${supportEmail}`}>{supportEmail}</a>
                   <br />
-                  <a
-                    href={contactFormUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="お問い合わせフォーム（新しいタブで開きます）"
-                  >
+                  <a href={contactFormUrl}>
                     お問い合わせフォーム
                   </a>
                 </dd>
@@ -633,7 +634,7 @@ function AdvertisePage() {
             <h1>バイクに関わる仕事を、<br />誌面へ。</h1>
             <p>創刊号に掲載する、バイク関連事業者様の広告を募集しています。広告掲載料は無料です。</p>
             <div className="advertise-hero__actions">
-              <a className="button button--accent" href={contactFormUrl} target="_blank" rel="noreferrer">掲載を相談する <ArrowIcon /></a>
+              <a className="button button--accent" href={advertiseContactUrl}>掲載を相談する <ArrowIcon /></a>
               <a className="text-link" href={officialXUrl} target="_blank" rel="noreferrer">公式Xを見る <ArrowIcon /></a>
             </div>
           </div>
@@ -693,12 +694,12 @@ function AdvertisePage() {
           <aside className="advertise-cta reveal">
             <div>
               <p>CONTACT / AD PARTNERS</p>
-              <h2>まずは、掲載希望と<br />お知らせください。</h2>
+              <h2>広告・掲載のご相談</h2>
             </div>
             <div>
-              <p>お問い合わせフォームの本文に「広告掲載希望」とご記入ください。掲載したい内容やWebサイト・SNSが決まっている場合は、あわせてお送りください。公式Xからのご相談も受け付けています。</p>
+              <p>掲載したい内容やWebサイト・SNSが決まっている場合は、あわせてお送りください。公式Xからのご相談も受け付けています。</p>
               <div className="advertise-cta__actions">
-                <a className="button button--accent" href={contactFormUrl} target="_blank" rel="noreferrer">お問い合わせフォーム <ArrowIcon /></a>
+                <a className="button button--accent" href={advertiseContactUrl}>お問い合わせフォーム <ArrowIcon /></a>
                 <a className="button advertise-cta__x" href={officialXUrl} target="_blank" rel="noreferrer">公式X @DUSTLINE_ADV <ArrowIcon /></a>
               </div>
             </div>
@@ -869,6 +870,7 @@ function PrivacyPage() {
               <div className="legal-block__heading"><span>01</span><h3>取得する情報</h3></div>
               <div className="legal-block__body">
                 <p>お問い合わせフォームをご利用の場合、氏名、メールアドレス、お問い合わせ内容など、送信者が入力した情報を受け取ることがあります。</p>
+                <p>サイト内のお問い合わせは、Cloudflareのメール送信機能を通じてDUST LINEのGmailの窓口へ届け、回答と対応の管理に利用します。</p>
                 <p>会員登録では、メールアドレス、認証情報、登録日時、ログインに必要な技術情報を取り扱います。ニュースレターは現在準備中であり、広告・案内メールの受信は会員登録とは分離して扱います。</p>
                 <p>部品の無料仮予約では、商品、希望数量、氏名、メールアドレス、受付日時、同意した条件の版を取り扱います。仮予約の管理と、その商品に関する販売条件・発送時期のご案内に利用し、広告メールの登録は行いません。この段階では住所やカード情報を取得しません。</p>
                 <p>利用者が「許可する」を選んだ場合に限り、Google Analytics 4を使用して、会員登録ページの表示、登録ボタンのクリック、登録手続きの進行状況などを計測します。当サイトが設定する計測イベントには、メールアドレス、パスワード、認証コード、ユーザーID、入力内容を含めません。許可しない場合、Google Analyticsのタグは読み込まれません。</p>
@@ -924,7 +926,7 @@ function PrivacyPage() {
               <div className="legal-block__heading"><span>07</span><h3>改定・お問い合わせ</h3></div>
               <div className="legal-block__body">
                 <p>サービス内容や法令等の変更に応じて、本方針を見直すことがあります。重要な変更がある場合は当サイト上でお知らせします。</p>
-                <p>情報の取り扱いに関するお問い合わせは、<a href={contactFormUrl} target="_blank" rel="noreferrer">お問い合わせフォーム</a>からご連絡ください。</p>
+                <p>情報の取り扱いに関するお問い合わせは、<a href={contactFormUrl}>お問い合わせフォーム</a>からご連絡ください。</p>
                 <p className="legal-block__date">制定日：2026年7月17日</p>
               </div>
             </section>
@@ -1239,7 +1241,7 @@ function Footer({ currentPage = null }) {
         <a href={suzuriShopUrl} target="_blank" rel="noreferrer">Shop</a>
         <a href={companyPagePath} aria-current={currentPage === 'company' ? 'page' : undefined}>Company</a>
         <a href={advertisePagePath} aria-current={currentPage === 'advertise' ? 'page' : undefined}>広告募集</a>
-        <a href={contactFormUrl} target="_blank" rel="noreferrer">Contact</a>
+        <a href={contactFormUrl} aria-current={currentPage === 'contact' ? 'page' : undefined}>お問い合わせ</a>
         <a href={officialXUrl} target="_blank" rel="noreferrer" aria-label="DUST LINE公式X">Official X</a>
         <a href={privacyPagePath} aria-current={currentPage === 'privacy' ? 'page' : undefined}>プライバシー・免責事項</a>
         <a href={commercialDisclosurePagePath} aria-current={currentPage === 'commercial-disclosure' ? 'page' : undefined}>特定商取引法に基づく表記</a>
@@ -1269,6 +1271,16 @@ function App() {
   const pathname = window.location.pathname === '/'
     ? '/'
     : `${window.location.pathname.replace(/\/+$/, '')}/`
+  if (pathname === contactFormUrl || (pathname === '/' && new URLSearchParams(window.location.search).get('page') === 'contact')) {
+    return (
+      <>
+        <a className="skip-link" href="#main">本文へ移動</a>
+        <Header currentPage="contact" />
+        <ContactPage privacyPath={privacyPagePath} />
+        <Footer currentPage="contact" />
+      </>
+    )
+  }
   const issue01Digest = issue01Digests.find((item) => pathname === item.path
     || (pathname === '/' && new URLSearchParams(window.location.search).get('article') === item.slug))
   const isDigestIndex = pathname === '/articles/issue-01/'
@@ -1321,7 +1333,7 @@ function App() {
       <>
         <a className="skip-link" href="#main">本文へ移動</a>
         <Header currentPage="parts" />
-        <GuardFactoryProductPage slug={productSlug} assetPath={assetPath} basePath={homePath} contactUrl={contactFormUrl} />
+        <GuardFactoryProductPage slug={productSlug} assetPath={assetPath} basePath={homePath} contactUrl={partsContactUrl} />
         <Footer currentPage="parts" />
       </>
     )
@@ -1397,7 +1409,7 @@ function App() {
       <>
         <a className="skip-link" href="#main">本文へ移動</a>
         <Header currentPage="parts" />
-        <PartsPage assetPath={assetPath} basePath={homePath} contactUrl={contactFormUrl} officialXUrl={officialXUrl} />
+        <PartsPage assetPath={assetPath} basePath={homePath} contactUrl={partsContactUrl} officialXUrl={officialXUrl} />
         <Footer currentPage="parts" />
       </>
     )
@@ -1415,7 +1427,7 @@ function App() {
           commercialDisclosurePath={commercialDisclosurePagePath}
           refundPolicyPath={refundPolicyPagePath}
           digitalDeliveryPath={digitalDeliveryPagePath}
-          supportEmail={supportEmail}
+          contactUrl={magazineContactUrl}
         />
         <Footer currentPage="issue-02-product" />
       </>

@@ -53,7 +53,7 @@ export default function Issue02ProductPage({
   commercialDisclosurePath = '/commercial-disclosure/',
   refundPolicyPath = '/refund-policy/',
   digitalDeliveryPath = '/digital-delivery/',
-  supportEmail = 'dustlineadv@gmail.com',
+  contactUrl = '/contact/?topic=magazine',
 }) {
   const productSignupPath = authPath(signupPath, '/magazine/issue-02/')
   useEffect(() => {
@@ -229,7 +229,7 @@ export default function Issue02ProductPage({
         <div className="issue-product__closing-actions reveal">
           <a className="issue-product__primary-link" href={productSignupPath} onClick={() => trackAnalyticsEvent('signup_cta_click')}>無料会員登録 <Arrow /></a>
           <a href={magazinePath}>DUST LINEについて <Arrow /></a>
-          <a href={`mailto:${supportEmail}`}>商品について問い合わせる <Arrow /></a>
+          <a href={contactUrl}>商品について問い合わせる <Arrow /></a>
         </div>
       </section>
     </main>
