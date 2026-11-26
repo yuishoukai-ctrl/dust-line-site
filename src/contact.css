@@ -29,8 +29,10 @@
 .contact-page a { text-decoration: underline; text-underline-offset: 3px; }
 .contact-page :is(input, select, textarea, button, a):focus-visible { outline: 2px solid #9b3f21; outline-offset: 3px; }
 .contact-form__privacy, .contact-page__email { font-size: .9rem; color: #4d473d; }
+.contact-form__privacy a { display: inline-block; }
 .contact-form__error { color: #862a17; font-weight: 700; }
-.contact-form__submit { justify-self: start; min-height: 48px; padding-inline: 42px; }
+.contact-form .contact-form__submit { justify-self: start; min-height: 48px; padding-inline: 42px; background: #a33f21; }
+.contact-form .contact-form__submit:hover { background: #84331d; }
 .contact-form__submit:disabled { opacity: .7; cursor: wait; }
 .contact-page .contact-page__email { margin-top: 32px; padding-top: 18px; border-top: 1px solid #a79d88; overflow-wrap: anywhere; }
 .contact-page__receipt { border-left: 3px solid var(--accent); padding: 6px 16px; }
